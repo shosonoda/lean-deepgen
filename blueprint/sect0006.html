@@ -217,7 +217,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Exponentially decaying approximation error: \(\bias (k) = e^{-\alpha k}\), \(\alpha {\gt} 0\). </p>
+  <p>  Exponentially decaying approximation error: \(\mathsf{bias}(k) = e^{-\alpha k}\), \(\alpha {\gt} 0\). </p>
 
   </div>
 </div>
@@ -260,7 +260,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Polynomially decaying approximation error: \(\bias (k) = k^{-\beta }\), \(\beta {\gt} 0\). </p>
+  <p>  Polynomially decaying approximation error: \(\mathsf{bias}(k) = k^{-\beta }\), \(\beta {\gt} 0\). </p>
 
   </div>
 </div>
@@ -303,7 +303,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Root-logarithmic estimation profile: \(\var (k,n) = \sqrt{\log k / n}\) (??prop:profiles(i)–(ii)). </p>
+  <p>  Root-logarithmic estimation profile: \(\mathsf{var}(k,n) = \sqrt{\log k / n}\) (??(i)–(ii)). </p>
 
   </div>
 </div>
@@ -346,7 +346,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Root-polynomial estimation profile: \(\var (k,n) = \sqrt{k^{\gamma } / n}\), \(\gamma {\gt} 0\) (??prop:profiles(iii)–(iv)). </p>
+  <p>  Root-polynomial estimation profile: \(\mathsf{var}(k,n) = \sqrt{k^{\gamma } / n}\), \(\gamma {\gt} 0\) (??(iii)–(iv)). </p>
 
   </div>
 </div>
@@ -389,7 +389,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  The depth-dependent part of the excess-risk bound of ??thm:bv: \(\gen (k,n) = \bias (k) + \var (k,n)\). </p>
+  <p>  The depth-dependent part of the excess-risk bound of <a href="sect0003.html#thm:bv">theorem 98</a>: \(\mathsf{gen}(k,n) = \mathsf{bias}(k) + \mathsf{var}(k,n)\). </p>
 
   </div>
 </div>
@@ -432,7 +432,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  PP balancing depth \(\kopt = n^{1/(2\beta +\gamma )}\). </p>
+  <p>  PP balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
@@ -475,7 +475,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EP balancing depth (leading terms): \(\kopt = \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). </p>
+  <p>  EP balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). </p>
 
   </div>
 </div>
@@ -561,7 +561,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EL balancing depth (leading terms): \(\kopt = \frac{1}{2\alpha }(\log n - \log \log \log n)\). </p>
+  <p>  EL balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \log \log \log n)\). </p>
 
   </div>
 </div>
@@ -647,7 +647,7 @@
         </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  PL balancing depth \(\kopt = \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\), the leading term of \(\exp \bigl(W(2\beta n)/(2\beta )\bigr)\) (Lambert \(W\), \(W(x) \sim \log x\)). </p>
+  <p>  PL balancing depth \({k^{\ast }}= \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\), the leading term of \(\exp \bigl(W(2\beta n)/(2\beta )\bigr)\) (Lambert \(W\), \(W(x) \sim \log x\)). </p>
 
   </div>
 </div>
@@ -1069,7 +1069,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   If \(\bias \ge 0\) and \(\var (\cdot ,n) \ge 0\) on a set \(S\) of depths, then \(\gen (k,n) \ge \max \{ \bias (k), \var (k,n)\} \) for every \(k \in S\). </p>
+  <p>   If \(\mathsf{bias}\ge 0\) and \(\mathsf{var}(\cdot ,n) \ge 0\) on a set \(S\) of depths, then \(\mathsf{gen}(k,n) \ge \max \{ \mathsf{bias}(k), \mathsf{var}(k,n)\} \) for every \(k \in S\). </p>
 
   </div>
 </div>
@@ -1147,7 +1147,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">Balancing principle.</b> Let \(S \subseteq \mathbb R\) be a set of depths on which \(\bias \ge 0\) is nonincreasing and \(\var (\cdot ,n) \ge 0\) is nondecreasing. If \(k_0 \in S\) balances the two terms, \(\bias (k_0) = \var (k_0,n)\), then \(\gen (k,n) \ge \bias (k_0)\) for every \(k \in S\), while \(\gen (k_0,n) = 2\bias (k_0)\); hence \(k_0\) minimizes the bound over \(S\) up to the factor \(2\). </p>
+  <p>   <b class="bfseries">Balancing principle.</b> Let \(S \subseteq \mathbb R\) be a set of depths on which \(\mathsf{bias}\ge 0\) is nonincreasing and \(\mathsf{var}(\cdot ,n) \ge 0\) is nondecreasing. If \(k_0 \in S\) balances the two terms, \(\mathsf{bias}(k_0) = \mathsf{var}(k_0,n)\), then \(\mathsf{gen}(k,n) \ge \mathsf{bias}(k_0)\) for every \(k \in S\), while \(\mathsf{gen}(k_0,n) = 2\mathsf{bias}(k_0)\); hence \(k_0\) minimizes the bound over \(S\) up to the factor \(2\). </p>
 
   </div>
 </div>
@@ -1159,7 +1159,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>Case split on \(k \le k_0\) or \(k \ge k_0\): in the first case \(\bias (k) \ge \bias (k_0)\) and \(\var (k,n) \ge 0\); in the second \(\var (k,n) \ge \var (k_0,n) = \bias (k_0)\) and \(\bias (k) \ge 0\). The identity at \(k_0\) is the balance equation. </p>
+  <p>Case split on \(k \le k_0\) or \(k \ge k_0\): in the first case \(\mathsf{bias}(k) \ge \mathsf{bias}(k_0)\) and \(\mathsf{var}(k,n) \ge 0\); in the second \(\mathsf{var}(k,n) \ge \mathsf{var}(k_0,n) = \mathsf{bias}(k_0)\) and \(\mathsf{bias}(k) \ge 0\). The identity at \(k_0\) is the balance equation. </p>
 
   </div>
 </div>
@@ -1227,7 +1227,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\bias (\kopt ) = \kopt ^{-\beta } = n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{bias}({k^{\ast }}) = {k^{\ast }}^{-\beta } = n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
@@ -1307,7 +1307,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\var (\kopt ,n) = \sqrt{\kopt ^{\gamma }/n} = n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{var}({k^{\ast }},n) = \sqrt{{k^{\ast }}^{\gamma }/n} = n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
@@ -1319,7 +1319,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>\(\kopt ^\gamma / n = n^{\gamma /(2\beta +\gamma ) - 1} = n^{-2\beta /(2\beta +\gamma )}\), and the square root halves the exponent. </p>
+  <p>\({k^{\ast }}^\gamma / n = n^{\gamma /(2\beta +\gamma ) - 1} = n^{-2\beta /(2\beta +\gamma )}\), and the square root halves the exponent. </p>
 
   </div>
 </div>
@@ -1401,7 +1401,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">PP regime</b> (??tab:tradeoff). Let \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\). At the balancing depth \(\kopt = n^{1/(2\beta +\gamma )}\), \(\gen (\kopt ,n) = \kopt ^{-\beta } + \sqrt{\kopt ^{\gamma }/n} = 2\, n^{-\beta /(2\beta +\gamma )}\), and for every depth \(k {\gt} 0\), \(\gen (k,n) = k^{-\beta } + \sqrt{k^{\gamma }/n} \ge n^{-\beta /(2\beta +\gamma )}\). Thus \(\kopt \) is optimal up to the factor \(2\) and \(\gen (\kopt ,n) \asymp n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>   <b class="bfseries">PP regime</b> (??). Let \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\). At the balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\), \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{{k^{\ast }}^{\gamma }/n} = 2\, n^{-\beta /(2\beta +\gamma )}\), and for every depth \(k {\gt} 0\), \(\mathsf{gen}(k,n) = k^{-\beta } + \sqrt{k^{\gamma }/n} \ge n^{-\beta /(2\beta +\gamma )}\). Thus \({k^{\ast }}\) is optimal up to the factor \(2\) and \(\mathsf{gen}({k^{\ast }},n) \asymp n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
@@ -1413,7 +1413,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Both terms equal \(n^{-\beta /(2\beta +\gamma )}\) at \(\kopt \) (??lem:bias-poly-kpp, ??lem:var-poly-kpp), so the balancing principle ??lem:balancing on \(S = (0,\infty )\) gives both claims. </p>
+  <p> Both terms equal \(n^{-\beta /(2\beta +\gamma )}\) at \({k^{\ast }}\) (<a href="sect0006.html#lem:bias-poly-kpp">theorem 339</a>, <a href="sect0006.html#lem:var-poly-kpp">theorem 340</a>), so the balancing principle <a href="sect0006.html#lem:balancing">theorem 338</a> on \(S = (0,\infty )\) gives both claims. </p>
 
   </div>
 </div>
@@ -1529,7 +1529,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Compose ??lem:eventually-log-le-mul with \(\log n \to \infty \). </p>
+  <p> Compose <a href="sect0006.html#lem:eventually-log-le-mul">theorem 342</a> with \(\log n \to \infty \). </p>
 
   </div>
 </div>
@@ -1851,7 +1851,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} 1\), \(e^{-\alpha \kopt } = n^{-1/2}(\log n)^{\gamma /2}\) exactly. </p>
+  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} 1\), \(e^{-\alpha {k^{\ast }}} = n^{-1/2}(\log n)^{\gamma /2}\) exactly. </p>
 
   </div>
 </div>
@@ -1863,7 +1863,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>\(-\alpha \kopt = -\tfrac 12 \log n + \tfrac \gamma 2 \log \log n\); exponentiate. </p>
+  <p>\(-\alpha {k^{\ast }}= -\tfrac 12 \log n + \tfrac \gamma 2 \log \log n\); exponentiate. </p>
 
   </div>
 </div>
@@ -1929,7 +1929,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha , \gamma {\gt} 0\) and \(\log n \ge 1\), \(\kopt \le \log n/(2\alpha )\). </p>
+  <p>   For \(\alpha , \gamma {\gt} 0\) and \(\log n \ge 1\), \({k^{\ast }}\le \log n/(2\alpha )\). </p>
 
   </div>
 </div>
@@ -2017,7 +2017,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha ,\gamma {\gt} 0\), \(n {\gt} 1\), \(\log n \ge 1\) and \(\gamma \log \log n \le \log n\): \(\sqrt{\kopt ^{\gamma }/n} \le \sqrt{(2\alpha )^{-\gamma }}\;  n^{-1/2}(\log n)^{\gamma /2}\). </p>
+  <p>   For \(\alpha ,\gamma {\gt} 0\), \(n {\gt} 1\), \(\log n \ge 1\) and \(\gamma \log \log n \le \log n\): \(\sqrt{{k^{\ast }}^{\gamma }/n} \le \sqrt{(2\alpha )^{-\gamma }}\;  n^{-1/2}(\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
@@ -2029,7 +2029,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(0 \le \kopt \le \log n/(2\alpha )\), so \(\kopt ^\gamma \le (2\alpha )^{-\gamma } (\log n)^\gamma \); divide by \(n\) and take roots. </p>
+  <p> \(0 \le {k^{\ast }}\le \log n/(2\alpha )\), so \({k^{\ast }}^\gamma \le (2\alpha )^{-\gamma } (\log n)^\gamma \); divide by \(n\) and take roots. </p>
 
   </div>
 </div>
@@ -2109,7 +2109,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha ,\gamma {\gt} 0\), eventually in \(n\): \(n^{-1/2}(\log n)^{\gamma /2} \le \gen (\kopt ,n) \le \bigl(1 + \sqrt{(2\alpha )^{-\gamma }}\bigr)\,  n^{-1/2}(\log n)^{\gamma /2}\). </p>
+  <p>   For \(\alpha ,\gamma {\gt} 0\), eventually in \(n\): \(n^{-1/2}(\log n)^{\gamma /2} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{(2\alpha )^{-\gamma }}\bigr)\,  n^{-1/2}(\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
@@ -2121,7 +2121,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The bias term equals the rate exactly (??lem:bias-exp-kep) and the variance term is at most \(\sqrt{(2\alpha )^{-\gamma }}\) times the rate (??lem:var-poly-kep-le); the side conditions hold for large \(n\) by ??lem:eventually-log-log-le-mul. </p>
+  <p> The bias term equals the rate exactly (<a href="sect0006.html#lem:bias-exp-kep">theorem 348</a>) and the variance term is at most \(\sqrt{(2\alpha )^{-\gamma }}\) times the rate (<a href="sect0006.html#lem:var-poly-kep-le">theorem 350</a>); the side conditions hold for large \(n\) by <a href="sect0006.html#lem:eventually-log-log-le-mul">theorem 343</a>. </p>
 
   </div>
 </div>
@@ -2259,7 +2259,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">EP regime</b> (??tab:tradeoff). Let \(\alpha ,\gamma {\gt} 0\) and \(\kopt (n) = \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). Then \(\gen (\kopt ,n) = e^{-\alpha \kopt } + \sqrt{\kopt ^{\gamma }/n} \asymp n^{-1/2}(\log n)^{\gamma /2}\) as \(n \to \infty \) (more precisely, between \(1\) and \(1 + (2\alpha )^{-\gamma /2}\) times the rate). </p>
+  <p>   <b class="bfseries">EP regime</b> (??). Let \(\alpha ,\gamma {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{{k^{\ast }}^{\gamma }/n} \asymp n^{-1/2}(\log n)^{\gamma /2}\) as \(n \to \infty \) (more precisely, between \(1\) and \(1 + (2\alpha )^{-\gamma /2}\) times the rate). </p>
 
   </div>
 </div>
@@ -2271,7 +2271,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Apply ??lem:isTheta-of-eventually-bounds to the two-sided bound ??lem:eventually-ep. </p>
+  <p> Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 352</a> to the two-sided bound <a href="sect0006.html#lem:eventually-ep">theorem 351</a>. </p>
 
   </div>
 </div>
@@ -2345,7 +2345,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   EP regime, upper bound: \(\gen (\kopt ,n) = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
+  <p>   EP regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
 
   </div>
 </div>
@@ -2357,7 +2357,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of ??thm:tradeoff-ep. </p>
+  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-ep">theorem 353</a>. </p>
 
   </div>
 </div>
@@ -2429,7 +2429,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} e\), \(e^{-\alpha \kopt } = \sqrt{\log \log n/n}\) exactly. </p>
+  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} e\), \(e^{-\alpha {k^{\ast }}} = \sqrt{\log \log n/n}\) exactly. </p>
 
   </div>
 </div>
@@ -2441,7 +2441,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(-\alpha \kopt = -\tfrac 12\log n + \tfrac 12\log \log \log n\); exponentiate and rewrite \(n^{-1/2}(\log \log n)^{1/2} = \sqrt{\log \log n/n}\). </p>
+  <p> \(-\alpha {k^{\ast }}= -\tfrac 12\log n + \tfrac 12\log \log \log n\); exponentiate and rewrite \(n^{-1/2}(\log \log n)^{1/2} = \sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
@@ -2509,7 +2509,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(0 {\lt} \kopt \le \log n/(2\alpha )\) and \(\log \kopt \le \log \log n + |\log (2\alpha )|\). </p>
+  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(0 {\lt} {k^{\ast }}\le \log n/(2\alpha )\) and \(\log {k^{\ast }}\le \log \log n + |\log (2\alpha )|\). </p>
 
   </div>
 </div>
@@ -2521,7 +2521,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(\log \log \log n \ge 0\) gives the upper bound; \(\log \log \log n {\lt} \log \log n {\lt} \log n\) gives positivity; then \(\log \kopt \le \log (\log n/(2\alpha )) = \log \log n - \log (2\alpha )\). </p>
+  <p> \(\log \log \log n \ge 0\) gives the upper bound; \(\log \log \log n {\lt} \log \log n {\lt} \log n\) gives positivity; then \(\log {k^{\ast }}\le \log (\log n/(2\alpha )) = \log \log n - \log (2\alpha )\). </p>
 
   </div>
 </div>
@@ -2595,7 +2595,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(\sqrt{\log \kopt /n} \le \sqrt{1 + |\log (2\alpha )|}\, \sqrt{\log \log n/n}\). </p>
+  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{1 + |\log (2\alpha )|}\, \sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
@@ -2607,7 +2607,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(\log \kopt \le \log \log n + |\log 2\alpha | \le (1 + |\log 2\alpha |)\log \log n\) because \(\log \log n \ge 1\) (??lem:kel-bounds). </p>
+  <p> \(\log {k^{\ast }}\le \log \log n + |\log 2\alpha | \le (1 + |\log 2\alpha |)\log \log n\) because \(\log \log n \ge 1\) (<a href="sect0006.html#lem:kel-bounds">theorem 356</a>). </p>
 
   </div>
 </div>
@@ -2685,7 +2685,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\), eventually in \(n\): \(\sqrt{\log \log n/n} \le \gen (\kopt ,n) \le \bigl(1 + \sqrt{1 + |\log (2\alpha )|}\bigr)\sqrt{\log \log n/n}\). </p>
+  <p>   For \(\alpha {\gt} 0\), eventually in \(n\): \(\sqrt{\log \log n/n} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{1 + |\log (2\alpha )|}\bigr)\sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
@@ -2697,7 +2697,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Bias equals the rate (??lem:bias-exp-kel); variance is at most \(\sqrt{1 + |\log 2\alpha |}\) times the rate (??lem:var-log-kel-le). </p>
+  <p> Bias equals the rate (<a href="sect0006.html#lem:bias-exp-kel">theorem 355</a>); variance is at most \(\sqrt{1 + |\log 2\alpha |}\) times the rate (<a href="sect0006.html#lem:var-log-kel-le">theorem 357</a>). </p>
 
   </div>
 </div>
@@ -2775,7 +2775,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">EL regime</b> (??tab:tradeoff). Let \(\alpha {\gt} 0\) and \(\kopt (n) = \frac{1}{2\alpha }(\log n - \log \log \log n)\). Then \(\gen (\kopt ,n) = e^{-\alpha \kopt } + \sqrt{\log \kopt /n} \asymp \sqrt{\log \log n/n}\) as \(n \to \infty \). </p>
+  <p>   <b class="bfseries">EL regime</b> (??). Let \(\alpha {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \log \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log \log n/n}\) as \(n \to \infty \). </p>
 
   </div>
 </div>
@@ -2787,7 +2787,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Apply ??lem:isTheta-of-eventually-bounds to ??lem:eventually-el. </p>
+  <p> Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 352</a> to <a href="sect0006.html#lem:eventually-el">theorem 358</a>. </p>
 
   </div>
 </div>
@@ -2861,7 +2861,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   EL regime, upper bound: \(\gen (\kopt ,n) = O(\sqrt{\log \log n/n})\). </p>
+  <p>   EL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log \log n/n})\). </p>
 
   </div>
 </div>
@@ -2873,7 +2873,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of ??thm:tradeoff-el. </p>
+  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-el">theorem 359</a>. </p>
 
   </div>
 </div>
@@ -2941,7 +2941,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \(\kopt ^{-\beta } = \sqrt{L/(2\beta n)}\). </p>
+  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \({k^{\ast }}^{-\beta } = \sqrt{L/(2\beta n)}\). </p>
 
   </div>
 </div>
@@ -2953,7 +2953,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p>\(\kopt ^{-\beta } = (2\beta n/L)^{-1/2} = (L/(2\beta n))^{1/2}\). </p>
+  <p>\({k^{\ast }}^{-\beta } = (2\beta n/L)^{-1/2} = (L/(2\beta n))^{1/2}\). </p>
 
   </div>
 </div>
@@ -3019,7 +3019,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \(\log \kopt = (L - \log L)/(2\beta )\). </p>
+  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \(\log {k^{\ast }}= (L - \log L)/(2\beta )\). </p>
 
   </div>
 </div>
@@ -3099,7 +3099,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   The PL balancing equation \(k^{2\beta }\log k \asymp n\) holds exactly up to the factor \(1 - \log L/L\): for \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\), \(\kopt ^{2\beta }\log \kopt = n\, (1 - \log L/L)\). </p>
+  <p>   The PL balancing equation \(k^{2\beta }\log k \asymp n\) holds exactly up to the factor \(1 - \log L/L\): for \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\), \({k^{\ast }}^{2\beta }\log {k^{\ast }}= n\, (1 - \log L/L)\). </p>
 
   </div>
 </div>
@@ -3111,7 +3111,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(\kopt ^{2\beta } = 2\beta n/L\) and \(\log \kopt = (L - \log L)/(2\beta )\) (??lem:log-kpl); multiply out. </p>
+  <p> \({k^{\ast }}^{2\beta } = 2\beta n/L\) and \(\log {k^{\ast }}= (L - \log L)/(2\beta )\) (<a href="sect0006.html#lem:log-kpl">theorem 362</a>); multiply out. </p>
 
   </div>
 </div>
@@ -3179,7 +3179,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   \(\kopt ^{2\beta }\log \kopt / n \to 1\) as \(n \to \infty \), i.e. \(\kopt ^{2\beta }\log \kopt \sim n\). </p>
+  <p>   \({k^{\ast }}^{2\beta }\log {k^{\ast }}/ n \to 1\) as \(n \to \infty \), i.e. \({k^{\ast }}^{2\beta }\log {k^{\ast }}\sim n\). </p>
 
   </div>
 </div>
@@ -3191,7 +3191,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> By ??lem:tradeoff-pl-balance the ratio is \(1 - \log L/L\) with \(L = \log (2\beta n) \to \infty \), and \(\log L / L \to 0\). </p>
+  <p> By <a href="sect0006.html#lem:tradeoff-pl-balance">theorem 363</a> the ratio is \(1 - \log L/L\) with \(L = \log (2\beta n) \to \infty \), and \(\log L / L \to 0\). </p>
 
   </div>
 </div>
@@ -3261,7 +3261,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) \ge 1\): \(\sqrt{\log \kopt /n} \le \sqrt{L/(2\beta n)}\). </p>
+  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) \ge 1\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{L/(2\beta n)}\). </p>
 
   </div>
 </div>
@@ -3273,7 +3273,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> \(\log \kopt = (L - \log L)/(2\beta ) \le L/(2\beta )\) since \(\log L \ge 0\). </p>
+  <p> \(\log {k^{\ast }}= (L - \log L)/(2\beta ) \le L/(2\beta )\) since \(\log L \ge 0\). </p>
 
   </div>
 </div>
@@ -3413,7 +3413,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), eventually in \(n\): \(\sqrt{1/(4\beta )}\sqrt{\log n/n} \le \gen (\kopt ,n) \le 2\sqrt{(1 + |\log 2\beta |)/(2\beta )}\, \sqrt{\log n/n}\). </p>
+  <p>   For \(\beta {\gt} 0\), eventually in \(n\): \(\sqrt{1/(4\beta )}\sqrt{\log n/n} \le \mathsf{gen}({k^{\ast }},n) \le 2\sqrt{(1 + |\log 2\beta |)/(2\beta )}\, \sqrt{\log n/n}\). </p>
 
   </div>
 </div>
@@ -3425,7 +3425,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Both terms are at most \(\sqrt{L/(2\beta n)}\) with \(L = \log (2\beta n)\) (??lem:bias-poly-kpl, ??lem:var-log-kpl-le), the bias term equals it, and \(\tfrac 12\log n \le L \le (1 + |\log 2\beta |)\log n\) (??lem:log-two-beta-n-bounds). </p>
+  <p> Both terms are at most \(\sqrt{L/(2\beta n)}\) with \(L = \log (2\beta n)\) (<a href="sect0006.html#lem:bias-poly-kpl">theorem 361</a>, <a href="sect0006.html#lem:var-log-kpl-le">theorem 365</a>), the bias term equals it, and \(\tfrac 12\log n \le L \le (1 + |\log 2\beta |)\log n\) (<a href="sect0006.html#lem:log-two-beta-n-bounds">theorem 366</a>). </p>
 
   </div>
 </div>
@@ -3503,7 +3503,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">PL regime</b> (??tab:tradeoff). Let \(\beta {\gt} 0\) and \(\kopt (n) = \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\). Then \(\gen (\kopt ,n) = \kopt ^{-\beta } + \sqrt{\log \kopt /n} \asymp \sqrt{\log n/n}\) as \(n \to \infty \). </p>
+  <p>   <b class="bfseries">PL regime</b> (??). Let \(\beta {\gt} 0\) and \({k^{\ast }}(n) = \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\). Then \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log n/n}\) as \(n \to \infty \). </p>
 
   </div>
 </div>
@@ -3515,7 +3515,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> Rescale the lower bound of ??lem:eventually-pl by \(\sqrt{1/(4\beta )}^{-1}\) and apply ??lem:isTheta-of-eventually-bounds to the function \(\sqrt{1/(4\beta )}\, \sqrt{\log n/n}\), which is \(\Theta (\sqrt{\log n/n})\). </p>
+  <p> Rescale the lower bound of <a href="sect0006.html#lem:eventually-pl">theorem 367</a> by \(\sqrt{1/(4\beta )}^{-1}\) and apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 352</a> to the function \(\sqrt{1/(4\beta )}\, \sqrt{\log n/n}\), which is \(\Theta (\sqrt{\log n/n})\). </p>
 
   </div>
 </div>
@@ -3589,7 +3589,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   PL regime, upper bound: \(\gen (\kopt ,n) = O(\sqrt{\log n/n})\). </p>
+  <p>   PL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log n/n})\). </p>
 
   </div>
 </div>
@@ -3601,7 +3601,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of ??thm:tradeoff-pl. </p>
+  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-pl">theorem 368</a>. </p>
 
   </div>
 </div>
@@ -3659,7 +3659,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> ??lem:rpow-neg-half-mul-rpow with \(\gamma = 1\). </p>
+  <p> <a href="sect0006.html#lem:rpow-neg-half-mul-rpow">theorem 345</a> with \(\gamma = 1\). </p>
 
   </div>
 </div>
@@ -3821,7 +3821,7 @@
         </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  <b class="bfseries">Ordering note</b> (??sec:proof.tradeoff). The EP and PL balanced rates are not uniformly ordered: EP \(\lesssim \) PL when \(\gamma \le 1\), and PL \(\lesssim \) EP when \(\gamma \ge 1\); for \(\gamma = 1\) they coincide up to constants. </p>
+  <p>  <b class="bfseries">Ordering note</b> (??). The EP and PL balanced rates are not uniformly ordered: EP \(\lesssim \) PL when \(\gamma \le 1\), and PL \(\lesssim \) EP when \(\gamma \ge 1\); for \(\gamma = 1\) they coincide up to constants. </p>
 
   </div>
 </div>
@@ -3833,7 +3833,7 @@
     <span class="expand-proof">▶</span>
   </div>
   <div class="proof_content">
-  <p> ??rem:tradeoff-ordering-le and ??rem:tradeoff-ordering-ge. </p>
+  <p> <a href="sect0006.html#rem:tradeoff-ordering-le">theorem 371</a> and <a href="sect0006.html#rem:tradeoff-ordering-ge">theorem 372</a>. </p>
 
   </div>
 </div>
