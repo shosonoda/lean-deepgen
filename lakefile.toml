@@ -1,0 +1,44 @@
+name = "lean-deepgen"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["LeanDeepgen"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+maxSynthPendingDepth = 3
+weak.linter.style.header = false # no copyright header required
+
+[[require]]
+name = "LeanArchitect"
+git = "https://github.com/hanwenzhu/LeanArchitect.git"
+rev = "v4.32.0"
+
+[[require]]
+name = "checkdecls"
+git = "https://github.com/PatrickMassot/checkdecls.git"
+rev = "master"
+
+[[require]]
+name = "FoML"
+git = "https://github.com/auto-res/lean-rademacher.git"
+rev = "main"
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.32.0"
+
+[[lean_lib]]
+name = "LeanDeepgen"
+
+# Comparator (https://github.com/leanprover/comparator): the challenge states the
+# paper's theorems with `sorry`, the solution proves them from the library.
+[[lean_lib]]
+name = "Challenge"
+srcDir = "comparator"
+
+[[lean_lib]]
+name = "Solution"
+srcDir = "comparator"

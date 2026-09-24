@@ -1,0 +1,50 @@
+name: CI
+
+# Builds the Lean project, extracts the blueprint with LeanArchitect and renders
+# the web version, so that broken proofs or broken LaTeX are caught early.
+# Runs in both the private (development) and the public repository.
+# lean-action caches `.lake` in the GitHub Actions cache (keyed by lean-toolchain
+# and lake-manifest.json) and fetches the Mathlib cache, so incremental runs are fast.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Build project and extract blueprint
+        uses: leanprover/lean-action@v1
+        with:
+          build-args: ":blueprint"
+          use-github-cache: true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install leanblueprint
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q graphviz libgraphviz-dev
+          python -m pip install --upgrade pip
+          python -m pip install pygraphviz leanblueprint
+
+      - name: Render blueprint (web)
+        run: leanblueprint web
+
+      - name: Check declarations referenced by the blueprint
+        run: ~/.elan/bin/lake exe checkdecls blueprint/lean_decls

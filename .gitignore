@@ -1,2 +1,29 @@
-# cache and other artifacts produced by Lean's Lake build tool
-.lake/
+## Lake
+/.lake
+/.cache
+
+## Generated blueprint / site
+/site
+/blueprint/web
+/blueprint/print
+/blueprint/lean_decls
+/blueprint/src/web.paux
+/blueprint/src/web.bbl
+
+## TeX
+*.aux
+*.log
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+
+## OS / editors
+.DS_Store
+00data/*.pdf
+
+## Reference texts (not distributed)
+/00data

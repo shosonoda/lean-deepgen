@@ -1,0 +1,63 @@
+name: Build and deploy pages
+
+# Full build on GitHub: Lean project + blueprint (LeanArchitect) + API docs,
+# deployed to GitHub Pages. Only runs in the public repository.
+#
+# Caching keeps this fast after the first run:
+#   - leanprover/lean-action caches `.lake` (oleans of the project and of Mathlib),
+#     keyed by lean-toolchain and lake-manifest.json, and uses the Mathlib cache.
+#   - leanprover-community/docgen-action caches the generated Mathlib API docs.
+#
+# Note: docgen-action builds the API docs and deploys only for `push` events.
+# A manual run (workflow_dispatch) builds everything except the docs and warms the
+# caches without deploying. For a quick deployment of a locally generated
+# blueprint use ./script/publish-page.sh instead (see pages.yml).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-build-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    if: ${{ !github.event.repository.private }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.0
+        with:
+          tool-cache: false
+          android: true
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: false
+          swap-storage: false
+
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Build project and extract blueprint
+        uses: leanprover/lean-action@v1
+        with:
+          build-args: ":blueprint"
+          use-github-cache: true
+
+      - name: Build blueprint and API docs, deploy to GitHub Pages
+        uses: leanprover-community/docgen-action@v1
+        with:
+          blueprint: true
+          api-docs: true
+          build-page: false   # home_page/ is plain HTML, no Jekyll needed
+          homepage: home_page
+          deploy: true

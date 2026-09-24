@@ -1,0 +1,32 @@
+-- This module serves as the root of the `LeanDeepgen` library.
+-- Import modules here that should be built as part of the library.
+import LeanDeepgen.Setting.WordBall
+import LeanDeepgen.Setting.Metrics
+import LeanDeepgen.Setting.Covering
+import LeanDeepgen.Setting.Hypothesis
+import LeanDeepgen.Setting.Loss
+import LeanDeepgen.Setting.Rademacher
+import LeanDeepgen.Setting.Assumptions
+import LeanDeepgen.Profiles.Defs
+import LeanDeepgen.Tradeoff.Defs
+import LeanDeepgen.Growth.Defs
+import LeanDeepgen.Growth.Lemmas
+import LeanDeepgen.Growth.Exponential
+import LeanDeepgen.Profiles.LogSplit
+import LeanDeepgen.Profiles.Profiles
+import LeanDeepgen.Bounds.BiasVariance
+import LeanDeepgen.Bounds.HiddenOutput
+import LeanDeepgen.Bounds.Sudakov
+import LeanDeepgen.Bounds.EntropyDecomp
+import LeanDeepgen.Bounds.EntropyDecompSample
+import LeanDeepgen.Growth.Polynomial
+import LeanDeepgen.Tradeoff.Regimes
+import LeanDeepgen.Growth.ArzelaAscoli
+import LeanDeepgen.Growth.Saturation
+import LeanDeepgen.Growth.MemoryExpansion
+import LeanDeepgen.Bounds.Variance
+import LeanDeepgen.Examples.Regimes
+import LeanDeepgen.Examples.Implementation
+import LeanDeepgen.Examples.Readout
+import LeanDeepgen.Examples.ChainOfThought
+import LeanDeepgen.Examples.ODE
