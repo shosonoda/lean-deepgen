@@ -10,7 +10,7 @@
 - 計画: [PLAN.md](PLAN.md)．進捗: [PROGRESS.md](PROGRESS.md)．原稿への修正: [ToDraft.md](ToDraft.md)．
 - 検証: [comparator/](comparator/)（Challenge 55 定理 / Solution）を `./script/comparator.sh` で検査済み（statement 一致・公理 3 つのみ・kernel 受理）．
 - 上流: `ToMathlib`/`ToFoML` は lean-rademacher に統合済み（PR #12 マージ，FoML rev `db9f187`）．本プロジェクトは `FoML.ToMathlib`/`FoML.ToFoML` を依存として参照し，ローカルコピーは撤去．
-- 公開: https://github.com/shosonoda/lean-deepgen（Lean 一式），blueprint: https://shosonoda.github.io/lean-deepgen/ ．
+- 公開: https://github.com/shosonoda/lean-deepgen（Lean 一式），blueprint（web + PDF）: https://shosonoda.github.io/lean-deepgen/ ．公開側 CI（`ci.yml`）と Pages（`blueprint.yml`，web 版のみ；`pages.yml`，ローカル生成物）で検証・デプロイ．
 
 ## 形式化済みの対象
 

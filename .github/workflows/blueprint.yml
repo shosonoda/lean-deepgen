@@ -6,7 +6,8 @@ name: Build and deploy pages
 # The steps mirror ./script/generate.sh (build, extract, leanblueprint web,
 # checkdecls, assemble site/). The PDF version and the API docs are not built
 # here: the PDF is produced locally by ./script/generate.sh and published with
-# ./script/publish-page.sh (see pages.yml). (The previous version used
+# ./script/publish-page.sh (see pages.yml); this workflow re-uses the PDF that
+# is already on the gh-pages branch so that it stays available. (The previous version used
 # leanprover-community/docgen-action, whose texlive step currently fails to
 # install pygraphviz with recent pip.)
 #
@@ -65,6 +66,18 @@ jobs:
           cp -R home_page/. site/
           cp -R blueprint/web site/blueprint
           touch site/.nojekyll
+
+      # The PDF is not built here; keep the one last published from a local
+      # build (./script/publish-page.sh pushes it to the gh-pages branch).
+      - name: Reuse the published PDF, if any
+        run: |
+          if git fetch --quiet --depth 1 origin gh-pages 2>/dev/null &&
+             git cat-file -e origin/gh-pages:blueprint.pdf 2>/dev/null; then
+            git show origin/gh-pages:blueprint.pdf > site/blueprint.pdf
+            echo "reused blueprint.pdf from gh-pages"
+          else
+            echo "no published PDF found; the site is deployed without it"
+          fi
 
       - uses: actions/upload-pages-artifact@v4
         with:
