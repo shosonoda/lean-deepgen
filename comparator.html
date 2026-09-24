@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Comparator certificate</title>
+  <style>
+    :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #ffffff; --muted: #666; --card: #f5f5f7; --accent: #2a6fdb; --ok: #1a7f37; }
+    @media (prefers-color-scheme: dark) { :root { --fg: #eee; --bg: #121212; --muted: #aaa; --card: #1e1e22; --accent: #7fb0ff; --ok: #57c76f; } }
+    body { margin: 0; padding: 0 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.5; }
+    main { max-width: 860px; margin: 0 auto; padding: 48px 0 64px; }
+    h1 { margin: 0 0 4px; font-size: 2rem; }
+    h2 { margin: 36px 0 12px; font-size: 1.3rem; }
+    #author { margin: 0 0 32px; color: var(--muted); }
+    a { color: var(--accent); }
+    p.nav a { font-weight: 600; text-decoration: none; }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.92em; }
+    pre { padding: 14px 18px; border-radius: 10px; background: var(--card); overflow-x: auto; font-size: 0.9rem; line-height: 1.45; }
+    .result { padding: 16px 20px; border-radius: 10px; background: var(--card); }
+    .result .ok { color: var(--ok); font-weight: 700; }
+    .result dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 12px 0 0; }
+    .result dt { color: var(--muted); }
+    .result dd { margin: 0; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--card); vertical-align: top; }
+    th { background: var(--card); }
+    .scroll { overflow-x: auto; }
+    footer { margin-top: 40px; color: var(--muted); font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Comparator certificate</h1>
+    <p id="author">Generalization error bounds for deep models &middot; Sho Sonoda</p>
+    <p class="nav"><a href="./">&larr; Project page</a> &middot; <a href="blueprint/">Blueprint</a> &middot; <a href="https://github.com/shosonoda/lean-deepgen/tree/main/comparator">comparator/ on GitHub</a></p>
+
+    <h2>Latest verification result</h2>
+    <div class="result">
+      <p class="ok">Lean default kernel accepts the solution / Your solution is okay!</p>
+      <dl>
+        <dt>Date</dt><dd>2026-09-25</dd>
+        <dt>Commit</dt><dd><code>f263d0b</code> (branch <code>main</code>)</dd>
+        <dt>Theorems checked</dt><dd>55 (all of <code>comparator/config.json</code>)</dd>
+        <dt>Permitted axioms</dt><dd><code>propext</code>, <code>Quot.sound</code>, <code>Classical.choice</code></dd>
+        <dt>Toolchain</dt><dd>Lean <code>v4.32.0</code>, Mathlib <code>v4.32.0</code>, lean4export <code>v4.32.0</code>, fake-landrun (macOS)</dd>
+      </dl>
+    </div>
+    <p>Last three lines of the output of <code>./script/comparator.sh</code>:</p>
+<pre>Running Lean default kernel on solution.
+Lean default kernel accepts the solution
+Your solution is okay!</pre>
+
+    <h2>What Comparator certifies</h2>
+    <p><a href="https://github.com/leanprover/comparator">Comparator</a> takes a <em>challenge</em>
+    (theorem statements with the proofs replaced by <code>sorry</code>) and a <em>solution</em>
+    (the same statements with proofs), exports both environments with
+    <a href="https://github.com/leanprover/lean4export">lean4export</a> and checks, for every theorem
+    listed in the configuration, that:</p>
+    <ul>
+      <li><strong>Statement equality.</strong> The theorem's type in the solution is identical to its type in
+        the challenge, and every constant occurring in the statement is identical in both environments
+        (definitions cannot be silently changed to make the theorem easier).</li>
+      <li><strong>Permitted axioms.</strong> The proof depends on no axiom outside the permitted list
+        (<code>propext</code>, <code>Quot.sound</code>, <code>Classical.choice</code>); in particular
+        no <code>sorryAx</code> and no project-specific axiom.</li>
+      <li><strong>Kernel replay.</strong> Lean's default kernel re-checks the exported solution independently
+        of the elaborator, so the certificate does not rely on tactics or on <code>lake build</code> alone.</li>
+    </ul>
+    <p>Everything in the import closure of the challenge is the trusted vocabulary of the certificate.
+    <code>comparator/Challenge.lean</code> imports only the definition modules of the library
+    (<code>LeanDeepgen.Setting.*</code>, <code>Profiles.Defs</code>, <code>Tradeoff.Defs</code>,
+    <code>Growth.Defs</code>) and the example modules holding the definitions of the worked examples;
+    the general-purpose tools come from
+    <a href="https://github.com/auto-res/lean-rademacher">lean-rademacher</a>
+    (<code>FoML.ToMathlib</code>, <code>FoML.ToFoML</code>). The statements are the paper's theorems in their
+    Lean form, that is, with the corrections and generalizations described in the
+    <a href="https://github.com/shosonoda/lean-deepgen#deviations-from-the-printed-manuscript">README</a>.</p>
+
+    <h2>Configuration</h2>
+    <p><code>comparator/config.json</code> lists 55 theorems of <code>LeanDeepgen.Challenge</code>
+    (challenge module <code>Challenge</code>, solution module <code>Solution</code>; both are Lake libraries
+    with <code>srcDir = "comparator"</code>) and the three permitted axioms. Each challenge statement is copied
+    verbatim (binders, implicitness, hypothesis order, universe levels) from the library theorem; the
+    <code>open</code> lines of each section reproduce the context of the source module so that both files
+    elaborate to identical kernel terms. The one exception is <code>thm_dudley_subgaussian</code>, whose
+    auxiliary definitions live in a theorem module and are therefore unfolded inline in the challenge.</p>
+    <p>Not included: the cited theorems <code>thm:guivarch-bass</code>, <code>cor:nilpotent-entropy</code>,
+    <code>thm:breuillard-large-balls</code> (not formalized; P2 takes their conclusion as a hypothesis), the
+    <code>&Phi;<sub>&infin;</sub></code> part of <code>lem:cot-output</code>, and the integral identity of
+    <code>lem:log-split</code> (used inside the proofs of <code>prop:profiles</code> (ii)/(iv)).</p>
+
+    <h2>Mapping: paper label &rarr; challenge theorem &rarr; library declaration</h2>
+    <div class="scroll">
+    <table>
+      <thead><tr><th>Paper label</th><th><code>LeanDeepgen.Challenge.</code></th><th>Library theorem (<code>LeanDeepgen.</code>)</th><th>Module</th></tr></thead>
+      <tbody>
+      <tr><td><code>thm:bv-general</code></td><td><code>thm_bv_general</code></td><td><code>bv_general</code></td><td><code>Bounds/BiasVariance</code></td></tr>
+      <tr><td><code>thm:bv-general</code> (gap)</td><td><code>thm_bv_general_gap</code></td><td><code>bv_general_gap</code></td><td><code>Bounds/BiasVariance</code></td></tr>
+      <tr><td><code>thm:bv</code></td><td><code>thm_bv</code></td><td><code>bv</code></td><td><code>Bounds/BiasVariance</code></td></tr>
+      <tr><td><code>thm:bv</code> (gap)</td><td><code>thm_bv_gap</code></td><td><code>bv_gap</code></td><td><code>Bounds/BiasVariance</code></td></tr>
+      <tr><td><code>thm:hidden-decomp</code> (= <code>thm:mixed-sg</code>)</td><td><code>thm_hidden_decomp</code></td><td><code>hidden_decomp</code></td><td><code>Bounds/HiddenOutput</code></td></tr>
+      <tr><td><code>thm:hidden-decomp</code> (depth <code>k</code>)</td><td><code>thm_hidden_decomp_depth</code></td><td><code>hidden_decomp_depth</code></td><td><code>Bounds/HiddenOutput</code></td></tr>
+      <tr><td><code>prop:hilbert-sg</code></td><td><code>prop_hilbert_sg</code></td><td><code>hilbert_sg</code></td><td><code>Bounds/HiddenOutput</code></td></tr>
+      <tr><td><code>prop:finite-lipschitz-sg</code></td><td><code>prop_finite_lipschitz_sg</code></td><td><code>finite_lipschitz_sg</code></td><td><code>Bounds/HiddenOutput</code></td></tr>
+      <tr><td><code>thm:sudakov-type</code> (= <code>thm:sudakov</code>)</td><td><code>thm_sudakov_type</code></td><td><code>sudakov_type</code></td><td><code>Bounds/Sudakov</code></td></tr>
+      <tr><td><code>cor:sudakov-rates</code> (i)</td><td><code>cor_sudakov_rates</code></td><td><code>sudakov_rates_exp</code></td><td><code>Bounds/Sudakov</code></td></tr>
+      <tr><td><code>cor:sudakov-rates</code> (ii)</td><td><code>cor_sudakov_rates_poly</code></td><td><code>sudakov_rates_poly</code></td><td><code>Bounds/Sudakov</code></td></tr>
+      <tr><td><code>cor:matching</code> (i)</td><td><code>cor_matching</code></td><td><code>matching_exp</code></td><td><code>Bounds/Sudakov</code></td></tr>
+      <tr><td><code>cor:matching</code> (ii)</td><td><code>cor_matching_poly</code></td><td><code>matching_poly</code></td><td><code>Bounds/Sudakov</code></td></tr>
+      <tr><td><code>thm:rad.decomp.ent.ent</code></td><td><code>thm_rad_decomp_ent_ent</code></td><td><code>rad_decomp_ent_ent</code></td><td><code>Bounds/EntropyDecomp</code></td></tr>
+      <tr><td><code>thm:rad.decomp.ent.ent</code> (sample)</td><td><code>thm_rad_decomp_ent_ent_sample</code></td><td><code>rad_decomp_ent_ent_sample</code></td><td><code>Bounds/EntropyDecompSample</code></td></tr>
+      <tr><td><code>thm:caa</code></td><td><code>thm_caa</code></td><td><code>totallyBounded_unifMaps_iff_equicontinuous</code></td><td><code>Growth/ArzelaAscoli</code></td></tr>
+      <tr><td><code>cond:p1</code> (1)</td><td><code>cond_p1</code></td><td><code>cond_p1_of_totallyBounded</code></td><td><code>Growth/Saturation</code></td></tr>
+      <tr><td><code>cond:p1</code> (2a)</td><td><code>cond_p1_2a</code></td><td><code>cond_p1_of_equicontinuous</code></td><td><code>Growth/Saturation</code></td></tr>
+      <tr><td><code>cond:p1</code> (2b)</td><td><code>cond_p1_2b</code></td><td><code>cond_p1_of_uniformLipschitz</code></td><td><code>Growth/Saturation</code></td></tr>
+      <tr><td><code>cond:p1</code> (2c)</td><td><code>cond_p1_2c</code></td><td><code>cond_p1_of_nonexpanding</code></td><td><code>Growth/Saturation</code></td></tr>
+      <tr><td><code>cond:p1-ucont</code></td><td><code>cond_p1_ucont</code></td><td><code>cond_p1_ucont</code></td><td><code>Growth/Saturation</code></td></tr>
+      <tr><td><code>cond:p2-nilp</code></td><td><code>cond_p2_nilp</code></td><td><code>cond_p2_nilp</code></td><td><code>Growth/Polynomial</code></td></tr>
+      <tr><td><code>cond:e1-free-iso</code></td><td><code>cond_e1_free_iso</code></td><td><code>cond_e1_free_iso</code></td><td><code>Growth/Exponential</code></td></tr>
+      <tr><td><code>cond:e1p-theoremC</code></td><td><code>cond_e1p</code></td><td><code>cond_e1p_theoremC</code></td><td><code>Growth/Exponential</code></td></tr>
+      <tr><td><code>cond:e2-pingpong</code></td><td><code>cond_e2_pingpong</code></td><td><code>cond_e2_pingpong</code></td><td><code>Growth/Exponential</code></td></tr>
+      <tr><td><code>cond:e3</code></td><td><code>cond_e3</code></td><td><code>cond_e3</code></td><td><code>Growth/MemoryExpansion</code></td></tr>
+      <tr><td><code>cor:superexp</code></td><td><code>cor_superexp</code></td><td><code>cor_superexp</code></td><td><code>Growth/MemoryExpansion</code></td></tr>
+      <tr><td><code>cor:doubleexp</code></td><td><code>cor_doubleexp</code></td><td><code>cor_doubleexp</code></td><td><code>Growth/MemoryExpansion</code></td></tr>
+      <tr><td><code>lem:log-split</code> (inequality)</td><td><code>lem_log_split</code></td><td><code>log_one_add_div_le</code></td><td><code>Profiles/LogSplit</code></td></tr>
+      <tr><td><code>prop:profiles</code> (i)</td><td><code>prop_profiles_i</code></td><td><code>profile_saturation</code></td><td><code>Profiles/Profiles</code></td></tr>
+      <tr><td><code>prop:profiles</code> (ii)</td><td><code>prop_profiles_ii</code></td><td><code>profile_poly_bounded</code></td><td><code>Profiles/Profiles</code></td></tr>
+      <tr><td><code>prop:profiles</code> (iii)</td><td><code>prop_profiles_iii</code></td><td><code>profile_exp_bounded</code></td><td><code>Profiles/Profiles</code></td></tr>
+      <tr><td><code>prop:profiles</code> (iv)</td><td><code>prop_profiles_iv</code></td><td><code>profile_poly_linear</code></td><td><code>Profiles/Profiles</code></td></tr>
+      <tr><td><code>prop:profiles-finite</code></td><td><code>prop_profiles_finite</code></td><td><code>profile_finite</code></td><td><code>Profiles/Profiles</code></td></tr>
+      <tr><td><code>tab:tradeoff</code> PP</td><td><code>thm_tradeoff_pp</code></td><td><code>Tradeoff.tradeoff_PP</code></td><td><code>Tradeoff/Regimes</code></td></tr>
+      <tr><td><code>tab:tradeoff</code> EP</td><td><code>thm_tradeoff_ep</code></td><td><code>Tradeoff.tradeoff_EP</code></td><td><code>Tradeoff/Regimes</code></td></tr>
+      <tr><td><code>tab:tradeoff</code> EL</td><td><code>thm_tradeoff_el</code></td><td><code>Tradeoff.tradeoff_EL</code></td><td><code>Tradeoff/Regimes</code></td></tr>
+      <tr><td><code>tab:tradeoff</code> PL</td><td><code>thm_tradeoff_pl</code></td><td><code>Tradeoff.tradeoff_PL</code></td><td><code>Tradeoff/Regimes</code></td></tr>
+      <tr><td><code>prop:implementation</code> (a)</td><td><code>prop_implementation_a</code></td><td><code>prop_implementation_a</code></td><td><code>Examples/Implementation</code></td></tr>
+      <tr><td><code>prop:implementation</code> (b)</td><td><code>prop_implementation_b</code></td><td><code>prop_implementation_b</code></td><td><code>Examples/Implementation</code></td></tr>
+      <tr><td><code>prop:implementation</code> (c)</td><td><code>prop_implementation_c</code></td><td><code>prop_implementation_c</code></td><td><code>Examples/Implementation</code></td></tr>
+      <tr><td><code>prop:global_scalar_observable</code></td><td><code>prop_global_scalar_observable</code></td><td><code>global_scalar_observable</code></td><td><code>Examples/Readout</code></td></tr>
+      <tr><td><code>prop:linear-interpolation</code></td><td><code>prop_linear_interpolation</code></td><td><code>linear_interpolation</code></td><td><code>Examples/Readout</code></td></tr>
+      <tr><td><code>cor:rkhs-readout</code></td><td><code>cor_rkhs_readout</code></td><td><code>rkhs_readout</code></td><td><code>Examples/Readout</code></td></tr>
+      <tr><td><code>lem:cot-append-growth</code></td><td><code>lem_cot_append_growth</code></td><td><code>cot_append_growth</code></td><td><code>Examples/ChainOfThought</code></td></tr>
+      <tr><td><code>lem:cot-branch-growth</code></td><td><code>lem_cot_branch_growth</code></td><td><code>cot_branch_growth</code></td><td><code>Examples/ChainOfThought</code></td></tr>
+      <tr><td><code>lem:cot-output</code> (window <code>Φ_L</code>)</td><td><code>lem_cot_output</code></td><td><code>lipschitzWith_windowFeature</code></td><td><code>Examples/ChainOfThought</code></td></tr>
+      <tr><td><code>prop:cot-append</code></td><td><code>prop_cot_append</code></td><td><code>prop_cot_append</code></td><td><code>Examples/ChainOfThought</code></td></tr>
+      <tr><td><code>lem:fp-contraction</code></td><td><code>lem_fp_contraction</code></td><td><code>fp_contraction</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>lem:ode-saturation</code></td><td><code>lem_ode_saturation</code></td><td><code>ode_saturation</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>lem:ode-euler-error</code></td><td><code>lem_ode_euler_error</code></td><td><code>euler_global_error</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>prop:ode-fixedpoint</code></td><td><code>prop_ode_fixedpoint</code></td><td><code>prop_ode_fixedpoint</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>prop:ode-horizon</code></td><td><code>prop_ode_horizon</code></td><td><code>prop_ode_horizon</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>thm:bernoulli-sudakov</code> (bonus)</td><td><code>thm_bernoulli_sudakov</code></td><td><code>FoML.ToFoML.bernoulli_sudakov</code> (lean-rademacher)</td><td><code>FoML/ToFoML/BernoulliSudakov</code></td></tr>
+      <tr><td><code>thm:dudley-subgaussian</code> (bonus, inlined)</td><td><code>thm_dudley_subgaussian</code></td><td><code>FoML.ToFoML.dudley_subgaussian_finite_space</code> (lean-rademacher)</td><td><code>FoML/ToFoML/DudleySubGaussian</code></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h2>How to reproduce</h2>
+<pre>git clone https://github.com/shosonoda/lean-deepgen.git
+cd lean-deepgen
+lake exe cache get &amp;&amp; lake build
+
+# once: Comparator and lean4export (for this project's Lean version) in ../comparator-tools/
+mkdir -p ../comparator-tools &amp;&amp; cd ../comparator-tools
+git clone https://github.com/leanprover/comparator.git &amp;&amp; (cd comparator &amp;&amp; lake build comparator)
+git clone --branch v4.32.0 https://github.com/leanprover/lean4export.git lean4export-v4.32.0 &amp;&amp; (cd lean4export-v4.32.0 &amp;&amp; lake build)
+cd -
+
+./script/comparator.sh   # about a minute; ends with "Your solution is okay!"</pre>
+    <p>The script builds <code>Challenge</code> and <code>Solution</code>, exports them and runs the checker on
+    <code>comparator/config.json</code>. On Linux it uses <code>landrun</code> for sandboxing when available and
+    Comparator's <code>fake-landrun</code> shim otherwise (always on macOS). The tool locations can be overridden
+    with <code>COMPARATOR_TOOLS</code>, <code>COMPARATOR_BIN</code>, <code>COMPARATOR_LEAN4EXPORT</code> and
+    <code>COMPARATOR_LANDRUN</code>.</p>
+
+    <footer>Certificate produced with <a href="https://github.com/leanprover/comparator">Comparator</a>; see
+    <code>comparator/README.md</code> in the repository for maintenance notes.</footer>
+  </main>
+</body>
+</html>
