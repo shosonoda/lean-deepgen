@@ -95,3 +95,71 @@ Lean 側は以下の一般形で述べる（原稿にも反映する場合の文
 | W26 | `lem:ode-saturation` | 時刻整合なしの上位クラスでも飽和 |
 | W27 | `prop:linear-interpolation` | `z_{j,i}` 相異なる仮定を削除 |
 | W28 | `lem:cot-output` | 窓版 `Φ_L` のみ形式化（`Φ_∞` は未） |
+
+## 反映状況（2026-09-25，ブランチ lean-fixes）
+
+原稿リポジトリ `draft-metric-deep` のブランチ `lean-fixes`（`main` から分岐，4 コミット: Sec. 2–3 hypotheses / growth conditions / profiles and trade-offs / appendix examples）に反映．`latexmk -pdf main-iclr2027.tex` はエラー・未定義参照なし（全 56 ページ，`main` は 54；References は p.13 から，`main` と同じ）．Lean 形式化への言及は Reproducibility statement（`06iclr2027/statements.tex`）に 1 箇所，「companion Lean formalization (URL withheld for anonymity)」として記載．引用 `Pinelis1994`，`Nesterov2004` を `06iclr2027/extra.bib` に追加．
+
+| # | 状況 | ファイル | 備考 |
+|---|---|---|---|
+| D1 | 反映 | 03bounds.tex, supp-gerror.tex | 可測性，`b>0`，各点有界性（sup-norm 可分も明記）を仮定に追加 |
+| D2 | 反映 | 03bounds.tex, supp-gerror.tex | gap 不等式は全ての `f∈ℋ`（`ĥ=ιf`）で成立と明記 |
+| D3 | 反映 | 03bounds.tex（脚注）, supp-gerror.tex | 「universal `C`」は維持し，`6b√(2log(4/δ)/n)`（gap: `3b√(2log(4/δ)/n)`）を明示 |
+| D4 | 反映 | 03bounds.tex, supp-radent.tex | `Z_f` の有限性を仮定に追加 |
+| D5 | 反映 | 03bounds.tex, supp-radent.tex | 積分が発散すれば自明と明記 |
+| D6 | 反映 | supp-entent.tex | 可積分性を仮定；外部閉球被覆の規約で `x/4, x/(4L_H)` on `[0,B_H/2]` に書き直し（証明も内部/外部の因子 2 を含めて更新） |
+| D7 | 反映 | 03bounds.tex, supp-sudakov.tex | `R̂_S(ℋ_k)<∞`（各符号パターンで有界）を仮定に追加 |
+| D8 | 反映 | 03bounds.tex, supp-sudakov.tex | `M=∞` のとき min は第 2 項 |
+| D9 | 反映 | supp-radent.tex | 実内積空間（完備性不要），Pinelis (1994) を引用 |
+| D10 | 反映 | supp-radent.tex | 全ての実 `x` で成立と注記 |
+| D11 | 反映 | supp-growth.tex, supp-cpt-ft.tex | (1) のみならコンパクト性不要；逆向きは連続性のみ使用と注記 |
+| D12 | 反映 | supp-growth.tex, 04growth.tex, table-profiles.tex | `ℕ∪{∞}` 値と有限性条件，全ての `k`，bounded absorbing set，`A` は非空・不変，`0<c` |
+| D13 | 反映 | supp-growth.tex | `k≥0`，`C=C_H max(1,R_S L_α)^D`，`C_H≥1`，直径評価を結論に含めた |
+| D14 | 反映 | supp-growth.tex | 自由性 (1) を削除（結論に「(2) から従う」を注記） |
+| D15 | 反映 | supp-growth.tex | `F={f_1,…,f_r}`, `r≥2` を明記；等長性・`d_∞` 有限性・自由性を削除 |
+| D16 | 反映 | supp-growth.tex | (1) を「チャンバー互いに素」に；`V_i≠∅` は (2) から；`Δ` は例の注記のみ |
+| D17 | 反映 | supp-condE3.tex | `ε<1/2` かつ `ε<λδ₀/2` を明示（証明を書き直し）；部分集合単調性（外部被覆数）を注記 |
+| D18 | 反映 | supp-condE3.tex | 定数 `C₁,C₂` 明示，`k₀=1`；`G` 任意部分集合，`N(G,δ)<∞` を仮定 |
+| D19 | 反映 | supp-cpt-ft.tex | `thm:maa` を擬距離空間で述べ，`thm:pmaa` はその直接の帰結と注記（環境は残置） |
+| D20 | 反映 | 04growth.tex | `C₀≥1`, `D≥0`, `D̄>0`（(ii)），`D₁>0` を明記 |
+| D21 | 反映 | supp-profiles.tex, 04growth.tex | 内部被覆数への転送 `N^{int}(A,d_S,ε)≤N(A,d_∞,ε/2)`（`2^D C₀`）を注記 |
+| D22 | 反映 | supp-tradeoff.tex | PL 深さを Lambert W なしで（`k*^{2β}log k* = n(1−log L/L)`）；両側 Θ と定数を注記 |
+| D23 | 反映 | supp-tradeoff.tex, 05tradeoff.tex | `lem:balancing` を追加，本文で 1 文参照 |
+| D24 | 反映 | app-examples.tex, supp-implementation.tex | `≤ N(ℋ_k,ε/2)`（内部被覆），`K` のコンパクト性不要 |
+| D25 | 反映 | app-examples.tex, supp-implementation.tex | `δ,Λ≥0` を明記，和の単調性に `Λ≥0` |
+| D26 | 反映 | app-cot.tex, 04growth.tex, supp-profiles.tex | `r≥2` を明記（`prop:profiles` (iii) の有限 `F` も同様に修正） |
+| D27 | 反映 | app-cot.tex | 全ての `ε>0`（`ℓ(ε):=max{0,⌈…⌉}`） |
+| D28 | 反映 | app-ode.tex | 強単調性＋co-coercivity（Nesterov 2004, Thm 2.1.12）で証明を書き直し；`0<μ≤Λ_s`，`Π_K` の性質を明記 |
+| D29 | 反映 | app-ode.tex | 時刻整合は不要と注記 |
+| D30 | 反映 | supp-sudakov.tex | 相異なる仮定を削除（右逆写像の存在に含まれる；`A_j` 添字を `[n]` 添字に変更） |
+| D31 | 既記 | supp-sudakov.tex | 原稿は既に `κ,R_Φ>0` を仮定（変更なし） |
+| D32 | 反映 | 03bounds.tex, supp-sudakov.tex | `k≥1` を明記 |
+| D33 | 見送り | — | Lean 側の厳密版確定後に反映 |
+| D34 | 反映 | 02setting.tex, supp-growth.tex | 規約（閉球・外部；内部は非単調，`N≤N^{int}≤N(ε/2)`）を明記 |
+| D35 | 反映 | supp-growth.tex | `id∈⟨F⟩`（モノイド）を明記 |
+| D36 | 反映 | 02setting.tex | `d_∞` を `[0,∞]` 値として注意書きを簡略化 |
+| W4 | 部分 | supp-radent.tex | 定理は Rademacher 過程のまま；証明中に一般の sub-Gaussian 過程（有限確率空間，定数 12，任意 anchor）で成立する旨を注記 |
+| W5 | 反映 | 03bounds.tex, supp-radent.tex | anchor `f₀∈F` 任意，第 1 項 `R̂_S(H∘f₀)`；`id∈F` の場合が原稿の形 |
+| W6 | 反映 | supp-radent.tex | 実内積空間；tail 定数 2 は最良（Pinelis） |
+| W7 | 反映 | 03bounds.tex, supp-sudakov.tex | 任意の部分集合 `B` で成立と明記（記号 `B_k` は維持） |
+| W8 | 部分 | supp-entent.tex | 標本版は remark（`x/4, x/(8L_H)` on `[0,B_H/2]`）として追加；sup-norm 版が主定理のまま |
+| W9 | 反映 | supp-cpt-ft.tex | 両方向の必要仮定を注記 |
+| W10 | 反映 | supp-growth.tex | D11 と同じ |
+| W11 | 反映 | supp-growth.tex | D12 と同じ |
+| W12 | 反映 | supp-growth.tex | D13 と同じ |
+| W13 | 反映 | supp-growth.tex | D14 と同じ |
+| W14 | 反映 | supp-growth.tex | D15 と同じ |
+| W15 | 反映 | supp-growth.tex | D16 と同じ |
+| W16 | 反映 | supp-condE3.tex | D17/D18 と同じ |
+| W17 | 反映 | supp-condE3.tex | (iii) 上界を全ての `ε>0` で（`λ>1` は設定で固定） |
+| W18 | 変更なし | 04growth.tex | (iii) に `ψ,α` の符号条件は元々なし |
+| W19 | 反映 | 04growth.tex | `D̄≥0` |
+| W20 | 変更なし | 04growth.tex | 有限 `F` の主張は距離構造を使っていない |
+| W21 | 反映 | supp-tradeoff.tex | 両側 Θ・定数を注記；PP は `lem:balancing` で厳密 |
+| W22 | 反映 | supp-tradeoff.tex, 05tradeoff.tex | `lem:balancing` |
+| W23 | 反映 | app-examples.tex, supp-implementation.tex | `X` 任意，全有界＋`ℋ_k` 上稠密性のみ |
+| W24 | 既記 | supp-implementation.tex | 連続性不要は既に記載（変更なし） |
+| W25 | 反映 | app-cot.tex | 全ての `ε>0` |
+| W26 | 反映 | app-ode.tex | 時刻整合なしでも飽和 |
+| W27 | 反映 | supp-sudakov.tex | `z_{j,i}` 相異なる仮定を削除 |
+| W28 | 見送り | — | 原稿は `Φ_∞` 版を維持（Lean 未形式化のため原稿側は変更なし） |
