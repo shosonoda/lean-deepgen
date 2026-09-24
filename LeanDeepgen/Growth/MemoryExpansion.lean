@@ -275,7 +275,7 @@ theorem ENat.prod_iSup_eq_iSup_prod {ι : Type*} {α : ι → Type*} [∀ i, Non
     (s : Finset ι) (g : ∀ i, α i → ℕ∞) :
     ∏ i ∈ s, ⨆ a, g i a = ⨆ x : (∀ i, α i), ∏ i ∈ s, g i (x i) := by
   /-- Induction on $s$, distributing multiplication over suprema
-    (`ENat.mul_iSup`, `ENat.iSup_mul`) and identifying pairs $(a, x)$ with the update
+    (`ENat.mul\_iSup`, `ENat.iSup\_mul`) and identifying pairs $(a, x)$ with the update
     $x[i := a]$. -/
   classical
   induction s using Finset.induction_on with

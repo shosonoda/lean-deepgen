@@ -550,7 +550,7 @@ theorem intervalIntegrable_wordBall_of_p2 {Γ : Type*} [Group Γ] [PseudoEMetric
       (fun ε : ℝ => √(metricEntropy (X := EmpSpace S) ε.toNNReal (wordBall F k)))
       volume 0 (empDiam S (wordBall F k)) := by
   /-- The polynomial majorant is interval-integrable on $[0, \overline D]$
-    (`intervalIntegrable_sqrt_log_div`). -/
+    (`intervalIntegrable\_sqrt\_log\_div`). -/
   have hgint : IntervalIntegrable
       (fun ε : ℝ => √(Real.log (2 ^ D * (CH * max 1 (RS * Lα) ^ D))) +
         √D * √(Real.log (1 + k / Dbar)) + √D * √(Real.log (Dbar / ε))) volume 0 Dbar :=

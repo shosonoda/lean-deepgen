@@ -948,7 +948,7 @@ omit [MeasurableSpace (SeqSpace 𝒜 θ)] [OpensMeasurableSpace (SeqSpace 𝒜 �
     $S$ of size $n \ge 1$ and every depth $k$,
     $$\hat{\mathfrak R}_S(\mathcal H_k) \le \frac{R M_\Phi}{\sqrt n}
       + \frac{12 \cdot 1 \cdot R L_\Phi}{\sqrt n}\,\mathsf V_\infty(m,\theta)$$
-    (`thm:hidden-decomp-depth` with $A_H = 1$, `lem:cot-append-profile` and
+    (`thm:hidden-decomp-depth` with $A\_H = 1$, `lem:cot-append-profile` and
     `lem:cot-readout-rademacher`). -/)]
 theorem cot_append_var (hm : 2 ≤ Fintype.card 𝒜) {n : ℕ} (hn : 0 < n)
     (S : Fin n → SeqSpace 𝒜 θ) (Φ : SeqSpace 𝒜 θ → E) {LΦ : ℝ≥0} (hLΦ : 0 < LΦ)

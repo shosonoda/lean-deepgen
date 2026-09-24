@@ -87,7 +87,7 @@ theorem entropyIntegral_le_of_totallyBounded [CompactSpace X] {G : Set (X → X)
           (closure (X := UnifMaps X) G) : ℝ≥0∞).toReal) := by
   /-- `prop:profiles-i` with $N(A_k, d_S, \varepsilon) \le N(A_k, d_\infty, \varepsilon)
     \le N(\overline G, d_\infty, \varepsilon/2)$ (`lem:covering-empSpace-le-unifMaps-internal` and
-    Mathlib's `coveringNumber_subset_le`), which is finite since $\overline G$ is totally
+    Mathlib's `coveringNumber\_subset\_le`), which is finite since $\overline G$ is totally
     bounded, and $D_k(S) \le \mathrm{diam}(\mathcal X)$. -/
   refine profile_saturation (Y := EmpSpace S) (A := A) (D := fun k => empDiam S (A k))
     (Dbar := Metric.diam (Set.univ : Set X))
@@ -630,7 +630,7 @@ theorem totallyBounded_semigroupClosure_fpClass (hK : IsCompact K) (hP : IsProje
     (`def:sat-integrable`). Then for every sample $S$ of size $n \ge 1$ and every depth $k$,
     $$\hat{\mathfrak R}_S(H_R \circ B(k, F_{\rm fp})) \le \frac{R M_K}{\sqrt n}
       + \frac{12 \cdot 1 \cdot R}{\sqrt n}\,\mathsf V_\infty(F_{\rm fp})$$
-    (`cor:var-profiles-p1` with $A_H = 1$, $L = R$, and `lem:linear-readouts-rademacher`). -/)]
+    (`cor:var-profiles-p1` with $A\_H = 1$, $L = R$, and `lem:linear-readouts-rademacher`). -/)]
 theorem fp_var (hK : IsCompact K) (hP : IsProjectionOnto K proj) {𝒮 : Set (K → E)}
     {μ Λ h : ℝ} (hμ : 0 < μ) (hμΛ : μ ≤ Λ) (h𝒮 : ∀ s ∈ 𝒮, StronglyConcaveSmooth μ Λ s)
     (hh0 : 0 < h) (hh : h ≤ 2 / (μ + Λ)) {n : ℕ} (hn : 0 < n) (S : Fin n → K) {R MK : ℝ}

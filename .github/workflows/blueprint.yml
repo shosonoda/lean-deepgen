@@ -1,17 +1,18 @@
 name: Build and deploy pages
 
-# Full build on GitHub: Lean project + blueprint (LeanArchitect) + API docs,
+# Full build on GitHub: Lean project + blueprint (LeanArchitect, web version),
 # deployed to GitHub Pages. Only runs in the public repository.
 #
-# Caching keeps this fast after the first run:
-#   - leanprover/lean-action caches `.lake` (oleans of the project and of Mathlib),
-#     keyed by lean-toolchain and lake-manifest.json, and uses the Mathlib cache.
-#   - leanprover-community/docgen-action caches the generated Mathlib API docs.
+# The steps mirror ./script/generate.sh (build, extract, leanblueprint web,
+# checkdecls, assemble site/). The PDF version and the API docs are not built
+# here: the PDF is produced locally by ./script/generate.sh and published with
+# ./script/publish-page.sh (see pages.yml). (The previous version used
+# leanprover-community/docgen-action, whose texlive step currently fails to
+# install pygraphviz with recent pip.)
 #
-# Note: docgen-action builds the API docs and deploys only for `push` events.
-# A manual run (workflow_dispatch) builds everything except the docs and warms the
-# caches without deploying. For a quick deployment of a locally generated
-# blueprint use ./script/publish-page.sh instead (see pages.yml).
+# Caching: leanprover/lean-action caches `.lake` (oleans of the project and of
+# Mathlib), keyed by lean-toolchain and lake-manifest.json, and uses the Mathlib
+# cache, so incremental runs are fast.
 
 on:
   push:
@@ -32,20 +33,7 @@ jobs:
     if: ${{ !github.event.repository.private }}
     runs-on: ubuntu-latest
     steps:
-      - name: Free disk space
-        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.0
-        with:
-          tool-cache: false
-          android: true
-          dotnet: false
-          haskell: false
-          large-packages: false
-          docker-images: false
-          swap-storage: false
-
       - uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
       - name: Build project and extract blueprint
         uses: leanprover/lean-action@v1
@@ -53,11 +41,42 @@ jobs:
           build-args: ":blueprint"
           use-github-cache: true
 
-      - name: Build blueprint and API docs, deploy to GitHub Pages
-        uses: leanprover-community/docgen-action@v1
+      - uses: actions/setup-python@v5
         with:
-          blueprint: true
-          api-docs: true
-          build-page: false   # home_page/ is plain HTML, no Jekyll needed
-          homepage: home_page
-          deploy: true
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install leanblueprint
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q graphviz libgraphviz-dev
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Render blueprint (web)
+        run: leanblueprint web
+
+      - name: Check declarations referenced by the blueprint
+        run: ~/.elan/bin/lake exe checkdecls blueprint/lean_decls
+
+      - name: Assemble site
+        run: |
+          rm -rf site && mkdir -p site
+          cp -R home_page/. site/
+          cp -R blueprint/web site/blueprint
+          touch site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: site
+
+  deploy:
+    if: ${{ github.event_name == 'push' }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

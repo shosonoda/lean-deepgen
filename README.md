@@ -131,7 +131,7 @@ cd -
 | workflow | 実行場所 | 内容 |
 | --- | --- | --- |
 | [`ci.yml`](.github/workflows/ci.yml) | 両方 | `lake build :blueprint` と `leanblueprint web`, `checkdecls` による検証。デプロイはしません。 |
-| [`blueprint.yml`](.github/workflows/blueprint.yml) | 公開のみ（`main` への push） | Lean のビルド、blueprint、API ドキュメント (doc-gen4) を生成し GitHub Pages にデプロイ。 |
+| [`blueprint.yml`](.github/workflows/blueprint.yml) | 公開のみ（`main` への push） | Lean のビルド、blueprint（web 版）を生成し GitHub Pages にデプロイ（PDF・API ドキュメントは含まない）。 |
 | [`pages.yml`](.github/workflows/pages.yml) | 公開のみ（`gh-pages` への push） | `publish-page.sh` が push した静的サイトをそのままデプロイ。 |
 | `create-release.yml`, `update.yml` | 両方 | Lean テンプレート標準の release tag 付与と Mathlib 更新（手動）。 |
 
@@ -140,11 +140,10 @@ cd -
 - `leanprover/lean-action` が `.lake`（プロジェクトと Mathlib の olean）を GitHub Actions cache に保存します。
   キーは `lean-toolchain` と `lake-manifest.json` のハッシュなので、依存を変えない限り 2 回目以降は差分ビルドで済みます。
   Mathlib 本体は `lake exe cache get` で取得します。
-- `leanprover-community/docgen-action` は生成済みの Mathlib API ドキュメントをキャッシュします。
 - ローカルで生成した blueprint を `publish-page.sh` で公開する経路では GitHub 側のビルドが不要です。
 
-`blueprint.yml` は `main` への push で API ドキュメント付きの完全版をデプロイし、`publish-page.sh` は
-ローカル生成物を即座にデプロイします。両方を実行した場合は後に完了した方が公開されます（通常は前者）。
+`blueprint.yml` は `main` への push で web 版 blueprint をデプロイし、`publish-page.sh` は
+ローカル生成物（PDF 付き）を即座にデプロイします。両方を実行した場合は後に完了した方が公開されます。
 
 ## ファイル構成
 

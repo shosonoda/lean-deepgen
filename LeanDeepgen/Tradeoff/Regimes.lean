@@ -169,7 +169,7 @@ theorem tradeoff_PP {β γ n : ℝ} (hβ : 0 < β) (hγ : 0 < γ) (hn : 0 < n) :
   (statement := /-- For every $c > 0$, $\log x \le c\,x$ for all sufficiently large $x$. -/)]
 theorem eventually_log_le_mul {c : ℝ} (hc : 0 < c) :
     ∀ᶠ x : ℝ in atTop, Real.log x ≤ c * x := by
-  /-- $\log x = o(x)$ (Mathlib: `Real.isLittleO_log_id_atTop`). -/
+  /-- $\log x = o(x)$ (Mathlib: `Real.isLittleO\_log\_id\_atTop`). -/
   filter_upwards [Real.isLittleO_log_id_atTop.def hc, eventually_ge_atTop (0 : ℝ)] with x hx hx0
   rw [id, Real.norm_eq_abs, Real.norm_eq_abs, abs_of_nonneg hx0] at hx
   exact (le_abs_self _).trans hx

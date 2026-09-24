@@ -30,7 +30,7 @@ variable {X : Type*}
     $\hat{\mathfrak R}_S(G) = \mathbb E_\sigma \sup_{g \in G} \frac1n \sum_{i=1}^n \sigma_i g(x_i)
     = 2^{-n} \sum_{\sigma \in \{\pm1\}^n} \sup_{g \in G} \frac1n \sum_{i=1}^n \sigma_i g(x_i)$
     (no absolute value). In Lean this is FoML's
-    `empiricalRademacherComplexity_without_abs` for the class indexed by $G$ itself. -/)]
+    `empiricalRademacherComplexity\_without\_abs` for the class indexed by $G$ itself. -/)]
 noncomputable def empRademacher {n : ℕ} (S : Fin n → X) (G : Set (X → ℝ)) : ℝ :=
   empiricalRademacherComplexity_without_abs n (fun g : G => (g : X → ℝ)) S
 

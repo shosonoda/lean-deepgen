@@ -276,7 +276,7 @@ theorem coveringNumber_wordBall_le_closure_semigroupClosure [CompactSpace X]
           (closure (X := UnifMaps X) (semigroupClosure F)) ∧
       coveringNumber (X := UnifMaps X) (ε / 2)
         (closure (X := UnifMaps X) (semigroupClosure F)) ≠ ⊤ := by
-  /-- Mathlib's `coveringNumber_subset_le` for the inclusion, and finiteness of the internal
+  /-- Mathlib's `coveringNumber\_subset\_le` for the inclusion, and finiteness of the internal
     covering number of a totally bounded set. -/
   refine ⟨coveringNumber_subset_le
     (subset_semigroupClosure.trans (subset_closure (X := UnifMaps X))), ?_⟩
