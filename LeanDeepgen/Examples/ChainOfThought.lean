@@ -10,6 +10,7 @@ import LeanDeepgen.Profiles.Profiles
 import LeanDeepgen.Bounds.HiddenOutput
 import LeanDeepgen.Bounds.Variance
 import LeanDeepgen.Examples.Regimes
+import LeanDeepgen.Growth.Envelope
 
 /-!
 # Worked example: chain-of-thought style symbolic computation (paper App. `sec:app-cot`)
@@ -28,6 +29,18 @@ with the ultrametric `d_θ(x,y) = θ^{n(x,y)}`, `n(x,y) = min {j : x_j ≠ y_j}`
   the ping–pong hypotheses of `cond:e2-pingpong` hold with `Δ = α = 1`
   (`lem:cot-branch-pingpong`), whence `r^k ≤ N^ext(B(k,F_b), d_∞, ε) ≤ r^{k+1}` for `ε < 1/2`
   and `V_k(S) ≤ √((k+1) log r)` (`lem:cot-branch-growth`, `lem:cot-branch-profile`).
+* Empirical saturation for branching steps `lem:cot-branch-sample`: the closed form
+  `f_u(x) = σ^{|u|}(x)` on the cylinder `[u]` and `f_u(x) = ū_{|u|}` otherwise
+  (`eq:cot-branch-closed-form`, `wordOf_guarded_of_inCylinder`,
+  `wordOf_guarded_of_not_inCylinder`), the disjointness of the cylinders of programs of the same
+  length (`inCylinder_unique`, hence `∑_{|u|=j} P̂_n([u]) ≤ 1`, `sum_card_cylinder_le`), the
+  estimate `d_S(f_u, ū_j)² ≤ P̂_n([u])` (`sq_empDist_wordOf_le`), and the sample-dependent
+  covering bound `N^ext(B(k,F_b), d_S, ε) ≤ 1 + r + ∑_{j=1}^k min{r^j, n, ⌊ε^{-2}⌋}
+  ≤ 1 + r + k min{n, ⌊ε^{-2}⌋}` for every sample and `ε ∈ (0,1]` (`cot_branch_sample`,
+  `cot_branch_sample_simple`), with the entropy-integral consequence
+  `V_k(S) ≤ √log(k+1) + √log(1+r) + √(2 log 2) + √(π/2)` (`cot_branch_sample_profile`; the
+  additive `√(2 log 2)` comes from comparing the internal covering number in `d_S` defining
+  `V_k(S)` with the external one at half the scale).
 * Window one-hot output features `Φ_L` (`def:cot-window-feature`): `‖Φ_L‖ = 1` and `Φ_L` is
   `√2 θ^{1-L}`-Lipschitz (`lem:cot-output`), so the linear readout class satisfies the
   sub-Gaussian increment condition with `A_H = 1` (`cor:cot-output-sg`, via `prop:hilbert-sg`).
@@ -746,6 +759,438 @@ theorem cot_branch_profile (hr : 2 ≤ r) {n : ℕ} (S : Fin n → SeqSpace (Bra
   simpa using h
 
 end Branch
+
+/-! ### Empirical saturation for branching steps (`lem:cot-branch-sample`) -/
+
+section BranchSample
+
+open MeasureTheory
+
+variable {θ : ℝ≥0} {r : ℕ}
+
+@[blueprint "lem:cot-wordof-append"
+  (statement := /-- $f_{u \cdot v} = f_v \circ f_u$ (the first letter acts first). -/)]
+theorem wordOf_append {X : Type*} (f : Fin r → X → X) (u v : List (Fin r)) :
+    wordOf f (u ++ v) = wordOf f v ∘ wordOf f u := by
+  induction u with
+  | nil => rfl
+  | cons a u ih => rw [List.cons_append, wordOf_cons, wordOf_cons, ih]; rfl
+
+@[blueprint "lem:cot-exists-wordof-of-mem-wordball"
+  (statement := /-- Every $g \in B(k, \{f_1, \dots, f_r\})$ is $f_u$ for a word
+    $u \in [r]^{\le k}$. -/)]
+theorem exists_wordOf_of_mem_wordBall_range {X : Type*} {f : Fin r → X → X} {k : ℕ} {g : X → X}
+    (hg : g ∈ wordBall (Set.range f) k) : ∃ u : List (Fin r), u.length ≤ k ∧ g = wordOf f u := by
+  induction k generalizing g with
+  | zero =>
+    simp only [wordBall_zero, Set.mem_singleton_iff] at hg
+    exact ⟨[], le_rfl, hg⟩
+  | succ k ih =>
+    rcases hg with hg | ⟨a, ⟨i, rfl⟩, b, hb, rfl⟩
+    · obtain ⟨u, hu, rfl⟩ := ih hg
+      exact ⟨u, hu.trans (Nat.le_succ k), rfl⟩
+    · obtain ⟨u, hu, rfl⟩ := ih hb
+      refine ⟨u ++ [i], by simp only [List.length_append, List.length_singleton]; omega, ?_⟩
+      rw [wordOf_append]
+      rfl
+
+@[blueprint "def:cot-cylinder"
+  (statement := /-- The success cylinder of a program $u = (u_1, \dots, u_j)$: the set $[u]$ of
+    inputs whose first $j$ symbols are $u_1, \dots, u_j$. In Lean, membership is defined by
+    recursion on $u$: $x \in [\,]$ always, and $x \in [a :: u]$ iff $x_0 = a$ and
+    $\sigma(x) \in [u]$. -/)]
+def InCylinder : List (Fin r) → SeqSpace (BranchAlphabet r) θ → Prop
+  | [], _ => True
+  | a :: u, x => x 0 = Sum.inl a ∧ InCylinder u (shift θ x)
+
+@[blueprint "def:cot-cylinder-decidable"
+  (statement := /-- Membership in a cylinder is decidable (it is a finite conjunction of
+    symbol comparisons). -/)]
+instance instDecidableInCylinder (u : List (Fin r)) (x : SeqSpace (BranchAlphabet r) θ) :
+    Decidable (InCylinder u x) :=
+  match u with
+  | [] => isTrue trivial
+  | _ :: u => @instDecidableAnd _ _ _ (instDecidableInCylinder u (shift θ x))
+
+@[blueprint "lem:cot-shift-iterate"
+  (statement := /-- $\sigma^j(x) = (x_{i+j})_{i \ge 0}$. -/)]
+theorem shift_iterate {𝒜 : Type*} (j : ℕ) (x : SeqSpace 𝒜 θ) :
+    (shift θ)^[j] x = fun i => x (i + j) := by
+  induction j generalizing x with
+  | zero => rfl
+  | succ j ih => rw [Function.iterate_succ_apply, ih]; rfl
+
+@[blueprint "lem:cot-wordof-guarded-const"
+  (statement := /-- On a constant state, $f_u(\bar b) = \bar u_j$ where $u_j$ is the last
+    letter of $u$ (and $\bar b$ if $u$ is empty): each guard either keeps the constant state or
+    replaces it by its own. -/)]
+theorem wordOf_guarded_constSeq (u : List (Fin r)) (b : Fin r) :
+    wordOf (guarded θ) u (constSeq θ (Sum.inl b)) = constSeq θ (Sum.inl (u.getLastD b)) := by
+  induction u generalizing b with
+  | nil => rfl
+  | cons a u ih => rw [wordOf_cons_apply, guarded_constSeq, ih, List.getLastD_cons]
+
+@[blueprint "lem:cot-wordof-guarded-of-incylinder"
+  (statement := /-- (Closed form, success.) If $x \in [u]$ then $f_u(x) = \sigma^{|u|}(x)$. -/)]
+theorem wordOf_guarded_of_inCylinder {u : List (Fin r)} {x : SeqSpace (BranchAlphabet r) θ}
+    (hx : InCylinder u x) : wordOf (guarded θ) u x = (shift θ)^[u.length] x := by
+  induction u generalizing x with
+  | nil => rfl
+  | cons a u ih =>
+    obtain ⟨h0, hrest⟩ := hx
+    rw [wordOf_cons_apply, guarded_of_eq θ a h0, ih hrest, List.length_cons,
+      Function.iterate_succ_apply]
+
+@[blueprint "lem:cot-wordof-guarded-of-not-incylinder"
+  (statement := /-- (Closed form, failure.) If $x \notin [u]$ then $f_u(x) = \bar u_j$, the
+    constant state of the last letter of $u$: once a guard fails the scratchpad is the constant
+    state of the failed symbol, and each later guard either keeps it or replaces it by its own
+    constant state. -/)]
+theorem wordOf_guarded_of_not_inCylinder {u : List (Fin r)} {x : SeqSpace (BranchAlphabet r) θ}
+    (hx : ¬ InCylinder u x) (b : Fin r) :
+    wordOf (guarded θ) u x = constSeq θ (Sum.inl (u.getLastD b)) := by
+  induction u generalizing x b with
+  | nil => exact absurd trivial hx
+  | cons a u ih =>
+    rw [wordOf_cons_apply, List.getLastD_cons]
+    by_cases h0 : x 0 = Sum.inl a
+    · rw [guarded_of_eq θ a h0]
+      exact ih (fun h => hx ⟨h0, h⟩) a
+    · rw [guarded_of_ne θ a h0, wordOf_guarded_constSeq]
+
+@[blueprint "eq:cot-branch-closed-form"
+  (statement := /-- \textbf{(Closed form of the programs.)} For a nonempty program
+    $u = (u_1, \dots, u_j)$ and $f_u := f_{u_j} \circ \cdots \circ f_{u_1}$,
+    $$f_u(x) = \sigma^{j}(x)\ \text{ if } x \in [u], \qquad
+    f_u(x) = \bar u_j\ \text{ otherwise}.$$ -/)]
+theorem cot_branch_closed_form (u : List (Fin r)) (hu : u ≠ [])
+    (x : SeqSpace (BranchAlphabet r) θ) :
+    wordOf (guarded θ) u x =
+      if InCylinder u x then (shift θ)^[u.length] x else constSeq θ (Sum.inl (u.getLast hu)) := by
+  split_ifs with hx
+  · exact wordOf_guarded_of_inCylinder hx
+  · obtain ⟨a, u, rfl⟩ := List.exists_cons_of_ne_nil hu
+    rw [wordOf_guarded_of_not_inCylinder hx a, List.getLast_eq_getLastD, List.getLastD_cons]
+
+@[blueprint "lem:cot-incylinder-unique"
+  (statement := /-- (Disjointness of the cylinders.) Programs of the same length with a common
+    successful input coincide: if $x \in [u] \cap [v]$ and $|u| = |v|$ then $u = v$. -/)]
+theorem inCylinder_unique {u v : List (Fin r)} {x : SeqSpace (BranchAlphabet r) θ}
+    (hu : InCylinder u x) (hv : InCylinder v x) (hlen : u.length = v.length) : u = v := by
+  induction u generalizing v x with
+  | nil =>
+    cases v with
+    | nil => rfl
+    | cons b v => simp at hlen
+  | cons a u ih =>
+    cases v with
+    | nil => simp at hlen
+    | cons b v =>
+      obtain ⟨ha, hu'⟩ := hu
+      obtain ⟨hb, hv'⟩ := hv
+      have hab : a = b := Sum.inl.inj (ha.symm.trans hb)
+      subst hab
+      rw [ih hu' hv' (by simpa using hlen)]
+
+@[blueprint "lem:cot-sum-card-cylinder-le"
+  (statement := /-- (The cylinders of length $j$ are pairwise disjoint.) For every sample
+    $S = (X_1, \dots, X_n)$ and $j \ge 0$, $\sum_{|u| = j} \#\{i : X_i \in [u]\} \le n$,
+    i.e. $\sum_{|u|=j}\hat P_n([u]) \le 1$: each $X_i$ lies in at most one cylinder of
+    length $j$. -/)]
+theorem sum_card_cylinder_le {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ) (j : ℕ) :
+    ∑ σ : Fin j → Fin r,
+      (Finset.univ.filter fun i => InCylinder (List.ofFn σ) (S i)).card ≤ n := by
+  calc ∑ σ : Fin j → Fin r, (Finset.univ.filter fun i => InCylinder (List.ofFn σ) (S i)).card
+      = ∑ σ : Fin j → Fin r, ∑ i : Fin n, if InCylinder (List.ofFn σ) (S i) then 1 else 0 := by
+        simp only [Finset.card_filter]
+    _ = ∑ i : Fin n, ∑ σ : Fin j → Fin r, if InCylinder (List.ofFn σ) (S i) then 1 else 0 :=
+        Finset.sum_comm
+    _ ≤ ∑ _i : Fin n, 1 := by
+        refine Finset.sum_le_sum fun i _ => ?_
+        rw [← Finset.card_filter]
+        refine Finset.card_le_one.2 fun σ hσ σ' hσ' => ?_
+        rw [Finset.mem_filter] at hσ hσ'
+        exact List.ofFn_injective (inCylinder_unique hσ.2 hσ'.2 (by simp))
+    _ = n := by simp
+
+variable [Fact (0 < θ)] [Fact (θ < 1)]
+
+@[blueprint "lem:cot-sq-empdist-wordof-le"
+  (statement := /-- \textbf{(Programs are close to constants on the sample.)} For every
+    program $u$ (with last letter $u_j$, or any $b$ if $u$ is empty),
+    $$d_S(f_u, \bar u_j)^2 = \frac1n\sum_{i : X_i \in [u]} d_\theta(\sigma^j(X_i), \bar u_j)^2
+      \le \hat P_n([u]) = \frac1n\#\{i : X_i \in [u]\},$$
+    since $f_u = \bar u_j$ off $[u]$ and $\mathrm{diam}(\mathcal A^{\mathbb N}) = 1$. -/)]
+theorem sq_empDist_wordOf_le {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ)
+    (u : List (Fin r)) (b : Fin r) :
+    empDist S (wordOf (guarded θ) u) (fun _ => constSeq θ (Sum.inl (u.getLastD b))) ^ 2 ≤
+      (1 / (n : ℝ)) * (Finset.univ.filter fun i => InCylinder u (S i)).card := by
+  rw [empDist, Real.sq_sqrt (by positivity)]
+  gcongr
+  rw [Finset.card_filter]
+  push_cast
+  refine Finset.sum_le_sum fun i _ => ?_
+  split_ifs with h
+  · exact pow_le_one₀ dist_nonneg (dist_seqSpace_le_one _ _)
+  · rw [wordOf_guarded_of_not_inCylinder h b]
+    simp
+
+@[blueprint "lem:cot-empdist-wordof-le"
+  (statement := /-- If $\#\{i : X_i \in [u]\} \le \varepsilon^2 n$ then
+    $d_S(f_u, \bar u_j) \le \varepsilon$. -/)]
+theorem empDist_wordOf_le {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ)
+    (u : List (Fin r)) (b : Fin r) {ε : ℝ≥0}
+    (h : ((Finset.univ.filter fun i => InCylinder u (S i)).card : ℝ) ≤ (ε : ℝ) ^ 2 * n) :
+    empDist S (wordOf (guarded θ) u) (fun _ => constSeq θ (Sum.inl (u.getLastD b))) ≤ ε := by
+  have h1 := sq_empDist_wordOf_le S u b
+  have h2 : (1 / (n : ℝ)) * (Finset.univ.filter fun i => InCylinder u (S i)).card ≤
+      (ε : ℝ) ^ 2 := by
+    rcases Nat.eq_zero_or_pos n with hn | hn
+    · subst hn
+      simp
+    · have hn' : (0 : ℝ) < n := by exact_mod_cast hn
+      calc (1 / (n : ℝ)) * (Finset.univ.filter fun i => InCylinder u (S i)).card
+          ≤ (1 / (n : ℝ)) * ((ε : ℝ) ^ 2 * n) := by gcongr
+        _ = (ε : ℝ) ^ 2 := by field_simp
+  exact (pow_le_pow_iff_left₀ empDist_nonneg ε.coe_nonneg two_ne_zero).1 (h1.trans h2)
+
+@[blueprint "lem:cot-branch-sample"
+  (statement := /-- \textbf{(Empirical saturation for branching steps.)} For every sample
+    $S = (X_1, \dots, X_n)$, every $k \ge 0$ and every $\varepsilon > 0$ (the paper states
+    $\varepsilon \in (0,1]$; the bound holds for all $\varepsilon > 0$),
+    $$N^{\mathrm{ext}}\bigl(B(k,F_{\rm b}), d_S, \varepsilon\bigr)
+      \le 1 + r + \sum_{j=1}^{k}\min\bigl\{r^j,\ n,\ \lfloor\varepsilon^{-2}\rfloor\bigr\} .$$
+    Centres: the identity, the $r$ constant maps $\bar a$, and for each $1 \le j \le k$ the
+    programs $u$ of length $j$ with $\hat P_n([u]) > \varepsilon^2$ (fewer than
+    $\varepsilon^{-2}$ of them, at most $n$, at most $r^j$); every other program of length $j$
+    is within $d_S$-distance $\varepsilon$ of the constant map $\bar u_j$. -/)]
+theorem cot_branch_sample {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ) (k : ℕ)
+    {ε : ℝ≥0} (hε : 0 < ε) :
+    externalCoveringNumber (X := EmpSpace S) ε (wordBall (branchClass θ) k) ≤
+      1 + r + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) := by
+  classical
+  /-- The heavy programs of length $j$. -/
+  set cyl : List (Fin r) → Finset (Fin n) := fun u =>
+    Finset.univ.filter fun i => InCylinder u (S i) with hcyl
+  set H : (j : ℕ) → Finset (Fin j → Fin r) := fun j =>
+    Finset.univ.filter fun σ => (ε : ℝ) ^ 2 * n < (cyl (List.ofFn σ)).card with hH
+  set C : Finset (SeqSpace (BranchAlphabet r) θ → SeqSpace (BranchAlphabet r) θ) :=
+    {id} ∪ Finset.univ.image (fun a : Fin r => fun _ => constSeq θ (Sum.inl a)) ∪
+      (Finset.Icc 1 k).biUnion (fun j => (H j).image fun σ => wordOf (guarded θ) (List.ofFn σ))
+    with hC
+  /-- Counting the heavy programs: at most $r^j$, at most $n$, at most
+    $\lfloor\varepsilon^{-2}\rfloor$. -/
+  have hHj : ∀ j, (H j).card ≤ min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) := by
+    intro j
+    have hsum := sum_card_cylinder_le S j
+    have hsumH : ∑ σ ∈ H j, (cyl (List.ofFn σ)).card ≤ n :=
+      (Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ _)
+        fun _ _ _ => Nat.zero_le _).trans hsum
+    refine le_min ?_ (le_min ?_ ?_)
+    · exact (Finset.card_le_univ _).trans (by simp)
+    · calc (H j).card = ∑ σ ∈ H j, 1 := Finset.card_eq_sum_ones _
+        _ ≤ ∑ σ ∈ H j, (cyl (List.ofFn σ)).card := by
+            refine Finset.sum_le_sum fun σ hσ => ?_
+            have h := (Finset.mem_filter.1 hσ).2
+            have : (0 : ℝ) < (cyl (List.ofFn σ)).card := lt_of_le_of_lt (by positivity) h
+            exact_mod_cast this
+        _ ≤ n := hsumH
+    · rcases (H j).eq_empty_or_nonempty with hHe | hHne
+      · rw [hHe, Finset.card_empty]; exact Nat.zero_le _
+      · refine Nat.le_floor ?_
+        have hn : (0 : ℝ) < n := by
+          obtain ⟨σ, hσ⟩ := hHne
+          have h := (Finset.mem_filter.1 hσ).2
+          have hc : ((cyl (List.ofFn σ)).card : ℝ) ≤ n := by
+            exact_mod_cast (Finset.card_le_univ _).trans (by simp)
+          by_contra hn
+          have hn0 : (n : ℝ) = 0 := le_antisymm (not_lt.1 hn) (Nat.cast_nonneg n)
+          rw [hn0, mul_zero] at h
+          rw [hn0] at hc
+          linarith
+        have hlt : ∑ _σ ∈ H j, (ε : ℝ) ^ 2 * n < ∑ σ ∈ H j, ((cyl (List.ofFn σ)).card : ℝ) :=
+          Finset.sum_lt_sum_of_nonempty hHne fun σ hσ => (Finset.mem_filter.1 hσ).2
+        have hle : ∑ σ ∈ H j, ((cyl (List.ofFn σ)).card : ℝ) ≤ n := by exact_mod_cast hsumH
+        rw [Finset.sum_const, nsmul_eq_mul] at hlt
+        have hε' : (0 : ℝ) < ε := hε
+        have hkey : ((H j).card : ℝ) < ((ε : ℝ)⁻¹) ^ 2 := by
+          have h1 : ((H j).card : ℝ) * (ε : ℝ) ^ 2 < 1 := by
+            have h := hlt.trans_le hle
+            by_contra hcon
+            have hcon' : 1 ≤ ((H j).card : ℝ) * (ε : ℝ) ^ 2 := not_lt.1 hcon
+            nlinarith [mul_le_mul_of_nonneg_right hcon' hn.le]
+          rw [inv_pow, ← one_div, lt_div_iff₀ (by positivity)]
+          exact h1
+        have : ((H j).card : ℝ≥0) ≤ ε⁻¹ ^ 2 := by
+          rw [← NNReal.coe_le_coe]; push_cast; exact hkey.le
+        exact this
+  have hcard : C.card ≤ 1 + r + ∑ j ∈ Finset.Icc 1 k, min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) := by
+    refine (Finset.card_union_le _ _).trans (add_le_add ?_ ?_)
+    · refine (Finset.card_union_le _ _).trans (add_le_add ?_ ?_)
+      · simp
+      · exact Finset.card_image_le.trans (by simp)
+    · refine Finset.card_biUnion_le.trans (Finset.sum_le_sum fun j _ => ?_)
+      exact Finset.card_image_le.trans (hHj j)
+  /-- The cover. -/
+  let Cs : Set (EmpSpace S) :=
+    (C : Set (SeqSpace (BranchAlphabet r) θ → SeqSpace (BranchAlphabet r) θ))
+  have hcover : IsCover (X := EmpSpace S) ε (wordBall (branchClass θ) k) Cs := by
+    intro g hg
+    obtain ⟨u, hu, rfl⟩ := exists_wordOf_of_mem_wordBall_range hg
+    rcases u with _ | ⟨a, u⟩
+    · refine ⟨id, Finset.mem_coe.2 ?_, by simp⟩
+      rw [hC]
+      exact Finset.mem_union.2 (Or.inl (Finset.mem_union.2 (Or.inl (Finset.mem_singleton.2 rfl))))
+    · set σ : Fin (a :: u).length → Fin r := fun i => (a :: u).get i with hσ
+      have hσu : List.ofFn σ = a :: u := List.ofFn_get _
+      by_cases hheavy : σ ∈ H (a :: u).length
+      · refine ⟨wordOf (guarded θ) (a :: u), Finset.mem_coe.2 ?_, by simp⟩
+        rw [hC]
+        refine Finset.mem_union.2 (Or.inr (Finset.mem_biUnion.2 ⟨(a :: u).length, ?_, ?_⟩))
+        · exact Finset.mem_Icc.2 ⟨by simp, hu⟩
+        · exact Finset.mem_image.2 ⟨σ, hheavy, by rw [hσu]⟩
+      · refine ⟨fun _ => constSeq θ (Sum.inl ((a :: u).getLastD a)), Finset.mem_coe.2 ?_, ?_⟩
+        · rw [hC]
+          exact Finset.mem_union.2 (Or.inl (Finset.mem_union.2 (Or.inr
+            (Finset.mem_image.2 ⟨(a :: u).getLastD a, Finset.mem_univ _, rfl⟩))))
+        · have hlight : ((cyl (a :: u)).card : ℝ) ≤ (ε : ℝ) ^ 2 * n := by
+            have h := hheavy
+            rw [hH, Finset.mem_filter, hσu] at h
+            exact not_lt.1 (not_and.1 h (Finset.mem_univ _))
+          change edist (toEmpSpace S (wordOf (guarded θ) (a :: u)))
+            (toEmpSpace S fun _ => constSeq θ (Sum.inl ((a :: u).getLastD a))) ≤ ε
+          rw [edist_dist, dist_empSpace, ← ENNReal.ofReal_coe_nnreal]
+          exact ENNReal.ofReal_le_ofReal (empDist_wordOf_le S (a :: u) a hlight)
+  calc externalCoveringNumber (X := EmpSpace S) ε (wordBall (branchClass θ) k)
+      ≤ Cs.encard := hcover.externalCoveringNumber_le_encard
+    _ = (C.card : ℕ∞) := Set.encard_coe_eq_coe_finsetCard C
+    _ ≤ ((1 + r + ∑ j ∈ Finset.Icc 1 k, min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) := by
+        exact_mod_cast hcard
+    _ = _ := by push_cast; rfl
+
+@[blueprint "lem:cot-branch-sample-simple"
+  (statement := /-- $1 + r + \sum_{j=1}^k\min\{r^j, n, \lfloor\varepsilon^{-2}\rfloor\}
+    \le 1 + r + k\min\{n, \lfloor\varepsilon^{-2}\rfloor\}$. -/)]
+theorem cot_branch_sample_sum_le (n r k : ℕ) (ε : ℝ≥0) :
+    1 + (r : ℕ∞) + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ≤
+      1 + r + k * ((min n ⌊ε⁻¹ ^ 2⌋₊ : ℕ) : ℕ∞) := by
+  refine add_le_add le_rfl ?_
+  calc ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞)
+      ≤ ∑ _j ∈ Finset.Icc 1 k, ((min n ⌊ε⁻¹ ^ 2⌋₊ : ℕ) : ℕ∞) :=
+        Finset.sum_le_sum fun j _ => by exact_mod_cast min_le_right _ _
+    _ = _ := by rw [Finset.sum_const, Nat.card_Icc, nsmul_eq_mul]; simp
+
+@[blueprint "lem:cot-branch-sample-profile"
+  (statement := /-- \textbf{(Root-logarithmic empirical entropy integral for branching steps.)}
+    For every sample $S$ and every $k$,
+    $$\mathsf V_k(S) \le \sqrt{\log(k+1)} + \sqrt{\log(1+r)} + \sqrt{2\log 2} + \sqrt{\pi/2}$$
+    (the paper's bound without the term $\sqrt{2\log 2}$: this additive constant is the price of
+    comparing the internal covering number in $d_S$, which defines $\mathsf V_k(S)$, with the
+    external one at half the scale, $N(B, d_S, \varepsilon) \le N^{\mathrm{ext}}(B, d_S,
+    \varepsilon/2) \le 1 + r + 4k\varepsilon^{-2}$). -/)]
+theorem cot_branch_sample_profile {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ) (k : ℕ) :
+    entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (branchClass θ) k))
+        (wordBall (branchClass θ) k) ≤
+      √(Real.log (k + 1)) + √(Real.log (1 + r)) + √(2 * Real.log 2) + √(π / 2) := by
+  /-- For $0 < \varepsilon \le 1$: $N(B, d_S, \varepsilon) \le N^{\mathrm{ext}}(B, d_S,
+    \varepsilon/2) \le 1 + r + k\lfloor 4\varepsilon^{-2}\rfloor \le (1+r)(k+1)(2/\varepsilon)^2$,
+    so $\sqrt{\log N} \le \sqrt{\log(k+1)} + \sqrt{\log(1+r)} + \sqrt{2\log 2}
+    + \sqrt2\sqrt{\log(1/\varepsilon)}$; integrate over $(0,1]$ (recall $D_k(S) \le 1$) with
+    $\int_0^1\sqrt{\log(1/\varepsilon)}\,d\varepsilon = \sqrt\pi/2$. -/
+  set A : ℝ := √(Real.log (k + 1)) + √(Real.log (1 + r)) + √(2 * Real.log 2) with hA
+  have hgint : IntervalIntegrable (fun ε : ℝ => A + √2 * √(Real.log (1 / ε))) volume 0 1 :=
+    intervalIntegrable_const.add ((intervalIntegrable_sqrt_log_div one_pos).const_mul _)
+  refine (entropyIntegral_le_integral_of_le (empDiam_nonneg S _) (empDiam_seqSpace_le_one S _)
+    hgint fun ε hε => ?_).trans (le_of_eq ?_)
+  · have hε0 : 0 < ε := hε.1
+    have hε1 : ε ≤ 1 := hε.2
+    have hεr : ((ε.toNNReal : ℝ≥0) : ℝ) = ε := Real.coe_toNNReal ε hε0.le
+    have hε2 : 0 < ε.toNNReal / 2 := by positivity
+    set M : ℕ := 1 + r + k * min n ⌊(ε.toNNReal / 2)⁻¹ ^ 2⌋₊ with hM
+    have hcov : coveringNumber (X := EmpSpace S) ε.toNNReal (wordBall (branchClass θ) k) ≤
+        (M : ℕ∞) := by
+      have h := coveringNumber_two_mul_le_externalCoveringNumber (X := EmpSpace S)
+        (ε.toNNReal / 2) (wordBall (branchClass θ) k)
+      rw [show 2 * (ε.toNNReal / 2) = ε.toNNReal by ring] at h
+      refine h.trans ((cot_branch_sample S k hε2).trans ?_)
+      refine (cot_branch_sample_sum_le n r k _).trans (le_of_eq ?_)
+      rw [hM]; push_cast; rfl
+    have h1 := log_toReal_toENNReal_mono (ENat.coe_ne_top M) hcov
+    rw [ENat.toENNReal_coe, ENNReal.toReal_natCast] at h1
+    have hfloor : ((min n ⌊(ε.toNNReal / 2)⁻¹ ^ 2⌋₊ : ℕ) : ℝ) ≤ (2 * (1 / ε)) ^ 2 := by
+      have h2 : ((⌊(ε.toNNReal / 2)⁻¹ ^ 2⌋₊ : ℕ) : ℝ≥0) ≤ (ε.toNNReal / 2)⁻¹ ^ 2 :=
+        Nat.floor_le zero_le
+      have h3 : (((ε.toNNReal / 2)⁻¹ ^ 2 : ℝ≥0) : ℝ) = (2 * (1 / ε)) ^ 2 := by
+        push_cast; rw [hεr]; field_simp
+      calc ((min n ⌊(ε.toNNReal / 2)⁻¹ ^ 2⌋₊ : ℕ) : ℝ)
+          ≤ ((⌊(ε.toNNReal / 2)⁻¹ ^ 2⌋₊ : ℕ) : ℝ) := by exact_mod_cast min_le_right _ _
+        _ ≤ (((ε.toNNReal / 2)⁻¹ ^ 2 : ℝ≥0) : ℝ) := by exact_mod_cast h2
+        _ = (2 * (1 / ε)) ^ 2 := h3
+    have hsq : (1 : ℝ) ≤ (2 * (1 / ε)) ^ 2 := by
+      have : (1 : ℝ) ≤ 2 * (1 / ε) := by
+        rw [← div_eq_mul_one_div]; exact (one_le_div hε0).2 (by linarith)
+      nlinarith
+    have hM' : (M : ℝ) ≤ (1 + r) * (k + 1) * (2 * (1 / ε)) ^ 2 := by
+      rw [hM, Nat.cast_add, Nat.cast_add, Nat.cast_mul, Nat.cast_one]
+      have hr0 : (0 : ℝ) ≤ r := Nat.cast_nonneg r
+      have hk0 : (0 : ℝ) ≤ k := Nat.cast_nonneg k
+      have hQ0 : (0 : ℝ) ≤ (2 * (1 / ε)) ^ 2 := zero_le_one.trans hsq
+      nlinarith [mul_le_mul_of_nonneg_left hfloor hk0,
+        mul_le_mul_of_nonneg_left hsq (add_nonneg zero_le_one hr0),
+        mul_nonneg (mul_nonneg hk0 hr0) hQ0]
+    have hlog : Real.log M ≤ Real.log (k + 1) + Real.log (1 + r) + 2 * Real.log 2 +
+        2 * Real.log (1 / ε) := by
+      have hMpos : (0 : ℝ) < M := by rw [hM]; push_cast; positivity
+      calc Real.log M ≤ Real.log ((1 + r) * (k + 1) * (2 * (1 / ε)) ^ 2) :=
+            Real.log_le_log hMpos hM'
+        _ = Real.log (1 + r) + Real.log (k + 1) + 2 * (Real.log 2 + Real.log (1 / ε)) := by
+            rw [Real.log_mul (by positivity) (by positivity), Real.log_mul (by positivity)
+              (by positivity), Real.log_pow, Real.log_mul (by norm_num) (by positivity)]
+            push_cast; ring
+        _ = _ := by ring
+    calc √(metricEntropy (X := EmpSpace S) ε.toNNReal (wordBall (branchClass θ) k))
+        ≤ √(Real.log (k + 1) + Real.log (1 + r) + 2 * Real.log 2 + 2 * Real.log (1 / ε)) :=
+          Real.sqrt_le_sqrt (h1.trans hlog)
+      _ ≤ √(Real.log (k + 1) + Real.log (1 + r) + 2 * Real.log 2) + √(2 * Real.log (1 / ε)) :=
+          sqrt_add_le _ _
+      _ ≤ √(Real.log (k + 1)) + √(Real.log (1 + r)) + √(2 * Real.log 2)
+            + √(2 * Real.log (1 / ε)) := add_le_add_left (sqrt_add_add_le _ _ _) _
+      _ = A + √2 * √(Real.log (1 / ε)) := by
+          rw [hA, Real.sqrt_mul (by norm_num : (0 : ℝ) ≤ 2) (Real.log (1 / ε))]
+  · rw [intervalIntegral.integral_add intervalIntegrable_const
+        ((intervalIntegrable_sqrt_log_div one_pos).const_mul _),
+      intervalIntegral.integral_const, intervalIntegral.integral_const_mul,
+      integral_sqrt_log_div one_pos, hA]
+    simp only [smul_eq_mul, sub_zero, mul_one, one_mul]
+    have h22 : √2 * √2 = 2 := Real.mul_self_sqrt (by norm_num)
+    have h2 : √2 * (√π / 2) = √(π / 2) := by
+      rw [Real.sqrt_div Real.pi_pos.le, eq_div_iff (Real.sqrt_pos.2 two_pos).ne']
+      linear_combination (√π / 2) * h22
+    rw [h2]
+
+@[blueprint "lem:cot-branch-sample-full"
+  (statement := /-- \textbf{(Empirical saturation for branching steps, `lem:cot-branch-sample`.)}
+    For every sample $S = (X_1,\dots,X_n)$, every $k \ge 0$ and every $\varepsilon > 0$ (the
+    paper states $\varepsilon \in (0,1]$),
+    $$N^{\mathrm{ext}}\bigl(B(k,F_{\rm b}), d_S, \varepsilon\bigr)
+      \le 1 + r + \sum_{j=1}^{k}\min\{r^j, n, \lfloor\varepsilon^{-2}\rfloor\}
+      \le 1 + r + k\min\{n, \lfloor\varepsilon^{-2}\rfloor\},$$
+    and consequently $\mathsf V_k(S) \le \sqrt{\log(k+1)} + \sqrt{\log(1+r)} + \sqrt{2\log2}
+    + \sqrt{\pi/2}$, the root-logarithmic profile, for every sample and without any assumption
+    on the input distribution. -/)]
+theorem lem_cot_branch_sample {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ) (k : ℕ) :
+    (∀ ε : ℝ≥0, 0 < ε →
+      externalCoveringNumber (X := EmpSpace S) ε (wordBall (branchClass θ) k) ≤
+          1 + r + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ∧
+        1 + (r : ℕ∞) + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ≤
+          1 + r + k * ((min n ⌊ε⁻¹ ^ 2⌋₊ : ℕ) : ℕ∞)) ∧
+    entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (branchClass θ) k))
+        (wordBall (branchClass θ) k) ≤
+      √(Real.log (k + 1)) + √(Real.log (1 + r)) + √(2 * Real.log 2) + √(π / 2) :=
+  ⟨fun ε hε => ⟨cot_branch_sample S k hε, cot_branch_sample_sum_le n r k ε⟩,
+    cot_branch_sample_profile S k⟩
+
+end BranchSample
 
 /-! ### Window one-hot output features -/
 

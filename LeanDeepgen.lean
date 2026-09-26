@@ -24,9 +24,11 @@ import LeanDeepgen.Tradeoff.Regimes
 import LeanDeepgen.Growth.ArzelaAscoli
 import LeanDeepgen.Growth.Saturation
 import LeanDeepgen.Growth.MemoryExpansion
+import LeanDeepgen.Growth.Envelope
 import LeanDeepgen.Bounds.Variance
 import LeanDeepgen.Examples.Regimes
 import LeanDeepgen.Examples.Implementation
 import LeanDeepgen.Examples.Readout
 import LeanDeepgen.Examples.ChainOfThought
 import LeanDeepgen.Examples.ODE
+import LeanDeepgen.Examples.ReLU

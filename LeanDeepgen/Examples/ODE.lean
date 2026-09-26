@@ -10,6 +10,7 @@ import LeanDeepgen.Profiles.Profiles
 import LeanDeepgen.Bounds.Variance
 import LeanDeepgen.Examples.ChainOfThought
 import LeanDeepgen.Examples.Regimes
+import LeanDeepgen.Growth.Envelope
 
 /-!
 # Worked example: unrolled iterative solvers and samplers (paper App. `sec:app-ode`)
@@ -44,6 +45,17 @@ we *assume* a map `proj : E → E` with `proj x ∈ K`, `proj x = x` on `K` and 
   mean value inequality with a quadratic boundary) and the discrete Grönwall recursion
   `e_{i+1} ≤ (1 + hΛ_s) e_i + c h²/2` give `‖x(T) − y_k‖ ≤ C_E T²/k` with
   `C_E = (Λ_s M_s + Λ_τ) e^{Λ_s T}/2` for the explicit Euler iterates with `k` equal steps.
+* Explicit entropy of the equal-step schemes `lem:ode-scheme-entropy`: the class
+  `E_T(k) = {Φ_{s,m} : s ∈ 𝒮_T, 0 ≤ m ≤ k}` (`equalSchemeClass`), the drift distance
+  `‖s − s'‖_∞ = sup_{x ∈ K, τ ∈ [0,T]} ‖s(x,τ) − s'(x,τ)‖` (the sup-edist of `restrictDrift T s` in
+  `DriftSpace K T`), the stability estimate `d_∞(Φ_{s,m}, Φ_{s',m}) ≤ T e^{Λ_s T} ‖s − s'‖_∞`
+  (`uniformDist_equalScheme_le`, from the discrete Grönwall recursion `dist_scheme_le` with the
+  per-layer error `h ‖s − s'‖_∞`), the covering bound
+  `N(E_T(k), d_∞, ε) ≤ 1 + k N(𝒮_T, ‖·‖_∞, ε e^{−Λ_s T}/T)` (`equalSchemeClass_covering`, by
+  extending the cover centres of the restricted drifts to `K × ℝ`) and the entropy-integral
+  consequence `V_k(S) ≤ D_K √log(k+1) + ∫_0^{D_K} √log N(𝒮_T, ε e^{−Λ_s T}/(2T)) dε`
+  (`equalSchemeClass_profile`; the factor `2` comes from comparing the internal covering number
+  in `d_S` with the external one in `d_∞`).
 * Rigorous form of `prop:ode-horizon` (PL regime, `p = 1`): if the projection is inactive along
   the Euler steps (`K` is invariant under `x ↦ x + h s(x,τ)`), the equal-step scheme
   `T_{s,T/k,τ_k} ∘ ⋯ ∘ T_{s,T/k,τ_1}` coincides with the Euler iterates
@@ -1308,5 +1320,416 @@ theorem cor_ode_horizon_depth [TopologicalSpace.SeparableSpace E] {Y : Type*} [M
   linarith
 
 end HorizonRegime
+
+/-! ### Explicit entropy of equal-step schemes (`lem:ode-scheme-entropy`) -/
+
+section SchemeEntropy
+
+open MeasureTheory
+
+variable {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] {K : Set E} {proj : E → E}
+
+@[blueprint "def:ode-equal-scheme-class"
+  (statement := /-- The class of equal-step schemes of at most $k$ steps,
+    $E_T(k) := \{\Phi_{s,m} : s \in \mathcal S_T,\ 0 \le m \le k\}$, where
+    $\Phi_{s,m} = T_{s,T/m,\tau_m} \circ \cdots \circ T_{s,T/m,\tau_1}$ with
+    $\tau_i = (i-1)T/m$ is the $m$-step equal-step Euler scheme and $\Phi_{s,0} = \mathrm{id}$. -/)]
+def equalSchemeClass (hP : IsProjectionOnto K proj) (𝒮 : Set (K → ℝ → E)) (T : ℝ) (k : ℕ) :
+    Set (K → K) :=
+  {f | ∃ s ∈ 𝒮, ∃ m, m ≤ k ∧ f = equalScheme hP s T m}
+
+@[blueprint "def:ode-drift-space"
+  (statement := /-- The space of drifts restricted to $K \times [0,T]$ with the sup-norm
+    (pseudo-e)metric $\|s - s'\|_\infty := \sup_{x \in K,\ \tau \in [0,T]}\|s(x,\tau) -
+    s'(x,\tau)\|$; in Lean it is Mathlib's $(K \times [0,T]) \to_{\mathrm u} E$. -/)]
+def DriftSpace (K : Set E) (T : ℝ) : Type _ := (K × Set.Icc (0 : ℝ) T) →ᵤ E
+
+@[blueprint "def:ode-drift-space-instance"
+  (statement := /-- $\|\cdot\|_\infty$ is a pseudo-emetric on the restricted drifts (Mathlib's
+    instance on the uniform function space). -/)]
+noncomputable instance instPseudoEMetricSpaceDriftSpace (K : Set E) (T : ℝ) :
+    PseudoEMetricSpace (DriftSpace K T) :=
+  inferInstanceAs (PseudoEMetricSpace ((K × Set.Icc (0 : ℝ) T) →ᵤ E))
+
+@[blueprint "def:ode-restrict-drift"
+  (statement := /-- The restriction of a drift $s : K \times \mathbb R \to \mathbb R^d$ to
+    $K \times [0,T]$, viewed in the sup-norm space. -/)]
+def restrictDrift (T : ℝ) (s : K → ℝ → E) : DriftSpace K T := fun p => s p.1 p.2
+
+omit [InnerProductSpace ℝ E] in
+@[blueprint "lem:ode-edist-restrict-drift"
+  (statement := /-- $\|s - s'\|_\infty = \sup_{x \in K,\ \tau \in [0,T]}
+    \|s(x,\tau) - s'(x,\tau)\|$ (as an extended distance). -/)]
+theorem edist_restrictDrift (T : ℝ) (s s' : K → ℝ → E) :
+    edist (restrictDrift T s) (restrictDrift T s') =
+      ⨆ p : K × Set.Icc (0 : ℝ) T, edist (s p.1 p.2) (s' p.1 p.2) := rfl
+
+omit [InnerProductSpace ℝ E] in
+@[blueprint "lem:ode-edist-apply-le-restrict-drift"
+  (statement := /-- $\|s(x,\tau) - s'(x,\tau)\| \le \|s - s'\|_\infty$ for $x \in K$ and
+    $\tau \in [0,T]$. -/)]
+theorem edist_apply_le_edist_restrictDrift (T : ℝ) (s s' : K → ℝ → E) (x : K) {τ : ℝ}
+    (hτ : τ ∈ Set.Icc (0 : ℝ) T) :
+    edist (s x τ) (s' x τ) ≤ edist (restrictDrift T s) (restrictDrift T s') :=
+  le_iSup (fun p : K × Set.Icc (0 : ℝ) T => edist (s p.1 p.2) (s' p.1 p.2)) (x, ⟨τ, hτ⟩)
+
+@[blueprint "def:ode-extend-drift"
+  (statement := /-- The extension of a restricted drift $c : K \times [0,T] \to \mathbb R^d$ to
+    $K \times \mathbb R$ by $0$ outside $[0,T]$ (used to lift the centres of a cover of
+    $\mathcal S_T$ to drifts). -/)]
+noncomputable def extendDrift (T : ℝ) (c : DriftSpace K T) : K → ℝ → E :=
+  fun x τ => if h : τ ∈ Set.Icc (0 : ℝ) T then c (x, ⟨τ, h⟩) else 0
+
+omit [InnerProductSpace ℝ E] in
+@[blueprint "lem:ode-restrict-extend-drift"
+  (statement := /-- Restricting the extension gives back the restricted drift. -/)]
+theorem restrictDrift_extendDrift (T : ℝ) (c : DriftSpace K T) :
+    restrictDrift T (extendDrift T c) = c := by
+  funext p
+  exact dif_pos p.2.2
+
+@[blueprint "lem:ode-grad-step-dist-two"
+  (statement := /-- (Two drifts.) Since $\Pi_K$ is $1$-Lipschitz,
+    $\|T_{s}(x) - T_{s'}(y)\| \le \|(x - y) + h\,(s(x) - s'(y))\|$. -/)]
+theorem dist_gradStep_le' (hP : IsProjectionOnto K proj) (s s' : K → E) (h : ℝ) (x y : K) :
+    dist (gradStep hP s h x) (gradStep hP s' h y) ≤ ‖((x : E) - y) + h • (s x - s' y)‖ := by
+  rw [Subtype.dist_eq]
+  change dist (proj _) (proj _) ≤ _
+  refine (hP.lipschitz.dist_le_mul _ _).trans ?_
+  rw [NNReal.coe_one, one_mul, dist_eq_norm]
+  apply le_of_eq
+  congr 1
+  rw [smul_sub]
+  abel
+
+@[blueprint "lem:ode-scheme-dist"
+  (statement := /-- \textbf{(Stability with respect to the drift; discrete Grönwall.)} Let
+    $s(\cdot,\tau)$ be $\Lambda_s$-Lipschitz for every $\tau$, let $h_i \ge 0$, and suppose
+    $\|s(x,\tau_i) - s'(x,\tau_i)\| \le \delta$ for all $x \in K$ and all stamps $\tau_i$ used
+    by the scheme. Then for every $x$,
+    $$\bigl\|y_n - y_n'\bigr\| \le \delta\,\Bigl(\sum_i h_i\Bigr)
+      \exp\Bigl(\Lambda_s\sum_i h_i\Bigr),$$
+    where $y_n, y_n'$ are the schemes of $s$ and $s'$ with the same steps and stamps started at
+    $x$. Indeed $\|y_{i} - y_{i}'\| \le (1 + h_i\Lambda_s)\|y_{i-1} - y_{i-1}'\| + h_i\delta$ and
+    $1 + h\Lambda_s \le e^{h\Lambda_s}$. -/)]
+theorem dist_scheme_le (hP : IsProjectionOnto K proj) {s s' : K → ℝ → E} {Λ : ℝ≥0}
+    (hs : ∀ τ, LipschitzWith Λ (fun x => s x τ)) {δ : ℝ} (hδ : 0 ≤ δ) :
+    ∀ (n : ℕ) (h τ : Fin n → ℝ), (∀ i, 0 ≤ h i) →
+      (∀ (x : K) (i : Fin n), ‖s x (τ i) - s' x (τ i)‖ ≤ δ) → ∀ x : K,
+      dist (scheme hP s n h τ x) (scheme hP s' n h τ x) ≤
+        δ * (∑ i, h i) * Real.exp (Λ * ∑ i, h i)
+  | 0, _, _, _, _, x => by simp [scheme]
+  | n + 1, h, τ, hh, hss', x => by
+    have ih : dist (scheme hP s n (fun i => h i.castSucc) (fun i => τ i.castSucc) x)
+        (scheme hP s' n (fun i => h i.castSucc) (fun i => τ i.castSucc) x) ≤
+        δ * (∑ i : Fin n, h i.castSucc) * Real.exp (Λ * ∑ i : Fin n, h i.castSucc) :=
+      dist_scheme_le hP hs hδ n (fun i => h i.castSucc) (fun i => τ i.castSucc)
+        (fun i => hh _) (fun x i => hss' x _) x
+    set y := scheme hP s n (fun i => h i.castSucc) (fun i => τ i.castSucc) x with hy
+    set y' := scheme hP s' n (fun i => h i.castSucc) (fun i => τ i.castSucc) x with hy'
+    set H := ∑ i : Fin n, h i.castSucc with hH
+    set hn := h (Fin.last n) with hhn
+    set τn := τ (Fin.last n) with hτn
+    have hH0 : 0 ≤ H := Finset.sum_nonneg fun i _ => hh _
+    have hhn0 : 0 ≤ hn := hh _
+    have hlip : ‖s y τn - s y' τn‖ ≤ Λ * ‖(y : E) - y'‖ := by
+      have := (hs τn).dist_le_mul y y'
+      rwa [dist_eq_norm, Subtype.dist_eq, dist_eq_norm] at this
+    have h1 : dist (eulerLayer hP s hn τn y) (eulerLayer hP s' hn τn y') ≤
+        (1 + hn * Λ) * dist y y' + hn * δ := by
+      refine (dist_gradStep_le' hP _ _ hn y y').trans ?_
+      calc ‖((y : E) - y') + hn • (s y τn - s' y' τn)‖
+          ≤ ‖(y : E) - y'‖ + ‖hn • (s y τn - s' y' τn)‖ := norm_add_le _ _
+        _ = ‖(y : E) - y'‖ + hn * ‖s y τn - s' y' τn‖ := by
+            rw [norm_smul, Real.norm_of_nonneg hhn0]
+        _ ≤ ‖(y : E) - y'‖ + hn * (‖s y τn - s y' τn‖ + ‖s y' τn - s' y' τn‖) := by
+            gcongr
+            exact norm_sub_le_norm_sub_add_norm_sub _ _ _
+        _ ≤ ‖(y : E) - y'‖ + hn * (Λ * ‖(y : E) - y'‖ + δ) := by
+            gcongr
+            exact hss' y' (Fin.last n)
+        _ = (1 + hn * Λ) * dist y y' + hn * δ := by
+            rw [Subtype.dist_eq, dist_eq_norm]; ring
+    have e1 : 1 + hn * Λ ≤ Real.exp (Λ * hn) := by
+      have := Real.add_one_le_exp (Λ * hn)
+      linarith [mul_comm hn (Λ : ℝ)]
+    have e2 : 1 ≤ Real.exp (Λ * (H + hn)) := Real.one_le_exp (by positivity)
+    have hsum : ∑ i : Fin (n + 1), h i = H + hn := Fin.sum_univ_castSucc h
+    rw [hsum]
+    calc dist (scheme hP s (n + 1) h τ x) (scheme hP s' (n + 1) h τ x)
+        = dist (eulerLayer hP s hn τn y) (eulerLayer hP s' hn τn y') := rfl
+      _ ≤ (1 + hn * Λ) * dist y y' + hn * δ := h1
+      _ ≤ Real.exp (Λ * hn) * (δ * H * Real.exp (Λ * H))
+            + hn * δ * Real.exp (Λ * (H + hn)) :=
+          add_le_add (mul_le_mul e1 ih dist_nonneg (Real.exp_pos _).le)
+            (le_mul_of_one_le_right (by positivity) e2)
+      _ = δ * (H + hn) * Real.exp (Λ * (H + hn)) := by
+          rw [mul_add (Λ : ℝ), Real.exp_add]; ring
+
+@[blueprint "lem:ode-scheme-zero-steps"
+  (statement := /-- A scheme all of whose steps have size $0$ is the identity. -/)]
+theorem scheme_zero_steps (hP : IsProjectionOnto K proj) (s : K → ℝ → E) :
+    ∀ (n : ℕ) (τ : Fin n → ℝ), scheme hP s n (fun _ => 0) τ = id
+  | 0, _ => rfl
+  | n + 1, τ => by
+    change eulerLayer hP s 0 (τ (Fin.last n)) ∘
+      scheme hP s n (fun _ => 0) (fun i => τ i.castSucc) = id
+    rw [scheme_zero_steps hP s n, eulerLayer, gradStep_zero]
+    rfl
+
+@[blueprint "lem:ode-equal-scheme-zero-horizon"
+  (statement := /-- With horizon $T = 0$ every equal-step scheme is the identity. -/)]
+theorem equalScheme_zero (hP : IsProjectionOnto K proj) (s : K → ℝ → E) (m : ℕ) :
+    equalScheme hP s 0 m = id := by
+  unfold equalScheme
+  simp only [zero_div]
+  exact scheme_zero_steps hP s m _
+
+@[blueprint "lem:ode-equal-scheme-dist"
+  (statement := /-- (Pointwise stability of equal-step schemes.) If $s(\cdot,\tau)$ is
+    $\Lambda_s$-Lipschitz for every $\tau$, $T \ge 0$, and $\|s(x,\tau) - s'(x,\tau)\| \le
+    \delta$ for all $x \in K$, $\tau \in [0,T]$, then
+    $\|\Phi_{s,m}(x) - \Phi_{s',m}(x)\| \le Te^{\Lambda_sT}\delta$ for all $m \ge 0$ and $x$. -/)]
+theorem dist_equalScheme_le (hP : IsProjectionOnto K proj) {s s' : K → ℝ → E} {Λ : ℝ≥0}
+    (hs : ∀ τ, LipschitzWith Λ (fun x => s x τ)) {T : ℝ} (hT : 0 ≤ T) {δ : ℝ} (hδ : 0 ≤ δ)
+    (hss' : ∀ (x : K), ∀ τ ∈ Set.Icc (0 : ℝ) T, ‖s x τ - s' x τ‖ ≤ δ) (m : ℕ) (x : K) :
+    dist (equalScheme hP s T m x) (equalScheme hP s' T m x) ≤ T * Real.exp (Λ * T) * δ := by
+  /-- `lem:ode-scheme-dist` with $h_i = T/m$, $\sum_i h_i = T$ and stamps
+    $\tau_i = (i-1)T/m \in [0,T]$. -/
+  rcases Nat.eq_zero_or_pos m with rfl | hm
+  · simp only [equalScheme, scheme, id_eq, dist_self]
+    positivity
+  · have hm' : (0 : ℝ) < m := by exact_mod_cast hm
+    have hsum : ∑ _i : Fin m, T / m = T := by
+      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+      field_simp
+    have hτ : ∀ i : Fin m, ((i : ℕ) : ℝ) * (T / m) ∈ Set.Icc (0 : ℝ) T := fun i =>
+      ⟨by positivity, by
+        calc ((i : ℕ) : ℝ) * (T / m) ≤ m * (T / m) := by
+              gcongr
+              exact_mod_cast i.2.le
+          _ = T := by field_simp⟩
+    have h := dist_scheme_le hP hs hδ m (fun _ => T / m) (fun i => ((i : ℕ) : ℝ) * (T / m))
+      (fun _ => div_nonneg hT hm'.le) (fun x i => hss' x _ (hτ i)) x
+    rw [hsum] at h
+    unfold equalScheme
+    exact h.trans (le_of_eq (by ring))
+
+@[blueprint "lem:ode-equal-scheme-uniformdist"
+  (statement := /-- \textbf{(Stability of equal-step schemes in $d_\infty$.)} If $s(\cdot,\tau)$
+    is $\Lambda_s$-Lipschitz for every $\tau$ and $T \ge 0$, then for every drift $s'$ and every
+    $m \ge 0$,
+    $$d_\infty(\Phi_{s,m}, \Phi_{s',m}) \le Te^{\Lambda_sT}\,\|s - s'\|_\infty ,
+    \qquad \|s - s'\|_\infty = \sup_{x \in K,\ \tau \in [0,T]}\|s(x,\tau) - s'(x,\tau)\| .$$
+    (Only the Lipschitz constant of $s$ is used; $s'$ may be any drift.) -/)]
+theorem uniformDist_equalScheme_le (hP : IsProjectionOnto K proj) {s s' : K → ℝ → E} {Λ : ℝ≥0}
+    (hs : ∀ τ, LipschitzWith Λ (fun x => s x τ)) {T : ℝ} (hT : 0 ≤ T) (m : ℕ) :
+    uniformDist (equalScheme hP s T m) (equalScheme hP s' T m) ≤
+      ENNReal.ofReal (T * Real.exp (Λ * T)) * edist (restrictDrift T s) (restrictDrift T s') := by
+  /-- If $\|s - s'\|_\infty = \infty$ the bound is trivial unless $T = 0$, when both schemes are
+    the identity; otherwise apply `lem:ode-equal-scheme-dist` with
+    $\delta = \|s - s'\|_\infty$ and take the supremum over $x$. -/
+  by_cases htop : edist (restrictDrift T s) (restrictDrift T s') = ⊤
+  · rcases eq_or_lt_of_le hT with hT0 | hT0
+    · subst hT0
+      rw [equalScheme_zero, equalScheme_zero]
+      refine (iSup_le fun x => ?_).trans zero_le
+      simp
+    · rw [htop, ENNReal.mul_top (ENNReal.ofReal_pos.2 (by positivity)).ne']
+      exact le_top
+  · refine iSup_le fun x => ?_
+    rw [edist_dist, ← ENNReal.ofReal_toReal htop, ← ENNReal.ofReal_mul (by positivity)]
+    refine ENNReal.ofReal_le_ofReal ?_
+    refine dist_equalScheme_le hP hs hT ENNReal.toReal_nonneg (fun x τ hτ => ?_) m x
+    rw [← dist_eq_norm, ← ENNReal.ofReal_le_iff_le_toReal htop, ← edist_dist]
+    exact edist_apply_le_edist_restrictDrift T s s' x hτ
+
+@[blueprint "lem:ode-equal-scheme-image-covering"
+  (statement := /-- (Covering the $m$-step schemes.) Under the hypotheses of
+    `lem:ode-equal-scheme-uniformdist` for every $s \in \mathcal S_T$, the image of an
+    $\varepsilon e^{-\Lambda_sT}/T$-cover of $\mathcal S_T$ (in $\|\cdot\|_\infty$ on
+    $K \times [0,T]$, centres extended by $0$ outside $[0,T]$) under $s \mapsto \Phi_{s,m}$ is an
+    $\varepsilon$-cover of $\{\Phi_{s,m} : s \in \mathcal S_T\}$; hence
+    $N^{\mathrm{ext}}(\{\Phi_{s,m} : s \in \mathcal S_T\}, d_\infty, \varepsilon)
+    \le N^{\mathrm{ext}}(\mathcal S_T, \|\cdot\|_\infty, \varepsilon e^{-\Lambda_sT}/T)$. -/)]
+theorem externalCoveringNumber_equalScheme_image_le (hP : IsProjectionOnto K proj)
+    {𝒮 : Set (K → ℝ → E)} {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ))
+    {T : ℝ} (hT : 0 ≤ T) (m : ℕ) (ε : ℝ≥0) :
+    externalCoveringNumber (X := UnifMaps K) ε ((fun s => equalScheme hP s T m) '' 𝒮) ≤
+      externalCoveringNumber (X := DriftSpace K T) (ε / (T * Real.exp (Λ * T)).toNNReal)
+        (restrictDrift T '' 𝒮) := by
+  set a : ℝ≥0 := (T * Real.exp (Λ * T)).toNNReal with ha
+  have hoa : ENNReal.ofReal (T * Real.exp (Λ * T)) = (a : ℝ≥0∞) := by rw [ha]; rfl
+  obtain ⟨C, hC, hCe⟩ := exists_isCover_encard_eq_externalCoveringNumber (X := DriftSpace K T)
+    (ε / a) (restrictDrift T '' 𝒮)
+  have hcover : IsCover (X := UnifMaps K) ε ((fun s => equalScheme hP s T m) '' 𝒮)
+      ((fun c => equalScheme hP (extendDrift T c) T m) '' C) := by
+    rintro _ ⟨s, hs, rfl⟩
+    obtain ⟨c, hc, hsc⟩ := hC ⟨s, hs, rfl⟩
+    refine ⟨_, ⟨c, hc, rfl⟩, ?_⟩
+    calc edist (toUnifMaps (equalScheme hP s T m))
+          (toUnifMaps (equalScheme hP (extendDrift T c) T m))
+        = uniformDist (equalScheme hP s T m) (equalScheme hP (extendDrift T c) T m) := rfl
+      _ ≤ ENNReal.ofReal (T * Real.exp (Λ * T)) *
+            edist (restrictDrift T s) (restrictDrift T (extendDrift T c)) :=
+          uniformDist_equalScheme_le hP (h𝒮 s hs) hT m
+      _ = ENNReal.ofReal (T * Real.exp (Λ * T)) * edist (restrictDrift T s) c := by
+          rw [restrictDrift_extendDrift]
+      _ ≤ ENNReal.ofReal (T * Real.exp (Λ * T)) * ((ε / a : ℝ≥0) : ℝ≥0∞) :=
+          mul_le_mul_right hsc _
+      _ = ((a * (ε / a) : ℝ≥0) : ℝ≥0∞) := by rw [ENNReal.coe_mul, hoa]
+      _ ≤ ε := by
+          rw [ENNReal.coe_le_coe]
+          by_cases ha0 : a = 0
+          · simp [ha0]
+          · rw [mul_comm, div_mul_cancel₀ _ ha0]
+  rw [← hCe]
+  exact hcover.externalCoveringNumber_le_encard.trans (Set.encard_image_le _ _)
+
+@[blueprint "lem:ode-equal-scheme-class-subset-union"
+  (statement := /-- $E_T(k) \subseteq \{\mathrm{id}\} \cup \bigcup_{m=1}^k
+    \{\Phi_{s,m} : s \in \mathcal S_T\}$. -/)]
+theorem equalSchemeClass_subset_union (hP : IsProjectionOnto K proj) (𝒮 : Set (K → ℝ → E))
+    (T : ℝ) (k : ℕ) :
+    equalSchemeClass hP 𝒮 T k ⊆
+      {id} ∪ ⋃ m ∈ Finset.Icc 1 k, (fun s => equalScheme hP s T m) '' 𝒮 := by
+  rintro _ ⟨s, hs, m, hm, rfl⟩
+  rcases Nat.eq_zero_or_pos m with rfl | hm0
+  · exact Or.inl rfl
+  · exact Or.inr (Set.mem_iUnion₂.2 ⟨m, Finset.mem_Icc.2 ⟨hm0, hm⟩, ⟨s, hs, rfl⟩⟩)
+
+@[blueprint "lem:ode-equal-scheme-class-covering"
+  (statement := /-- \textbf{(Covering bound for equal-step schemes.)} If every drift
+    $s \in \mathcal S_T$ is $\Lambda_s$-Lipschitz in $x$ and $T \ge 0$, then for every
+    $k \ge 0$ and $\varepsilon \ge 0$,
+    $$N^{\mathrm{ext}}\bigl(E_T(k), d_\infty, \varepsilon\bigr)
+      \le 1 + k\,N^{\mathrm{ext}}\bigl(\mathcal S_T, \|\cdot\|_\infty,
+      \varepsilon e^{-\Lambda_sT}/T\bigr)$$
+    (the radius is $\varepsilon/(Te^{\Lambda_sT})$, equal to $0$ when $T = 0$). -/)]
+theorem equalSchemeClass_covering (hP : IsProjectionOnto K proj) {𝒮 : Set (K → ℝ → E)}
+    {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ)) {T : ℝ} (hT : 0 ≤ T)
+    (k : ℕ) (ε : ℝ≥0) :
+    externalCoveringNumber (X := UnifMaps K) ε (equalSchemeClass hP 𝒮 T k) ≤
+      1 + k * externalCoveringNumber (X := DriftSpace K T)
+        (ε / (T * Real.exp (Λ * T)).toNNReal) (restrictDrift T '' 𝒮) := by
+  /-- Subadditivity over the union $\{\mathrm{id}\} \cup \bigcup_{m=1}^k\{\Phi_{s,m}\}$ and
+    `lem:ode-equal-scheme-image-covering` for each $m$. -/
+  refine (externalCoveringNumber_mono_set (X := UnifMaps K)
+    (equalSchemeClass_subset_union hP 𝒮 T k)).trans ?_
+  refine (externalCoveringNumber_union_le _ _ _).trans (add_le_add ?_ ?_)
+  · exact (externalCoveringNumber_le_encard_self (X := UnifMaps K) _).trans
+      (Set.encard_singleton _).le
+  · refine (externalCoveringNumber_biUnion_le _ _ _).trans ?_
+    calc ∑ m ∈ Finset.Icc 1 k, externalCoveringNumber (X := UnifMaps K) ε
+          ((fun s => equalScheme hP s T m) '' 𝒮)
+        ≤ ∑ _m ∈ Finset.Icc 1 k, externalCoveringNumber (X := DriftSpace K T)
+            (ε / (T * Real.exp (Λ * T)).toNNReal) (restrictDrift T '' 𝒮) :=
+          Finset.sum_le_sum fun m _ => externalCoveringNumber_equalScheme_image_le hP h𝒮 hT m ε
+      _ = _ := by
+          rw [Finset.sum_const, Nat.card_Icc, nsmul_eq_mul]
+          simp
+
+@[blueprint "lem:ode-equal-scheme-class-mono"
+  (statement := /-- The equal-step scheme classes are nested: $E_T(k) \subseteq E_T(k+1)$. -/)]
+theorem equalSchemeClass_mono (hP : IsProjectionOnto K proj) (𝒮 : Set (K → ℝ → E)) (T : ℝ) :
+    Monotone (equalSchemeClass hP 𝒮 T) := by
+  intro k l hkl f hf
+  obtain ⟨s, hs, m, hm, rfl⟩ := hf
+  exact ⟨s, hs, m, hm.trans hkl, rfl⟩
+
+@[blueprint "lem:ode-equal-scheme-class-subset"
+  (statement := /-- $E_T(k) \subseteq B_T(k)$ when $0 \le T \le h_0$ (the equal steps $T/m$,
+    $1 \le m \le k$, are admissible). -/)]
+theorem equalSchemeClass_subset_schemeBall (hP : IsProjectionOnto K proj)
+    (𝒮 : Set (K → ℝ → E)) {h₀ T : ℝ} (hT : 0 ≤ T) (hTh : T ≤ h₀) (k : ℕ) :
+    equalSchemeClass hP 𝒮 T k ⊆ schemeBall hP 𝒮 h₀ T k := by
+  rintro _ ⟨s, hs, m, hm, rfl⟩
+  rcases Nat.eq_zero_or_pos m with rfl | hm0
+  · exact ⟨s, hs, 0, Nat.zero_le _, finZeroElim, finZeroElim, fun i => i.elim0, fun i => i.elim0,
+      by simp [hT], rfl⟩
+  · have hm1 : (1 : ℝ) ≤ m := by exact_mod_cast hm0
+    exact schemeBall_mono hP 𝒮 h₀ T hm
+      (equalScheme_mem_schemeBall hP hs hT hm0 ((div_le_self hT hm1).trans hTh))
+
+@[blueprint "lem:ode-scheme-entropy"
+  (statement := /-- \textbf{(Explicit entropy of equal-step schemes.)} Let every drift
+    $s \in \mathcal S_T$ be $\Lambda_s$-Lipschitz in $x$ and $T \ge 0$. Then for all
+    $s, s' \in \mathcal S_T$ and $m \ge 0$,
+    $$d_\infty(\Phi_{s,m}, \Phi_{s',m}) \le Te^{\Lambda_sT}\,\|s - s'\|_\infty ,
+    \qquad \|s - s'\|_\infty := \sup_{x \in K,\ \tau \in [0,T]}\|s(x,\tau) - s'(x,\tau)\| ,$$
+    and consequently, for every $k \ge 0$ and $\varepsilon \ge 0$,
+    $$N^{\mathrm{ext}}\bigl(E_T(k), d_\infty, \varepsilon\bigr)
+      \le 1 + k\,N^{\mathrm{ext}}\bigl(\mathcal S_T, \|\cdot\|_\infty,
+      \varepsilon e^{-\Lambda_sT}/T\bigr) .$$
+    The entropy-integral consequence is `lem:ode-scheme-entropy-profile`. -/)]
+theorem lem_ode_scheme_entropy (hP : IsProjectionOnto K proj) {𝒮 : Set (K → ℝ → E)}
+    {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ)) {T : ℝ} (hT : 0 ≤ T) :
+    (∀ s ∈ 𝒮, ∀ s' ∈ 𝒮, ∀ m : ℕ,
+      uniformDist (equalScheme hP s T m) (equalScheme hP s' T m) ≤
+        ENNReal.ofReal (T * Real.exp (Λ * T)) *
+          edist (restrictDrift T s) (restrictDrift T s')) ∧
+    (∀ (k : ℕ) (ε : ℝ≥0),
+      externalCoveringNumber (X := UnifMaps K) ε (equalSchemeClass hP 𝒮 T k) ≤
+        1 + k * externalCoveringNumber (X := DriftSpace K T)
+          (ε / (T * Real.exp (Λ * T)).toNNReal) (restrictDrift T '' 𝒮)) :=
+  ⟨fun s hs _s' _ m => uniformDist_equalScheme_le hP (h𝒮 s hs) hT m,
+    fun k ε => equalSchemeClass_covering hP h𝒮 hT k ε⟩
+
+@[blueprint "lem:ode-scheme-entropy-profile"
+  (statement := /-- \textbf{(Entropy integral of equal-step schemes.)} Let $K$ be compact,
+    every drift $s \in \mathcal S_T$ be $\Lambda_s$-Lipschitz in $x$, $T > 0$, and suppose
+    $N^{\mathrm{ext}}(\mathcal S_T, \|\cdot\|_\infty, \rho) < \infty$ for all $\rho > 0$ and
+    that $\varepsilon \mapsto \sqrt{\log N^{\mathrm{ext}}(\mathcal S_T, \|\cdot\|_\infty,
+    \varepsilon e^{-\Lambda_sT}/(2T))}$ is integrable on $[0, D_K]$, $D_K = \mathrm{diam}(K)$.
+    Then for every sample $S$ and every $k$, for the class $E_T(k)$,
+    $$\mathsf V_k(S) \le D_K\sqrt{\log(k+1)} + \int_0^{D_K}\sqrt{\log N^{\mathrm{ext}}\bigl(
+      \mathcal S_T, \|\cdot\|_\infty, \varepsilon e^{-\Lambda_sT}/(2T)\bigr)}\,d\varepsilon .$$
+    (The paper has $\varepsilon e^{-\Lambda_sT}/T$: the factor $2$ is the price of comparing the
+    internal covering number in $d_S$ defining $\mathsf V_k(S)$ with the external one in
+    $d_\infty$, `lem:covering-empSpace-le-external-unifMaps`.) -/)]
+theorem equalSchemeClass_profile (hK : IsCompact K) (hP : IsProjectionOnto K proj)
+    {𝒮 : Set (K → ℝ → E)} {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ))
+    {T : ℝ} (hT : 0 < T) {n : ℕ} (S : Fin n → K) (k : ℕ)
+    (hfin : ∀ ρ : ℝ≥0, 0 < ρ →
+      externalCoveringNumber (X := DriftSpace K T) ρ (restrictDrift T '' 𝒮) ≠ ⊤)
+    (hint : IntervalIntegrable (fun ε : ℝ => √(Real.log (externalCoveringNumber
+      (X := DriftSpace K T) (ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal)
+      (restrictDrift T '' 𝒮) : ℝ≥0∞).toReal)) volume 0 (Metric.diam (Set.univ : Set K))) :
+    entropyIntegral (Y := EmpSpace S) (empDiam S (equalSchemeClass hP 𝒮 T k))
+        (equalSchemeClass hP 𝒮 T k) ≤
+      Metric.diam (Set.univ : Set K) * √(Real.log (k + 1)) +
+        ∫ ε in (0 : ℝ)..Metric.diam (Set.univ : Set K), √(Real.log (externalCoveringNumber
+          (X := DriftSpace K T) (ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal)
+          (restrictDrift T '' 𝒮) : ℝ≥0∞).toReal) := by
+  /-- Pointwise, $\log N(E_T(k), d_S, \varepsilon) \le \log N^{\mathrm{ext}}(E_T(k), d_\infty,
+    \varepsilon/2) \le \log(1 + kN) \le \log(k+1) + \log N$ with
+    $N = N^{\mathrm{ext}}(\mathcal S_T, \varepsilon e^{-\Lambda_sT}/(2T))$; take square roots
+    termwise and integrate over $(0, D_K]$, using $D_k(S) \le D_K$. -/
+  haveI : CompactSpace K := isCompact_iff_compactSpace.1 hK
+  have hgint : IntervalIntegrable (fun ε : ℝ => √(Real.log (k + 1)) +
+      √(Real.log (externalCoveringNumber (X := DriftSpace K T)
+        (ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal)
+        (restrictDrift T '' 𝒮) : ℝ≥0∞).toReal)) volume 0 (Metric.diam (Set.univ : Set K)) :=
+    intervalIntegrable_const.add hint
+  refine (entropyIntegral_le_integral_of_le (empDiam_nonneg S _) (empDiam_le_diam_univ S _)
+    hgint fun ε hε => ?_).trans (le_of_eq ?_)
+  · have hε0 : 0 < ε := hε.1
+    have hTe : 0 < T * Real.exp (Λ * T) := by positivity
+    have hρ : 0 < ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal :=
+      div_pos (div_pos (Real.toNNReal_pos.2 hε0) two_pos) (Real.toNNReal_pos.2 hTe)
+    have hN := hfin _ hρ
+    have hcov := equalSchemeClass_covering hP h𝒮 hT.le k (ε.toNNReal / 2)
+    have h1 : metricEntropy (X := EmpSpace S) ε.toNNReal (equalSchemeClass hP 𝒮 T k) ≤
+        Real.log (externalCoveringNumber (X := UnifMaps K) (ε.toNNReal / 2)
+          (equalSchemeClass hP 𝒮 T k) : ℝ≥0∞).toReal :=
+      log_toReal_toENNReal_mono (ne_top_of_le_ne_top (one_add_mul_ne_top hN k) hcov)
+        (coveringNumber_empSpace_le_externalCoveringNumber_unifMaps S _ _)
+    have h2 := log_toReal_le_of_le_one_add_mul hN hcov
+    exact (Real.sqrt_le_sqrt (h1.trans h2)).trans (sqrt_add_le _ _)
+  · rw [intervalIntegral.integral_add intervalIntegrable_const hint,
+      intervalIntegral.integral_const]
+    simp only [smul_eq_mul, sub_zero]
+
+end SchemeEntropy
 
 end LeanDeepgen

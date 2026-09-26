@@ -1,14 +1,14 @@
 # 形式化の現状 (SUMMARY.md)
 
-更新日: 2026-09-25（第 9 回：FoML.ToMathlib/ToFoML へ移行，公開）
+更新日: 2026-09-26（第 11 回：原稿の新付録「深層 ReLU ネットワーク」lem:relu-layer-covering / prop:relu-regimes を形式化）
 
 ## 概要
 
 - 対象: "Why and When Deep is Better than Shallow: Implementation-Agnostic State-Transition Model of Deep Learning"（ICLR 2027 投稿原稿）．
 - 環境: Lean v4.32.0，Mathlib v4.32.0，LeanArchitect v4.32.0，FoML（lean-rademacher `main`）．`lake build` と `./script/generate.sh --no-pdf`（blueprint web + checkdecls）が通る．
-- 規模: Lean 約 12,200 行（一般的道具 約 8,400 行は lean-rademacher へ移管），blueprint 575 ノード．**`sorry` は 0**．主要定理（thm:bv-general, thm:bv, thm:hidden-decomp(-depth), thm:sudakov-type, cor:matching, thm:rad.decomp.ent.ent, prop:hilbert-sg, prop:finite-lipschitz-sg, P1', P2, E2, cor:doubleexp, prop:profiles, tradeoff_PL, bernoulli_sudakov）の `#print axioms` は `propext, Classical.choice, Quot.sound` のみ．
+- 規模: Lean 約 15,500 行（一般的道具 約 8,400 行は lean-rademacher へ移管）．**`sorry` は 0**．主要定理（thm:bv-general, thm:bv, thm:hidden-decomp(-depth), thm:sudakov-type, cor:matching, thm:rad.decomp.ent.ent, prop:hilbert-sg, prop:finite-lipschitz-sg, P1', P2, E2, cor:doubleexp, prop:profiles, tradeoff_PL, bernoulli_sudakov，および新結果 prop:envelope, cor:envelope-profiles, lem:reachable-radius, lem:ode-scheme-entropy(-profile), lem:cot-branch-sample，ReLU 付録の lem:relu-layer-covering, prop:relu-regimes(-i/-ii/-iii/-iii-lower)）の `#print axioms` は `propext, Classical.choice, Quot.sound` のみ．
 - 計画: [PLAN.md](PLAN.md)．進捗: [PROGRESS.md](PROGRESS.md)．原稿への修正: [ToDraft.md](ToDraft.md)．
-- 検証: [comparator/](comparator/)（Challenge 55 定理 / Solution）を `./script/comparator.sh` で検査済み（statement 一致・公理 3 つのみ・kernel 受理）．
+- 検証: [comparator/](comparator/)（Challenge 55 定理 / Solution）を `./script/comparator.sh` で検査済み（statement 一致・公理 3 つのみ・kernel 受理）．2026-09-25 に新結果 6 定理（`prop_envelope`, `cor_envelope_profiles`, `lem_reachable_radius`, `lem_ode_scheme_entropy`, `equalSchemeClass_profile`, `lem_cot_branch_sample`）を Challenge/Solution/config に追加し，2026-09-25 に再実行済み（61 定理）．2026-09-26 に ReLU 付録の 3 定理（`lem_relu_layer_covering`, `prop_relu_regimes`, `prop_relu_regimes_iii_lower`；計 64 定理）を Challenge/Solution/config に追加（両ファイルはビルド済み；Comparator の再実行は未実施）．
 - 上流: `ToMathlib`/`ToFoML` は lean-rademacher に統合済み（PR #12 マージ，FoML rev `db9f187`）．本プロジェクトは `FoML.ToMathlib`/`FoML.ToFoML` を依存として参照し，ローカルコピーは撤去．
 - 公開: https://github.com/shosonoda/lean-deepgen（Lean 一式），blueprint（web + PDF）: https://shosonoda.github.io/lean-deepgen/ ．公開側 CI（`ci.yml`）と Pages（`blueprint.yml`，web 版のみ；`pages.yml`，ローカル生成物）で検証・デプロイ．
 
@@ -18,9 +18,17 @@
 |---|---|---|---|
 | 設定（Sec. 2） | 13 / 13（+ 補助定義 7） | — | 基本補題 35 / 35 |
 | 主定理（Sec. 3） | 仮定 3 / 3 | 9 / 9 | **9 / 9 完全証明** |
-| 増大度（Sec. 4, App. F） | — | 14 / 14 | 14 / 14（基本補題，E1, E1', E2, P1, P1', P2, E3, cor:superexp, cor:doubleexp, Arzelà–Ascoli 系） |
+| 増大度（Sec. 4, App. F） | — | 17 / 17 | 17 / 17（基本補題，E1, E1', E2, P1, P1', P2, E3, cor:superexp, cor:doubleexp, Arzelà–Ascoli 系，被覆包絡 prop:envelope，cor:envelope-profiles (a)(b)，lem:reachable-radius） |
 | プロファイル・トレードオフ（Sec. 4.2, 5） | — | 4 / 4 | 4 / 4（lem:log-split，prop:profiles (i)–(iv)，tab:tradeoff の 4 regime を `IsTheta` で） |
-| 例・応用（App.） | — | 17 / 17 | 17 / 17（prop:cot-append, prop:ode-fixedpoint, prop:ode-horizon は高確率評価＋明示深さの厳密版；lem:ode-euler-error も証明済み） |
+| 例・応用（App. J–M） | — | 22 / 22 | 22 / 22（prop:cot-append, prop:ode-fixedpoint, prop:ode-horizon は高確率評価＋明示深さの厳密版；lem:ode-euler-error，等ステップスキームの lem:ode-scheme-entropy，分岐計算の標本依存被覆 lem:cot-branch-sample，深層 ReLU の lem:relu-layer-covering，prop:relu-regimes (i)–(iii) 上界と (iii) の E2 下界も証明済み） |
+
+## 原稿の枝刈り（2026-09-26）
+
+2026-09-26 に原稿（`../draft-metric-deep`，`06iclr2027/`）の付録が整理され，以下の項目が本文から削除された．**Lean 側のモジュールは変更しておらず，これらは引き続き形式化・証明済みのまま**である：決定的エントロピー分解の付録（`sec:rad.decomp.ent.ent`, `thm:rad.decomp.ent.ent`, `thm:rad.decomp.ent.ent-sample`, `rem:entent-sample`, `eq:det-entropy-decomp-emp`, `eq:det-entropy-decomp-pop`, `ass:ent-readout`, `ass:ent-transition`）；自己写像のコンパクト Arzelà–Ascoli の付録（`sec:cpt-functions-aaa`, `thm:caa`, `thm:maa`, `thm:pmaa`, `lem:oaa`, `cor:aa-semigroup-saturation`）；Guivarc'h 次元の付録（`sec:guivarch`, `thm:guivarch-bass`, `thm:breuillard-large-balls`, `cor:nilpotent-entropy`）；増大度付録の例 `ex:p1-circle`, `ex:p1-finite`, `ex:p2-noncpt-abel-iso`, `ex:p2-cpt-abel-exp`, `ex:p2-cpt-dheisenberg`, `ex:e1-free-diverge`, `ex:e2-pingpong-plinear`（`ex:p1-cantor`, `ex:p2-noncpt-ut`, `ex:e1-free-bounded`, `ex:e2-pingpong-subshift` は存置）．また「4 つの代表的レジーム」の付録（`sec:app-tradeoff-regimes`）は `sec:proof.tradeoff` に統合され，表 `tab:tradeoff` は表示式 `eq:tradeoff-table` に，表 `tab:profiles` / `tab:scorecard` / `tab:cot-summary` は箇条書き（内容は同一）になった．`comparator/config.json` に載る定理・条件ラベルはすべて維持されるが，このうち `thm_rad_decomp_ent_ent`，`thm_rad_decomp_ent_ent_sample`，`thm_caa` の 3 つは，もはや本文中の記載に対応しない（`comparator/README.md` と `home_page/comparator.html` に注記済み）．
+
+## 原稿の付録再編、第 2 段（2026-09-26）
+
+同日中に原稿の付録がさらに整理され，付録 A–M の統一テンプレート（intro/statement/proof/examples/remarks）が導入された．旧付録「実装命題の証明」は独立の付録として存在しなくなり，`prop:implementation` の証明は付録 J（`sec:examples-regime`）の J.3 に統合された．**ラベル（`thm:...`, `prop:...`, `lem:...`, `cond:...`, `sec:...`）は不変**であり，Lean 側の変更は不要である．`blueprint/src/content.tex` の章・節見出しを新しい付録 A–M の対応関係に合わせて更新した（`\inputleanmodule`/`\inputleannode` はすべて維持，節の移動・改題のみ）：Growth 章の「Basic facts on covering and packing numbers」は付録 A，Bounds 章の bias–variance/hidden–output/Sudakov は付録 C/D/E，`Examples/Readout`（readout 関連の系）は付録 E（Bounds 章に移動），Growth 章の増大度条件 4 節は付録 F.1–F.4，`Growth/Envelope` は付録 G，Profiles 章と `Bounds/Variance` は付録 H，Tradeoff 章は付録 I，Examples 章（Implementation/ReLU/ChainOfThought/ODE）は付録 J–M．本文に対応しない `Bounds/EntropyDecomp(Sample)` と `Growth/ArzelaAscoli` の節見出しには "Tools not printed in the manuscript" を付記した．
 
 ## Mathlib との対応
 
@@ -49,6 +57,10 @@
 | tab:profiles（機構 → プロファイル → R̂ の評価） | `Bounds/Variance`（`varTerm`, `var_profile_p1/p2_bounded/p2_linear/finite`） |
 | Dudley 積分 `V_k(S)`，4 プロファイル | `entropyIntegral D A`，`profile_saturation` 等（`Profiles/Profiles`） |
 | 語 `f_{i_k} ∘ ⋯ ∘ f_{i_1}`，E1/E1'/E2 | `wordOf f u`（`List (Fin r)`），`cond_e1_free_iso`，`cond_e1p_theoremC`，`cond_e2_pingpong`（`Growth/Exponential`） |
+| 被覆包絡 `S_m(Λ) = ∑_{i<m} Λ^i`，`N(B(k,F),d_∞,ε) ≤ 1 + ∑_m N(F,ε/S_m)^m ≤ 1 + k N(F,ε/S_k)^k`，包絡からのプロファイル，到達半径 | `geomSum`（`Growth/Defs`），`prop_envelope`，`envelope_entropy_parametric/nonparametric`，`envelope_profile_parametric/nonparametric`，`cor_envelope_profiles`，`dist_wordBall_le`，`lem_reachable_radius`（`Growth/Envelope`；語の被覆は `lem:impl-word-error` の望遠評価を再利用） |
+| 等ステップ Euler スキーム `E_T(k)`，ドリフトの sup ノルム `‖s − s'‖_∞`（`K × [0,T]` 上） | `equalSchemeClass`，`DriftSpace K T := (K × Icc 0 T) →ᵤ E`，`restrictDrift`，`uniformDist_equalScheme_le`（離散 Grönwall `dist_scheme_le`），`equalSchemeClass_covering`，`lem_ode_scheme_entropy`，`equalSchemeClass_profile`（`Examples/ODE`） |
+| ReLU ブロック `f_θ = Π_K(V relu(Wx+b)+c)`（`W : E →L[ℝ] ℝ^w`，`V : ℝ^w →L[ℝ] E`，作用素ノルム），クラス `F_Λ`，パラメータ数 `p = 2mw+w+m`，被覆定数 `C_F`，有限次元の球の packing 数の体積評価 `M(B(x,ρ),δ) ≤ (1+2ρ/δ)^q`（Haar 測度），`(1+C/ε)` 型仮定の包絡プロファイル，expand-and-reset 写像 `g₀, g₁` と E2 データ | `reluVec`，`ReLUParam E w`，`reluBlock`，`reluParamSet`，`reluClass`，`reluCoverConst`，`packingNumber_closedBall_le`，`externalCoveringNumber_image_le_coveringNumber`（集合上 Lipschitz な像の被覆），`envelope_profile_one_add`，`uniformDist_reluBlock_le`，`externalCoveringNumber_reluClass_le`，`lem_relu_layer_covering`，`prop_relu_regimes(_i/_ii/_iii/_i_profile/_ii_profile)`，`expandReset₀/₁`，`expandResetParam₀/₁`，`expandReset_pingpong`，`prop_relu_regimes_iii_lower`（`Examples/ReLU`） |
+| 分岐計算の成功 cylinder `[u]`，閉形式 eq:cot-branch-closed-form，標本依存被覆 | `InCylinder`（決定可能），`cot_branch_closed_form`，`inCylinder_unique`，`sum_card_cylinder_le`，`sq_empDist_wordOf_le`，`cot_branch_sample`，`cot_branch_sample_profile`，`lem_cot_branch_sample`（`Examples/ChainOfThought`） |
 
 ## 原稿と Lean の主な差異
 
@@ -62,6 +74,9 @@
 - **tab:profiles**: 内部被覆数の非単調性のため `N(A, d_S, ε) ≤ N^ext(A, d_∞, ε/2)` を経由し，P2 の定数に `2^D` が付く．
 - **例**: ODE の射影 `Π_K` は Mathlib に無いので `IsProjectionOnto K proj`（像が K，K 上恒等，1-Lipschitz）を仮定．勾配ステップの縮小は強単調性と co-coercivity を仮定に置く（強凹＋smooth から従う）．
 - **トレードオフ**: Lambert W は Mathlib に無いので PL の深さは `(2βn / log(2βn))^{1/(2β)}` で直接定義し，`k^{2β} log k / n → 1` を証明．
+- **新結果（2026-09-25）の V_k(S) 評価**: `V_k(S)` は `d_S` の内部被覆数で定義されているため，原稿の外部被覆数による評価は `N(A, d_S, ε) ≤ N^ext(A, ·, ε/2)`（D21 と同じ橋渡し）を経由し，スケールに因子 2 が付く：cor:envelope-profiles (a) は `log(C/D̄)` → `log(2C/D̄)`，(b) は `S_k^{q/2}` → `(2S_k)^{q/2}`，lem:ode-scheme-entropy の積分は半径 `ε e^{−ΛT}/(2T)`，lem:cot-branch-sample は加法定数 `√(2 log 2)`．`d_∞` での被覆数評価自体（prop:envelope，`log N(B(k,F),d_∞,ε)` の評価，`N(E_T(k),d_∞,ε)`，`N(B(k,F_b),d_S,ε)` の外部被覆数）は原稿どおり．
+- **ReLU 付録（2026-09-26）**: 状態空間は有限次元実内積空間 `E`（`m = finrank ℝ E`）の有界集合 `K`（部分型）と 1-Lipschitz retraction `IsProjectionOnto K proj`；`R_K` は `‖x‖ ≤ R_K` を満たす任意の定数（`R_K ≥ 0`）．`W, V` は連続線型写像（作用素ノルム）で，被覆定数は `C_F = 2(2β_W R_K + β_W + β + 1) max{β_W, β}`（原稿の `8√max{m,w} max{β_W,1} max{β_W R_K+β, β_W, 1}` と同形；作用素ノルムで直接体積評価するため `√max{m,w}` は不要）．(i) は `K ≠ ∅`，`0 < Λ` を仮定し全ての `k` で成立（P1'）；(ii)/(iii) の包絡プロファイルは仮定 `log N(F,ε) ≤ p log(1 + C_F/ε)` 用の変種 `envelope_profile_one_add`（`cor:envelope-profiles`(a) の `log(2C/D̄)` が `log(1 + 2C_F/D̄)` になる）で述べる．(iii) の下界は `m = 1`，`K = [0,1]`，クリッピング retraction，幅 `w ≥ 4`（原稿は `w ≥ 5`），`Λ ≥ 20`，`β_W ≥ 41`，`β ≥ 2` で `N(B(k,F_Λ), d_∞, ε) ≥ 2^k`（`ε < 1/16`）．
+- **新結果の追加仮定**: 原稿の `log N(F,ε) ≤ …` 型の仮定には `N(F,ε) < ∞` を併記（Lean では `log ∞ = log 0 = 0` の junk 値）；lem:ode-scheme-entropy の積分評価は `T > 0`，`N(𝒮_T, ρ) < ∞ (ρ > 0)`，majorant の可積分性を仮定；lem:reachable-radius は `c ≥ 0` を明記．逆に lem:cot-branch-sample の被覆評価は `ε ≤ 1` を使わず全ての `ε > 0` で成立．
 
 ## 未解決・注意点
 

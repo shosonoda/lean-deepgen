@@ -56,7 +56,20 @@
     "LeanDeepgen.Challenge.prop_ode_fixedpoint",
     "LeanDeepgen.Challenge.prop_ode_horizon",
     "LeanDeepgen.Challenge.thm_bernoulli_sudakov",
-    "LeanDeepgen.Challenge.thm_dudley_subgaussian"
+    "LeanDeepgen.Challenge.thm_dudley_subgaussian",
+    "LeanDeepgen.Challenge.prop_envelope",
+    "LeanDeepgen.Challenge.cor_envelope_profiles",
+    "LeanDeepgen.Challenge.lem_reachable_radius",
+    "LeanDeepgen.Challenge.lem_ode_scheme_entropy",
+    "LeanDeepgen.Challenge.equalSchemeClass_profile",
+    "LeanDeepgen.Challenge.lem_cot_branch_sample",
+    "LeanDeepgen.Challenge.lem_relu_layer_covering",
+    "LeanDeepgen.Challenge.prop_relu_regimes",
+    "LeanDeepgen.Challenge.prop_relu_regimes_iii_lower"
   ],
-  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"]
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ]
 }

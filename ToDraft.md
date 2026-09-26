@@ -163,3 +163,29 @@ Lean 側は以下の一般形で述べる（原稿にも反映する場合の文
 | W26 | 反映 | app-ode.tex | 時刻整合なしでも飽和 |
 | W27 | 反映 | supp-sudakov.tex | `z_{j,i}` 相異なる仮定を削除 |
 | W28 | 見送り | — | 原稿は `Φ_∞` 版を維持（Lean 未形式化のため原稿側は変更なし） |
+
+## 2026-09-25 (new results)
+
+原稿に追加された `prop:envelope`（`supp-envelope.tex`），`lem:ode-scheme-entropy`（`app-ode.tex`），`lem:cot-branch-sample`（`app-cot.tex`）の形式化（`Growth/Envelope`，`Examples/ODE`，`Examples/ChainOfThought`）で判明した修正候補．
+
+| # | 箇所 | 種別 | 内容 |
+|---|---|---|---|
+| N1 | `prop:envelope-restated` | 任意 | 第 2 不等式は `k ≥ 1` の断りなしに全ての `k ≥ 0` で成立（`ε/S_0 = 0` と読めば `N(F,0)^0 = 1`；Lean はこの形）．`F = ∅` でも成立（`B(k,∅) = {id}`）．中心が Lipschitz 不要である旨は既記 |
+| N2 | `cor:envelope-profiles` (a)(b) | 推奨 | (i) 仮定 `log N(F,d_∞,ε) ≤ p log(C/ε)`（(b) は `≤ c ε^{-q}`）には `N(F,d_∞,ε) < ∞` を明記（Lean では `log ∞ = 0` の junk 値により log 形だけでは空虚）．(ii) `V_k(S)` は `d_S` の（内部）被覆数で定義されるため，外部被覆数の包絡からの転送は `N(A,d_S,ε) ≤ N^ext(A,d_∞,ε/2)`（D21）を経由し，Lean の評価は (a) `√log(C/D̄)` → `√log(2C/D̄)`，(b) `S_k^{q/2}` → `(2S_k)^{q/2}` となる（「絶対定数を除いて」で吸収可，または `V_k` を外部被覆数で定義すれば原稿の形）．(iii) `d_∞` の entropy 評価 `log N(B(k,F),ε) ≤ log(k+1) + kp[log(C/ε) + log S_k]` は `0 < ε ≤ C` で成立し（`D̄` 不要），(b) の entropy 評価は任意の実数 `q` で成立（`0 < q < 2` は積分にのみ必要；`p ≥ 0` も積分にのみ必要） |
+| N3 | `lem:reachable-radius` | 推奨 | `c ≥ 0` を明記（`F = ∅` で `c < 0` を許すと `D_k(S)` の評価が偽）．二つの場合分けは統一形 `Λ₊^k R + c S_k(Λ)`，`Λ₊ = max{1,Λ}` で述べられる（Lean: `dist_wordBall_le`） |
+| N4 | `lem:ode-scheme-entropy` | 推奨 | (i) 距離評価 `d_∞(Φ_{s,m},Φ_{s',m}) ≤ T e^{Λ_s T}‖s−s'‖_∞` は `s` のみ Lipschitz なら成立（`s'` は任意のドリフト；被覆中心が `𝒮_T` に属さなくてよい）．(ii) `T = 0` では半径 `ε e^{-Λ_s T}/T` が未定義；`T > 0` を仮定するか，Lean のように半径 `ε/(T e^{Λ_s T})`（`T = 0` で `0`）と読む．(iii) `‖s−s'‖_∞` は `K × [0,T]` 上の sup（Lean: `DriftSpace K T = (K × [0,T]) →ᵤ E`）．(iv) `V_k(S)` の評価は `T > 0`，`N(𝒮_T,‖·‖_∞,ρ) < ∞ (ρ>0)`，被積分関数の可積分性を仮定し，半径は `ε e^{-Λ_s T}/(2T)`（内部/外部の因子 2，N2(ii) と同じ）．(v) `E_T(k) ⊂ B_T(k)` には `T ≤ h_0`（等ステップ `T/m` が許容）を要する．パラメトリックな drift の remark（`D_K √p (√log(CTe^{Λ_s T}/D_K) + √π/2)`）は未形式化（`lem:log-split` の数値的帰結） |
+| N5 | `lem:cot-branch-sample` | 任意 | (i) 被覆評価 `N(B(k,F_b),d_S,ε) ≤ 1 + r + ∑_j min{r^j,n,⌊ε^{-2}⌋}` は `ε ≤ 1` を使わず全ての `ε > 0` で成立（`⌊ε^{-2}⌋` は自然数の床）．(ii) `V_k(S)` の評価は Lean では `√log(k+1) + √log(1+r) + √(2 log 2) + √(π/2)`：加法定数 `√(2 log 2)` は内部被覆数（`V_k` の定義）と外部被覆数（本補題）の比較 `N(B,d_S,ε) ≤ N^ext(B,d_S,ε/2) ≤ 1 + r + 4kε^{-2}` に由来（`V_k` を外部被覆数で定義すれば原稿の形） |
+| N6 | `eq:cot-branch-closed-form` | 任意 | 空プログラム `u = ()` は `f_u = id`（閉形式は `|u| ≥ 1` で述べる；Lean: `cot_branch_closed_form` は `u ≠ []` を仮定，成功側 `f_u = σ^{|u|}` は空でも成立） |
+
+## 2026-09-26 (deep ReLU appendix)
+
+原稿の新付録 `06iclr2027/app-relu.tex`（`lem:relu-layer-covering`, `prop:relu-regimes`）の形式化（`Examples/ReLU`）で判明した修正候補．
+
+| # | 箇所 | 種別 | 内容 |
+|---|---|---|---|
+| R1 | `lem:relu-layer-covering` | 推奨 | (i) `R_K = sup_{x∈K}‖x‖` は「`‖x‖ ≤ R_K` on `K`（`R_K ≥ 0`）を満たす任意の定数」で十分（Lean はこの形）．(ii) (a) の評価で使うのは `‖V‖_op ≤ β_W`, `‖W'‖_op ≤ β_W`, `‖b'‖ ≤ β` の 3 つのみ（証明どおり）．(iii) (b) の定数は，作用素ノルムで直接体積評価すれば `C_F = 2(2β_W R_K + β_W + β + 1) max{β_W, β}`（Lean で証明した値）となり，Frobenius ノルム経由の因子 `√max{m,w}` は不要．原稿の `C_F = 8√max{m,w} max{β_W,1} max{β_W R_K+β, β_W, 1}` も同形で正しい（`max{β_W,1}·max{β_W R_K+β,…} ≥ β` なので `b, c` の球の半径 `β` も吸収される）が，どちらかに統一を．(iv) 体積評価 `N(B(ρ),δ) ≤ (1+2ρ/δ)^q` は packing 数（`M(B̄(x,ρ),δ) ≤ ⌊(1+2ρ/δ)^q⌋`）で証明し `N ≤ M` で被覆数へ転送（Lean: `packingNumber_closedBall_le`） |
+| R2 | `prop:relu-regimes` (i) | 推奨 | `K ≠ ∅`（P1' の不変集合 `A = K` の非空性）と `0 < Λ`（`log(1/Λ)`）を明記．結論は `k ≥ m(ε)` の断りなしに全ての `k` で成立（`cond:p1-ucont` の D12 と同じ）．`N(F_Λ^ℓ,ε) ≤ N(F_Λ,(1−Λ)ε)^ℓ` は `S_ℓ(Λ) ≤ 1/(1−Λ)` による（Lean: `externalCoveringNumber_words_le_of_lt_one`）；`∑_{ℓ<m} N^ℓ ≤ m N^m` は `N ≥ 1`（`F_Λ ≠ ∅`，零パラメータの定数写像）で成立．`V_k(S) = O(1)` は `N_∞(ε) := N(K,ε/4) + m(ε/2) N(F_Λ,(1−Λ)ε/2)^{m(ε/2)}` を majorant とする `prop:profiles`(i)（Lean は majorant の可積分性を仮定；`√log N_∞` の可積分性自体は未形式化） |
+| R3 | `prop:relu-regimes` (ii)(iii) 上界 | 推奨 | 包絡プロファイルは `cor:envelope-profiles`(a) の仮定 `log N(F,ε) ≤ p log(C/ε)` ではなく `log N(F,ε) ≤ p log(1 + C_F/ε)`（`lem:relu-layer-covering` の形）から導く必要がある（前者は `ε = C` で `N(F,C) = 1` を要求し ReLU クラスでは成立しない）．`1 + 2C S_k/ε ≤ (1 + 2C/D̄) S_k D̄/ε`（`ε ≤ D̄`）により結論は `V_k(S) ≤ D̄(√log(k+1) + √(kp log k) + k√(p log Λ₊) + √(kp)(√log(1 + 2C_F/D̄) + √π/2))`（Lean: `envelope_profile_one_add`；`(1 + C/ε)` 型の系として `cor:envelope-profiles` に併記すると便利）．`Λ ≤ 1` で `Λ₊ = 1` の項が消え `O(√(kp log k))`，`Λ > 1` で `O(k√(p log Λ))`．仮定は `K` 有界，`D_K ≤ D̄`，`D̄ > 0`，`k ≥ 1`（(ii) の P1 飽和のみ `K` コンパクト） |
+| R4 | `prop:relu-regimes` (iii) 下界 | 推奨 | (i) 2 つの expand-and-reset 写像は内部折れ点 3 個ずつなので幅 4 の ReLU ブロック（`w ≥ 4` で十分；原稿の `w ≥ 5` は弱い形）．(ii) 「`β_W, β` は表現の重みノルム以上」の具体値: `‖W‖_op = ‖(1,1,1,1,0,…)‖ = 2`，`‖b‖ ≤ 2`，`‖V‖_op ≤ 41`（`g₀`: `v = (−12, 52/3, −76/3, 20)`，`‖v‖² = 13376/9`；`g₁`: `v = (−20, 76/3, −52/3, 0)`），`‖c‖ ≤ 5/8`．Lean は `β_W ≥ 41`, `β ≥ 2`, `Λ ≥ 20` で述べる．(iii) `g₁` の最後の区間 `[1−η, 1]` の傾きは `−12`（`(1−η,1) → (1,5/8)`），`g₀` の最初の区間の傾きも `−12`；Lipschitz 定数 20 は `[η,1/4−η]`→`[1/4−η,1/4]` 等の傾き `−20` から |
+| R5 | `sec:relu-computed` | 任意 | E2 の検証で「アンカーが両チャンバーの外」は `3/8, 5/8 ∉ [0,1/4] ∪ [3/4,1]` から，`f_i(A) ⊆ A` はリセット条件から従う；`f_i(V_i) = [0,1]` は `x = η + (3/16)y`（resp. `3/4 + η + (3/16)y`）による全射性．`d(q,{a_0,a_1}) = 1/8` より `ε < 1/16` で `N ≥ 2^k`（E2 の `2ε < α`） |
+| R6 | `sec:relu-setting` | 任意 | 「`‖V‖_op‖W‖_op` は常に `lip(f_θ)` の上界」は Lean では未使用（`F_Λ` の定義に Lipschitz 制約を直接入れる）．`F_Λ ≠ ∅`（`θ = 0`）．`β_W, β, Λ ≥ 0` を明記 |

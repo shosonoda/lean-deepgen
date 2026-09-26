@@ -12,6 +12,8 @@ theorems about them:
 
 * `wordOf f u = f_{i_k} ∘ ⋯ ∘ f_{i_1}` for a finite family `f : Fin r → X → X` and a word
   `u : List (Fin r)` (E1, E1', E2; theorems in `LeanDeepgen.Growth.Exponential`);
+* `geomSum Λ m = S_m(Λ) = ∑_{i<m} Λ^i`, the geometric sum of the layerwise Lipschitz constant
+  (the covering envelope `prop:envelope`; `LeanDeepgen.Growth.Envelope`);
 * `evalProbes P f = (f (p_j))_j`, the evaluation map at finitely many probes
   (`LeanDeepgen.Growth.Lemmas`);
 * `orbitMap α g = α g` for a monoid homomorphism `α : G →* Function.End X` (P2;
@@ -65,6 +67,33 @@ theorem wordOf_cons_apply (f : Fin r → X → X) (i : Fin r) (u : List (Fin r))
     wordOf f (i :: u) x = wordOf f u (f i x) := rfl
 
 end Words
+
+/-! ### The geometric sum of the layerwise Lipschitz constant (covering envelope) -/
+
+section GeomSum
+
+@[blueprint "def:envelope-geom-sum"
+  (statement := /-- For a layerwise Lipschitz constant $\Lambda \ge 0$ and $m \ge 0$, the
+    geometric sum $S_m(\Lambda) := \sum_{i=0}^{m-1} \Lambda^i$ (so $S_0 = 0$, $S_1 = 1$) of
+    `prop:implementation`(b); it is the amplification factor of the covering envelope
+    `prop:envelope`. -/)]
+def geomSum (Λ : ℝ≥0) (m : ℕ) : ℝ≥0 := ∑ i ∈ Finset.range m, Λ ^ i
+
+@[simp, blueprint "lem:envelope-geom-sum-zero"
+  (statement := /-- $S_0(\Lambda) = 0$. -/)]
+theorem geomSum_zero (Λ : ℝ≥0) : geomSum Λ 0 = 0 := by simp [geomSum]
+
+@[simp, blueprint "lem:envelope-geom-sum-one"
+  (statement := /-- $S_1(\Lambda) = 1$. -/)]
+theorem geomSum_one (Λ : ℝ≥0) : geomSum Λ 1 = 1 := by simp [geomSum]
+
+@[blueprint "lem:envelope-geom-sum-coe"
+  (statement := /-- As a real number, $S_m(\Lambda) = \sum_{i<m} \Lambda^i$. -/)]
+theorem coe_geomSum (Λ : ℝ≥0) (m : ℕ) :
+    ((geomSum Λ m : ℝ≥0) : ℝ) = ∑ i ∈ Finset.range m, (Λ : ℝ) ^ i := by
+  simp [geomSum]
+
+end GeomSum
 
 /-! ### Evaluation at probes -/
 

@@ -15,8 +15,12 @@ library `LeanDeepgen` from the standard axioms only.
   in the import closure of the challenge is the trusted "vocabulary" of the certificate.
 * `Solution.lean` imports the whole library and proves each challenge statement by the
   corresponding library theorem (`:= LeanDeepgen.<name> <args>`).
-* `config.json` lists the 55 theorem names and the permitted axioms
-  `propext`, `Quot.sound`, `Classical.choice`.
+* `config.json` lists the 64 theorem names (55 of the original certificate, 6 added on
+  2026-09-25 for the new results `prop:envelope`, `cor:envelope-profiles`, `lem:reachable-radius`,
+  `lem:ode-scheme-entropy`, `lem:cot-branch-sample`, and 3 added on 2026-09-26 for the deep ReLU
+  appendix, `lem:relu-layer-covering`, `prop:relu-regimes`, `prop:relu-regimes-iii-lower`) and
+  the permitted axioms `propext`, `Quot.sound`, `Classical.choice`. `./script/comparator.sh` was
+  re-run on 2026-09-26 with all 64 theorems: "Your solution is okay!".
 
 Comparator checks that each listed theorem has, in `Solution`, exactly the statement given in
 `Challenge` (all constants occurring in the statement are identical in both environments) and
@@ -65,7 +69,16 @@ generalizations W4–W28). In particular the challenge already incorporates:
   co-coercivity form of `lem:fp-contraction` (D28), saturation without time-stamp consistency
   (D29/W26), no distinctness in `prop:linear-interpolation` (D30/W27), `R_Φ > 0` (D31), window
   feature map only in `lem:cot-output` (W28), and rigorous versions with explicit constants of
-  `prop:cot-append`, `prop:ode-fixedpoint`, `prop:ode-horizon` (D33).
+  `prop:cot-append`, `prop:ode-fixedpoint`, `prop:ode-horizon` (D33);
+* deep ReLU appendix (2026-09-26, R1–R6 in `ToDraft.md`): `R_K` any bound `‖x‖ ≤ R_K ≥ 0` on
+  `K`, explicit `C_F = 2(2β_W R_K + β_W + β + 1) max{β_W, β}` in `lem:relu-layer-covering` (R1);
+  `K ≠ ∅`, `0 < Λ` and all `k` in `prop:relu-regimes` (i), the `(1 + C/ε)` form of the envelope
+  profile with `log(1 + 2C_F/D̄)` in (ii)/(iii) (R2); width `w ≥ 4`, `Λ ≥ 20`, `β_W ≥ 41`,
+  `β ≥ 2` in the lower bound of (iii) (R3).
+
+The three ReLU theorems were added to `Challenge.lean` / `Solution.lean` / `config.json` on
+2026-09-26; `./script/comparator.sh` was re-run the same day with all 64 theorems: "Your
+solution is okay!" (commit `aa16b1e`).
 
 ## Mapping: paper label → challenge theorem → library theorem
 
@@ -84,9 +97,9 @@ generalizations W4–W28). In particular the challenge already incorporates:
 | `cor:sudakov-rates` (ii) | `cor_sudakov_rates_poly` | `sudakov_rates_poly` | `Bounds/Sudakov` |
 | `cor:matching` (i) | `cor_matching` | `matching_exp` | `Bounds/Sudakov` |
 | `cor:matching` (ii) | `cor_matching_poly` | `matching_poly` | `Bounds/Sudakov` |
-| `thm:rad.decomp.ent.ent` | `thm_rad_decomp_ent_ent` | `rad_decomp_ent_ent` | `Bounds/EntropyDecomp` |
-| `thm:rad.decomp.ent.ent` (sample) | `thm_rad_decomp_ent_ent_sample` | `rad_decomp_ent_ent_sample` | `Bounds/EntropyDecompSample` |
-| `thm:caa` | `thm_caa` | `totallyBounded_unifMaps_iff_equicontinuous` | `Growth/ArzelaAscoli` |
+| `thm:rad.decomp.ent.ent` *(not printed in the current manuscript; kept in the library — formerly App. E of the ICLR draft)* | `thm_rad_decomp_ent_ent` | `rad_decomp_ent_ent` | `Bounds/EntropyDecomp` |
+| `thm:rad.decomp.ent.ent` (sample) *(not printed in the current manuscript; kept in the library — formerly App. E of the ICLR draft)* | `thm_rad_decomp_ent_ent_sample` | `rad_decomp_ent_ent_sample` | `Bounds/EntropyDecompSample` |
+| `thm:caa` *(not printed in the current manuscript; kept in the library — formerly App. P of the ICLR draft)* | `thm_caa` | `totallyBounded_unifMaps_iff_equicontinuous` | `Growth/ArzelaAscoli` |
 | `cond:p1` (1) | `cond_p1` | `cond_p1_of_totallyBounded` | `Growth/Saturation` |
 | `cond:p1` (2a) | `cond_p1_2a` | `cond_p1_of_equicontinuous` | `Growth/Saturation` |
 | `cond:p1` (2b) | `cond_p1_2b` | `cond_p1_of_uniformLipschitz` | `Growth/Saturation` |
@@ -124,6 +137,15 @@ generalizations W4–W28). In particular the challenge already incorporates:
 | `lem:ode-euler-error` | `lem_ode_euler_error` | `euler_global_error` | `Examples/ODE` |
 | `prop:ode-fixedpoint` | `prop_ode_fixedpoint` | `prop_ode_fixedpoint` | `Examples/ODE` |
 | `prop:ode-horizon` | `prop_ode_horizon` | `prop_ode_horizon` | `Examples/ODE` |
+| `prop:envelope` (= `prop:envelope-restated`) | `prop_envelope` | `prop_envelope` | `Growth/Envelope` |
+| `cor:envelope-profiles` (a), (b) | `cor_envelope_profiles` | `cor_envelope_profiles` | `Growth/Envelope` |
+| `lem:reachable-radius` | `lem_reachable_radius` | `lem_reachable_radius` | `Growth/Envelope` |
+| `lem:ode-scheme-entropy` (distance, covering) | `lem_ode_scheme_entropy` | `lem_ode_scheme_entropy` | `Examples/ODE` |
+| `lem:ode-scheme-entropy` (entropy integral) | `equalSchemeClass_profile` | `equalSchemeClass_profile` | `Examples/ODE` |
+| `lem:cot-branch-sample` | `lem_cot_branch_sample` | `lem_cot_branch_sample` | `Examples/ChainOfThought` |
+| `lem:relu-layer-covering` | `lem_relu_layer_covering` | `lem_relu_layer_covering` | `Examples/ReLU` |
+| `prop:relu-regimes` (i)–(iii), upper bounds | `prop_relu_regimes` | `prop_relu_regimes` | `Examples/ReLU` |
+| `prop:relu-regimes` (iii), lower bound (E2) | `prop_relu_regimes_iii_lower` | `prop_relu_regimes_iii_lower` | `Examples/ReLU` |
 | `thm:bernoulli-sudakov` (bonus) | `thm_bernoulli_sudakov` | `FoML.ToFoML.bernoulli_sudakov` (lean-rademacher) | `FoML/ToFoML/BernoulliSudakov` |
 | `thm:dudley-subgaussian` (bonus, inlined) | `thm_dudley_subgaussian` | `FoML.ToFoML.dudley_subgaussian_finite_space` (lean-rademacher) | `FoML/ToFoML/DudleySubGaussian` |
 
@@ -132,6 +154,26 @@ Not included: the cited theorems `thm:guivarch-bass`, `cor:nilpotent-entropy`,
 `Φ_∞` part of `lem:cot-output` (W28), and the integral identity of `lem:log-split`
 (`∫₀^{D̄} √log(D̄/ε) dε = (√π/2) D̄`, used inside the proofs of `prop:profiles` (ii)/(iv) and
 stated in `FoML/ToMathlib/SqrtLogIntegral`, a theorem module).
+
+Note (2026-09-26): `thm:rad.decomp.ent.ent` (both forms) and `thm:caa` are a different case from
+the paragraph above — they *are* formalized and remain in the comparator challenge, but the
+manuscript was pruned on 2026-09-26 and no longer prints the corresponding appendix sections
+(formerly App. E, "A deterministic entropy alternative to `thm:hidden-decomp`", and App. P,
+"Compact-Domain Arzelà–Ascoli Principle for Self-Maps", in the pre-2026-09-26 lettering — *not*
+to be confused with the current Appendix E, "The Sudakov-type converse", which is a different
+section under the reorganized lettering A–M introduced later the same day). The Lean modules
+`Bounds/EntropyDecomp`, `Bounds/EntropyDecompSample` and `Growth/ArzelaAscoli` are unchanged.
+
+Note (2026-09-26, appendix reorganization): the manuscript's appendix was further reorganized the
+same day into a fixed order and lettering A–M (see `SUMMARY.md`): A conventions/basic facts, B
+literature, C bias--variance, D hidden--output, E the Sudakov-type converse (`thm:sudakov-type`,
+`cor:matching`, `cor:sudakov-rates`, `prop:global_scalar_observable`, `prop:linear-interpolation`,
+`cor:rkhs-readout`), F growth mechanisms, G the layerwise envelope, H variance profiles, I the
+four regimes and balancing depths, J teacher--student/neural-operator/implementation examples
+(`prop:implementation`, proof now in J.3), K deep ReLU networks, L chain-of-thought symbolic
+computation, M unrolled iterative solvers and samplers. All Lean labels
+(`thm:...`/`prop:...`/`lem:...`/`cond:...`) referenced in the table above are unchanged by this
+reorganization; only their location within the appendix moved.
 
 ## Maintenance
 

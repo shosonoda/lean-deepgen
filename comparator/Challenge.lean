@@ -25,6 +25,7 @@ import LeanDeepgen.Examples.Implementation
 import LeanDeepgen.Examples.Readout
 import LeanDeepgen.Examples.ChainOfThought
 import LeanDeepgen.Examples.ODE
+import LeanDeepgen.Examples.ReLU
 
 universe u
 
@@ -914,5 +915,213 @@ theorem thm_dudley_subgaussian {Ω : Type*} [Fintype Ω] {T : Type*} [PseudoMetr
         Real.sqrt (Real.log ((coveringNumber (Real.toNNReal ε) F : ℝ≥0∞).toReal)) := sorry
 
 end Dudley
+
+/-! ## Sec. 4 / App. F: the covering envelope and the reachable radius (`Growth/Envelope`) -/
+
+section Envelope
+
+open scoped NNReal ENNReal Real UniformConvergence
+open Metric MeasureTheory Set
+open FoML.ToMathlib
+
+/-- **prop:envelope** (= `prop:envelope-restated`, App. "Proof of prop:envelope"). Layerwise covering
+envelope: for `Λ`-Lipschitz layers, `N(B(k,F), d_∞, ε) ≤ 1 + ∑_{m=1}^k N(F, d_∞, ε/S_m(Λ))^m
+≤ 1 + k N(F, d_∞, ε/S_k(Λ))^k` (external covering numbers; all `k ≥ 0`, N1). -/
+theorem prop_envelope {X : Type*} [PseudoEMetricSpace X] {F : Set (X → X)} {Λ : ℝ≥0} (hF : ∀ f ∈ F, LipschitzWith Λ f) (ε : ℝ≥0) (k : ℕ) :
+    externalCoveringNumber (X := UnifMaps X) ε (wordBall F k) ≤
+        1 + ∑ m ∈ Finset.Icc 1 k,
+          externalCoveringNumber (X := UnifMaps X) (ε / geomSum Λ m) F ^ m ∧
+      1 + ∑ m ∈ Finset.Icc 1 k,
+          externalCoveringNumber (X := UnifMaps X) (ε / geomSum Λ m) F ^ m ≤
+        1 + k * externalCoveringNumber (X := UnifMaps X) (ε / geomSum Λ k) F ^ k := sorry
+
+/-- **cor:envelope-profiles** (a), (b). Entropy bounds in `d_∞` and entropy-integral bounds for
+`V_k(S)` under parametric (`log N(F,ε) ≤ p log(C/ε)`) and nonparametric (`log N(F,ε) ≤ c ε^{-q}`)
+layer classes; finiteness of `N(F, ε)` is assumed and the `V_k(S)` bounds carry a factor `2` in the
+scale (`2C`, `(2 S_k)^{q/2}`) from the internal/external comparison (N2). -/
+theorem cor_envelope_profiles {X : Type*} [PseudoMetricSpace X] {F : Set (X → X)} {Λ : ℝ≥0} (hF : ∀ f ∈ F, LipschitzWith Λ f) {Dbar : ℝ} (hDbar : 0 < Dbar)
+    {n : ℕ} (S : Fin n → X) {k : ℕ} (hk : 1 ≤ k) (hD : empDiam S (wordBall F k) ≤ Dbar) :
+    (∀ p C : ℝ, 0 ≤ p → Dbar ≤ C →
+      (∀ ε : ℝ≥0, 0 < ε → (ε : ℝ) ≤ C → externalCoveringNumber (X := UnifMaps X) ε F ≠ ⊤) →
+      (∀ ε : ℝ≥0, 0 < ε → (ε : ℝ) ≤ C →
+        Real.log (externalCoveringNumber (X := UnifMaps X) ε F : ℝ≥0∞).toReal ≤
+          p * Real.log (C / ε)) →
+      (∀ ε : ℝ≥0, 0 < ε → (ε : ℝ) ≤ Dbar →
+        Real.log (externalCoveringNumber (X := UnifMaps X) ε (wordBall F k) : ℝ≥0∞).toReal ≤
+          Real.log (k + 1) + k * p * (Real.log (C / ε) + Real.log (geomSum Λ k))) ∧
+      entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall F k)) (wordBall F k) ≤
+        Dbar * (√(Real.log (k + 1)) + √(k * p * Real.log k)
+          + k * √(p * Real.log ((max 1 Λ : ℝ≥0) : ℝ))
+          + √(k * p) * (√(Real.log (2 * C / Dbar)) + √π / 2))) ∧
+    (∀ c q : ℝ, 0 ≤ c → 0 < q → q < 2 →
+      (∀ ε : ℝ≥0, 0 < ε → externalCoveringNumber (X := UnifMaps X) ε F ≠ ⊤) →
+      (∀ ε : ℝ≥0, 0 < ε →
+        Real.log (externalCoveringNumber (X := UnifMaps X) ε F : ℝ≥0∞).toReal ≤
+          c * (ε : ℝ) ^ (-q)) →
+      (∀ ε : ℝ≥0, 0 < ε →
+        Real.log (externalCoveringNumber (X := UnifMaps X) ε (wordBall F k) : ℝ≥0∞).toReal ≤
+          Real.log (k + 1) + k * c * ((geomSum Λ k : ℝ) ^ q * (ε : ℝ) ^ (-q))) ∧
+      entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall F k)) (wordBall F k) ≤
+        Dbar * √(Real.log (k + 1)) +
+          √(k * c) * (2 * (geomSum Λ k : ℝ)) ^ (q / 2) * Dbar ^ (1 - q / 2) / (1 - q / 2)) := sorry
+
+/-- **lem:reachable-radius**. Every `g ∈ B(k,F)` maps `B(x₀,R)` into `B(x₀, Λ^k R + c S_k(Λ))` for
+`Λ ≥ 1` and into `B(x₀, R + c S_k(Λ))` for `Λ ≤ 1`, and `D_k(S) ≤ 2(Λ₊^k R + c S_k(Λ))` for a
+sample in `B(x₀,R)` (`c ≥ 0` made explicit, N3). -/
+theorem lem_reachable_radius {X : Type*} [PseudoMetricSpace X] {F : Set (X → X)} {Λ : ℝ≥0} (hF : ∀ f ∈ F, LipschitzWith Λ f) {x₀ : X} {c : ℝ} (hc0 : 0 ≤ c)
+    (hc : ∀ f ∈ F, dist (f x₀) x₀ ≤ c) {R : ℝ} (hR : 0 ≤ R) (k : ℕ) :
+    (1 ≤ Λ → ∀ g ∈ wordBall F k, ∀ x, dist x x₀ ≤ R →
+      dist (g x) x₀ ≤ (Λ : ℝ) ^ k * R + c * geomSum Λ k) ∧
+    (Λ ≤ 1 → ∀ g ∈ wordBall F k, ∀ x, dist x x₀ ≤ R →
+      dist (g x) x₀ ≤ R + c * geomSum Λ k) ∧
+    (∀ {n : ℕ} (S : Fin n → X), (∀ i, dist (S i) x₀ ≤ R) →
+      empDiam S (wordBall F k) ≤ 2 * (((max 1 Λ : ℝ≥0) : ℝ) ^ k * R + c * geomSum Λ k)) := sorry
+
+end Envelope
+
+/-! ## App. ODE: explicit entropy of equal-step schemes (`Examples/ODE`) -/
+
+section ODEScheme
+
+open scoped NNReal ENNReal UniformConvergence Topology RealInnerProductSpace
+open Metric
+open FoML.ToMathlib
+open MeasureTheory
+
+/-- **lem:ode-scheme-entropy** (App. ODE). Equal-step Euler schemes with a common drift:
+`d_∞(Φ_{s,m}, Φ_{s',m}) ≤ T e^{Λ_s T} ‖s − s'‖_∞` (sup over `K × [0,T]`) and
+`N(E_T(k), d_∞, ε) ≤ 1 + k N(𝒮_T, ‖·‖_∞, ε e^{−Λ_s T}/T)` (N4). -/
+theorem lem_ode_scheme_entropy {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] {K : Set E} {proj : E → E} (hP : IsProjectionOnto K proj) {𝒮 : Set (K → ℝ → E)}
+    {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ)) {T : ℝ} (hT : 0 ≤ T) :
+    (∀ s ∈ 𝒮, ∀ s' ∈ 𝒮, ∀ m : ℕ,
+      uniformDist (equalScheme hP s T m) (equalScheme hP s' T m) ≤
+        ENNReal.ofReal (T * Real.exp (Λ * T)) *
+          edist (restrictDrift T s) (restrictDrift T s')) ∧
+    (∀ (k : ℕ) (ε : ℝ≥0),
+      externalCoveringNumber (X := UnifMaps K) ε (equalSchemeClass hP 𝒮 T k) ≤
+        1 + k * externalCoveringNumber (X := DriftSpace K T)
+          (ε / (T * Real.exp (Λ * T)).toNNReal) (restrictDrift T '' 𝒮)) := sorry
+
+/-- **lem:ode-scheme-entropy** (entropy-integral consequence). `V_k(S) ≤ D_K √log(k+1)
++ ∫_0^{D_K} √log N(𝒮_T, ‖·‖_∞, ε e^{−Λ_s T}/(2T)) dε` for the class `E_T(k)` (`T > 0`, finite covering
+numbers of the drift class and integrability of the majorant assumed; factor `2` in the radius, N4). -/
+theorem equalSchemeClass_profile {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] {K : Set E} {proj : E → E} (hK : IsCompact K) (hP : IsProjectionOnto K proj)
+    {𝒮 : Set (K → ℝ → E)} {Λ : ℝ≥0} (h𝒮 : ∀ s ∈ 𝒮, ∀ τ, LipschitzWith Λ (fun x => s x τ))
+    {T : ℝ} (hT : 0 < T) {n : ℕ} (S : Fin n → K) (k : ℕ)
+    (hfin : ∀ ρ : ℝ≥0, 0 < ρ →
+      externalCoveringNumber (X := DriftSpace K T) ρ (restrictDrift T '' 𝒮) ≠ ⊤)
+    (hint : IntervalIntegrable (fun ε : ℝ => √(Real.log (externalCoveringNumber
+      (X := DriftSpace K T) (ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal)
+      (restrictDrift T '' 𝒮) : ℝ≥0∞).toReal)) volume 0 (Metric.diam (Set.univ : Set K))) :
+    entropyIntegral (Y := EmpSpace S) (empDiam S (equalSchemeClass hP 𝒮 T k))
+        (equalSchemeClass hP 𝒮 T k) ≤
+      Metric.diam (Set.univ : Set K) * √(Real.log (k + 1)) +
+        ∫ ε in (0 : ℝ)..Metric.diam (Set.univ : Set K), √(Real.log (externalCoveringNumber
+          (X := DriftSpace K T) (ε.toNNReal / 2 / (T * Real.exp (Λ * T)).toNNReal)
+          (restrictDrift T '' 𝒮) : ℝ≥0∞).toReal) := sorry
+
+end ODEScheme
+
+/-! ## App. CoT: empirical saturation for branching steps (`Examples/ChainOfThought`) -/
+
+section CoTSample
+
+open scoped NNReal ENNReal UniformConvergence Topology Real
+open Metric
+open FoML.ToMathlib
+open MeasureTheory
+
+/-- **lem:cot-branch-sample** (App. CoT). Empirical saturation for branching steps: for every sample
+and every `ε > 0`, `N(B(k,F_b), d_S, ε) ≤ 1 + r + ∑_{j=1}^k min{r^j, n, ⌊ε^{-2}⌋} ≤ 1 + r + k min{n, ⌊ε^{-2}⌋}`,
+and `V_k(S) ≤ √log(k+1) + √log(1+r) + √(2 log 2) + √(π/2)` (additive `√(2 log 2)` from the
+internal/external comparison, N5). -/
+theorem lem_cot_branch_sample {θ : ℝ≥0} {r : ℕ} [Fact (0 < θ)] [Fact (θ < 1)] {n : ℕ} (S : Fin n → SeqSpace (BranchAlphabet r) θ) (k : ℕ) :
+    (∀ ε : ℝ≥0, 0 < ε →
+      externalCoveringNumber (X := EmpSpace S) ε (wordBall (branchClass θ) k) ≤
+          1 + r + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ∧
+        1 + (r : ℕ∞) + ∑ j ∈ Finset.Icc 1 k, ((min (r ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ≤
+          1 + r + k * ((min n ⌊ε⁻¹ ^ 2⌋₊ : ℕ) : ℕ∞)) ∧
+    entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (branchClass θ) k))
+        (wordBall (branchClass θ) k) ≤
+      √(Real.log (k + 1)) + √(Real.log (1 + r)) + √(2 * Real.log 2) + √(π / 2) := sorry
+
+end CoTSample
+
+/-! ## App. ReLU: deep ReLU networks (`Examples/ReLU`) -/
+
+section ReLU
+
+open scoped NNReal ENNReal UniformConvergence Real
+open Metric MeasureTheory Set
+open FoML.ToMathlib
+
+/-- **lem:relu-layer-covering** (App. ReLU). One ReLU block `Π_K(V relu(Wx+b)+c)` on a bounded state
+space `K ⊆ E` (`‖x‖ ≤ R_K`): (a) the parameter-Lipschitz estimate
+`d_∞(f_θ, f_θ') ≤ β_W R_K ‖W−W'‖ + β_W ‖b−b'‖ + (β_W R_K+β) ‖V−V'‖ + ‖c−c'‖`; (b) for every `ε > 0`,
+`N(F_Λ, d_∞, ε) < ∞` and `log N(F_Λ, d_∞, ε) ≤ p log(1 + C_F/ε)`, `p = 2mw+w+m`,
+`C_F = 2(2β_W R_K + β_W + β + 1) max{β_W, β}` (R1). -/
+theorem lem_relu_layer_covering {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {K : Set E} {proj : E → E} {w : ℕ} (hP : IsProjectionOnto K proj) {R : ℝ}
+    (hR : ∀ x ∈ K, ‖x‖ ≤ R) (hR0 : 0 ≤ R) (βW β Λ : ℝ≥0) :
+    (∀ θ ∈ reluParamSet hP w βW β Λ, ∀ θ' ∈ reluParamSet hP w βW β Λ,
+      uniformDist (reluBlock hP θ) (reluBlock hP θ') ≤
+        ENNReal.ofReal (βW * R * ‖θ.1 - θ'.1‖ + βW * ‖θ.2.1 - θ'.2.1‖
+          + (βW * R + β) * ‖θ.2.2.1 - θ'.2.2.1‖ + ‖θ.2.2.2 - θ'.2.2.2‖)) ∧
+    (∀ ε : ℝ≥0, 0 < ε →
+      externalCoveringNumber (X := UnifMaps K) ε (reluClass hP w βW β Λ) ≠ ⊤ ∧
+      Real.log (externalCoveringNumber (X := UnifMaps K) ε
+          (reluClass hP w βW β Λ) : ℝ≥0∞).toReal ≤
+        (2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ) *
+          Real.log (1 + reluCoverConst R βW β / ε)) := sorry
+
+/-- **prop:relu-regimes** (App. ReLU), upper bounds. (i) `0 < Λ < 1`: P1' with `A = K`, `L = 0` gives
+`N(B(k,F_Λ), d_∞, ε) ≤ N(K, ε/2) + m(ε) N(F_Λ, d_∞, (1−Λ)ε)^{m(ε)} < ∞` for every `k`;
+(ii) `Λ ≤ 1`, `K` compact: P1 (2c) saturation, and the envelope profile `O(√(kp log k))`;
+(iii) `Λ > 1`: the envelope profile `O(k √(p log Λ))` (`K ≠ ∅`, `D_K ≤ D̄`, `k ≥ 1`; factor `2` in
+`log(1 + 2C_F/D̄)` from the internal/external comparison, R2). -/
+theorem prop_relu_regimes {E : Type*} [NormedAddCommGroup E] [InnerProductSpace ℝ E] [FiniteDimensional ℝ E] {K : Set E} {proj : E → E} {w : ℕ} (hP : IsProjectionOnto K proj) (hK : Bornology.IsBounded K)
+    (hKne : K.Nonempty) {R : ℝ} (hR : ∀ x ∈ K, ‖x‖ ≤ R) (hR0 : 0 ≤ R) (βW β Λ : ℝ≥0) :
+    (0 < Λ → Λ < 1 → ∀ ε : ℝ≥0, 0 < ε → ∀ k : ℕ,
+      externalCoveringNumber (X := UnifMaps K) ε (wordBall (reluClass hP w βW β Λ) k) ≤
+          externalCoveringNumber (ε / 2) (Set.univ : Set K) +
+            memoryLength Λ 0 (Set.univ : Set K) ε *
+              externalCoveringNumber (X := UnifMaps K) ((1 - Λ) * ε) (reluClass hP w βW β Λ) ^
+                memoryLength Λ 0 (Set.univ : Set K) ε ∧
+        externalCoveringNumber (ε / 2) (Set.univ : Set K) +
+            memoryLength Λ 0 (Set.univ : Set K) ε *
+              externalCoveringNumber (X := UnifMaps K) ((1 - Λ) * ε) (reluClass hP w βW β Λ) ^
+                memoryLength Λ 0 (Set.univ : Set K) ε ≠ ⊤) ∧
+    (Λ ≤ 1 → IsCompact K → ∀ ε : ℝ≥0, 0 < ε → ∀ k : ℕ,
+      externalCoveringNumber (X := UnifMaps K) ε (wordBall (reluClass hP w βW β Λ) k) ≤
+          externalCoveringNumber (X := UnifMaps K) ε
+            (closure (X := UnifMaps K) (semigroupClosure (reluClass hP w βW β Λ))) ∧
+        externalCoveringNumber (X := UnifMaps K) ε
+          (closure (X := UnifMaps K) (semigroupClosure (reluClass hP w βW β Λ))) ≠ ⊤) ∧
+    (Λ ≤ 1 → ∀ Dbar : ℝ, 0 < Dbar → Metric.diam (Set.univ : Set K) ≤ Dbar →
+      ∀ (n : ℕ) (S : Fin n → K) (k : ℕ), 1 ≤ k →
+      entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (reluClass hP w βW β Λ) k))
+          (wordBall (reluClass hP w βW β Λ) k) ≤
+        Dbar * (√(Real.log (k + 1))
+          + √(k * (2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ) * Real.log k)
+          + √(k * (2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ))
+            * (√(Real.log (1 + 2 * reluCoverConst R βW β / Dbar)) + √π / 2))) ∧
+    (1 < Λ → ∀ Dbar : ℝ, 0 < Dbar → Metric.diam (Set.univ : Set K) ≤ Dbar →
+      ∀ (n : ℕ) (S : Fin n → K) (k : ℕ), 1 ≤ k →
+      entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (reluClass hP w βW β Λ) k))
+          (wordBall (reluClass hP w βW β Λ) k) ≤
+        Dbar * (√(Real.log (k + 1))
+          + √(k * (2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ) * Real.log k)
+          + k * √((2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ) * Real.log (Λ : ℝ))
+          + √(k * (2 * Module.finrank ℝ E * w + w + Module.finrank ℝ E : ℕ))
+            * (√(Real.log (1 + 2 * reluCoverConst R βW β / Dbar)) + √π / 2))) := sorry
+
+/-- **prop:relu-regimes** (App. ReLU), (iii) lower bound. For `m = 1`, `K = [0,1]` with the clipping
+retraction, width `w ≥ 4`, `Λ ≥ 20`, `β_W ≥ 41`, `β ≥ 2`, the two expand-and-reset maps lie in
+`F_Λ` and satisfy E2 with separation `1/8`, so `N(B(k,F_Λ), d_∞, ε) ≥ 2^k` for `ε < 1/16` (R3). -/
+theorem prop_relu_regimes_iii_lower {w : ℕ} (hw : 4 ≤ w) {βW β Λ : ℝ≥0} (hβW : 41 ≤ βW)
+    (hβ : 2 ≤ β) (hΛ : 20 ≤ Λ) (k : ℕ) {ε : ℝ≥0} (hε : ε < 1 / 16) :
+    (2 : ℕ∞) ^ k ≤ externalCoveringNumber (X := UnifMaps (Icc (0 : ℝ) 1)) ε
+      (wordBall (reluClass isProjectionOnto_clipUnit w βW β Λ) k) := sorry
+
+end ReLU
 
 end LeanDeepgen.Challenge
