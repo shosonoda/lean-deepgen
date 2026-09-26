@@ -38,9 +38,9 @@
     <div class="result">
       <p class="ok">Lean default kernel accepts the solution / Your solution is okay!</p>
       <dl>
-        <dt>Date</dt><dd>2026-09-25</dd>
-        <dt>Commit</dt><dd><code>f263d0b</code> (branch <code>main</code>)</dd>
-        <dt>Theorems checked</dt><dd>55 (all of <code>comparator/config.json</code>)</dd>
+        <dt>Date</dt><dd>2026-09-26</dd>
+        <dt>Commit</dt><dd><code>aa16b1e</code> (branch <code>main</code>)</dd>
+        <dt>Theorems checked</dt><dd>64 (all of <code>comparator/config.json</code>)</dd>
         <dt>Permitted axioms</dt><dd><code>propext</code>, <code>Quot.sound</code>, <code>Classical.choice</code></dd>
         <dt>Toolchain</dt><dd>Lean <code>v4.32.0</code>, Mathlib <code>v4.32.0</code>, lean4export <code>v4.32.0</code>, fake-landrun (macOS)</dd>
       </dl>
@@ -77,7 +77,7 @@ Your solution is okay!</pre>
     <a href="https://github.com/shosonoda/lean-deepgen#deviations-from-the-printed-manuscript">README</a>.</p>
 
     <h2>Configuration</h2>
-    <p><code>comparator/config.json</code> lists 55 theorems of <code>LeanDeepgen.Challenge</code>
+    <p><code>comparator/config.json</code> lists 64 theorems of <code>LeanDeepgen.Challenge</code>
     (challenge module <code>Challenge</code>, solution module <code>Solution</code>; both are Lake libraries
     with <code>srcDir = "comparator"</code>) and the three permitted axioms. Each challenge statement is copied
     verbatim (binders, implicitness, hypothesis order, universe levels) from the library theorem; the
@@ -88,6 +88,26 @@ Your solution is okay!</pre>
     <code>thm:breuillard-large-balls</code> (not formalized; P2 takes their conclusion as a hypothesis), the
     <code>&Phi;<sub>&infin;</sub></code> part of <code>lem:cot-output</code>, and the integral identity of
     <code>lem:log-split</code> (used inside the proofs of <code>prop:profiles</code> (ii)/(iv)).</p>
+    <p><em>Note (2026-09-26):</em> <code>thm:rad.decomp.ent.ent</code> (both forms) and <code>thm:caa</code>
+    are a different case &mdash; they <em>are</em> formalized and remain in the challenge, but the manuscript
+    was pruned on 2026-09-26 and no longer prints the corresponding appendix sections (formerly App. E,
+    &ldquo;A deterministic entropy alternative to <code>thm:hidden-decomp</code>&rdquo;, and App. P,
+    &ldquo;Compact-Domain Arzel&agrave;&ndash;Ascoli Principle for Self-Maps&rdquo;, in the pre-2026-09-26
+    lettering &mdash; <em>not</em> to be confused with the current Appendix E, &ldquo;The Sudakov-type
+    converse&rdquo;, a different section under the reorganized lettering A&ndash;M introduced later the
+    same day). The Lean modules <code>Bounds/EntropyDecomp</code>, <code>Bounds/EntropyDecompSample</code>
+    and <code>Growth/ArzelaAscoli</code> are unchanged.</p>
+    <p><em>Note (2026-09-26, appendix reorganization):</em> the manuscript's appendix was further
+    reorganized the same day into a fixed order and lettering A&ndash;M (see <code>SUMMARY.md</code>):
+    A conventions/basic facts, B literature, C bias&ndash;variance, D hidden&ndash;output, E the
+    Sudakov-type converse (<code>thm:sudakov-type</code>, <code>cor:matching</code>,
+    <code>cor:sudakov-rates</code>, <code>prop:global_scalar_observable</code>,
+    <code>prop:linear-interpolation</code>, <code>cor:rkhs-readout</code>), F growth mechanisms, G the
+    layerwise envelope, H variance profiles, I the four regimes and balancing depths, J
+    teacher&ndash;student/neural-operator/implementation examples (<code>prop:implementation</code>,
+    proof now in J.3), K deep ReLU networks, L chain-of-thought symbolic computation, M unrolled
+    iterative solvers and samplers. All Lean labels referenced in the table below are unchanged by
+    this reorganization; only their location within the appendix moved.</p>
 
     <h2>Mapping: paper label &rarr; challenge theorem &rarr; library declaration</h2>
     <div class="scroll">
@@ -107,9 +127,9 @@ Your solution is okay!</pre>
       <tr><td><code>cor:sudakov-rates</code> (ii)</td><td><code>cor_sudakov_rates_poly</code></td><td><code>sudakov_rates_poly</code></td><td><code>Bounds/Sudakov</code></td></tr>
       <tr><td><code>cor:matching</code> (i)</td><td><code>cor_matching</code></td><td><code>matching_exp</code></td><td><code>Bounds/Sudakov</code></td></tr>
       <tr><td><code>cor:matching</code> (ii)</td><td><code>cor_matching_poly</code></td><td><code>matching_poly</code></td><td><code>Bounds/Sudakov</code></td></tr>
-      <tr><td><code>thm:rad.decomp.ent.ent</code></td><td><code>thm_rad_decomp_ent_ent</code></td><td><code>rad_decomp_ent_ent</code></td><td><code>Bounds/EntropyDecomp</code></td></tr>
-      <tr><td><code>thm:rad.decomp.ent.ent</code> (sample)</td><td><code>thm_rad_decomp_ent_ent_sample</code></td><td><code>rad_decomp_ent_ent_sample</code></td><td><code>Bounds/EntropyDecompSample</code></td></tr>
-      <tr><td><code>thm:caa</code></td><td><code>thm_caa</code></td><td><code>totallyBounded_unifMaps_iff_equicontinuous</code></td><td><code>Growth/ArzelaAscoli</code></td></tr>
+      <tr><td><code>thm:rad.decomp.ent.ent</code><br><small>(not printed in the current manuscript; kept in the library &mdash; formerly App. E of the ICLR draft)</small></td><td><code>thm_rad_decomp_ent_ent</code></td><td><code>rad_decomp_ent_ent</code></td><td><code>Bounds/EntropyDecomp</code></td></tr>
+      <tr><td><code>thm:rad.decomp.ent.ent</code> (sample)<br><small>(not printed in the current manuscript; kept in the library &mdash; formerly App. E of the ICLR draft)</small></td><td><code>thm_rad_decomp_ent_ent_sample</code></td><td><code>rad_decomp_ent_ent_sample</code></td><td><code>Bounds/EntropyDecompSample</code></td></tr>
+      <tr><td><code>thm:caa</code><br><small>(not printed in the current manuscript; kept in the library &mdash; formerly App. P of the ICLR draft)</small></td><td><code>thm_caa</code></td><td><code>totallyBounded_unifMaps_iff_equicontinuous</code></td><td><code>Growth/ArzelaAscoli</code></td></tr>
       <tr><td><code>cond:p1</code> (1)</td><td><code>cond_p1</code></td><td><code>cond_p1_of_totallyBounded</code></td><td><code>Growth/Saturation</code></td></tr>
       <tr><td><code>cond:p1</code> (2a)</td><td><code>cond_p1_2a</code></td><td><code>cond_p1_of_equicontinuous</code></td><td><code>Growth/Saturation</code></td></tr>
       <tr><td><code>cond:p1</code> (2b)</td><td><code>cond_p1_2b</code></td><td><code>cond_p1_of_uniformLipschitz</code></td><td><code>Growth/Saturation</code></td></tr>
@@ -147,6 +167,15 @@ Your solution is okay!</pre>
       <tr><td><code>lem:ode-euler-error</code></td><td><code>lem_ode_euler_error</code></td><td><code>euler_global_error</code></td><td><code>Examples/ODE</code></td></tr>
       <tr><td><code>prop:ode-fixedpoint</code></td><td><code>prop_ode_fixedpoint</code></td><td><code>prop_ode_fixedpoint</code></td><td><code>Examples/ODE</code></td></tr>
       <tr><td><code>prop:ode-horizon</code></td><td><code>prop_ode_horizon</code></td><td><code>prop_ode_horizon</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>prop:envelope</code> (= <code>prop:envelope-restated</code>)</td><td><code>prop_envelope</code></td><td><code>prop_envelope</code></td><td><code>Growth/Envelope</code></td></tr>
+      <tr><td><code>cor:envelope-profiles</code> (a), (b)</td><td><code>cor_envelope_profiles</code></td><td><code>cor_envelope_profiles</code></td><td><code>Growth/Envelope</code></td></tr>
+      <tr><td><code>lem:reachable-radius</code></td><td><code>lem_reachable_radius</code></td><td><code>lem_reachable_radius</code></td><td><code>Growth/Envelope</code></td></tr>
+      <tr><td><code>lem:ode-scheme-entropy</code> (distance, covering)</td><td><code>lem_ode_scheme_entropy</code></td><td><code>lem_ode_scheme_entropy</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>lem:ode-scheme-entropy-profile</code></td><td><code>equalSchemeClass_profile</code></td><td><code>equalSchemeClass_profile</code></td><td><code>Examples/ODE</code></td></tr>
+      <tr><td><code>lem:cot-branch-sample</code></td><td><code>lem_cot_branch_sample</code></td><td><code>lem_cot_branch_sample</code></td><td><code>Examples/ChainOfThought</code></td></tr>
+      <tr><td><code>lem:relu-layer-covering</code></td><td><code>lem_relu_layer_covering</code></td><td><code>lem_relu_layer_covering</code></td><td><code>Examples/ReLU</code></td></tr>
+      <tr><td><code>prop:relu-regimes</code> (i)&ndash;(iii), upper bounds</td><td><code>prop_relu_regimes</code></td><td><code>prop_relu_regimes</code></td><td><code>Examples/ReLU</code></td></tr>
+      <tr><td><code>prop:relu-regimes</code> (iii), lower bound (E2)</td><td><code>prop_relu_regimes_iii_lower</code></td><td><code>prop_relu_regimes_iii_lower</code></td><td><code>Examples/ReLU</code></td></tr>
       <tr><td><code>thm:bernoulli-sudakov</code> (bonus)</td><td><code>thm_bernoulli_sudakov</code></td><td><code>FoML.ToFoML.bernoulli_sudakov</code> (lean-rademacher)</td><td><code>FoML/ToFoML/BernoulliSudakov</code></td></tr>
       <tr><td><code>thm:dudley-subgaussian</code> (bonus, inlined)</td><td><code>thm_dudley_subgaussian</code></td><td><code>FoML.ToFoML.dudley_subgaussian_finite_space</code> (lean-rademacher)</td><td><code>FoML/ToFoML/DudleySubGaussian</code></td></tr>
       </tbody>

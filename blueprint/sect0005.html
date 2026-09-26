@@ -12,8 +12,8 @@
 <meta name="generator" content="plasTeX" />
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>From growth mechanisms to variance profiles</title>
-<link rel="next" href="sect0006.html" title="Depth bias–variance trade-offs" />
+<title>From growth mechanisms to variance profiles (Appendix H)</title>
+<link rel="next" href="sect0006.html" title="Depth bias–variance trade-offs (Appendix I)" />
 <link rel="prev" href="sect0004.html" title="Growth of the hidden class with depth" />
 <link rel="up" href="index.html" title="Generalization error bounds for deep models" />
 <link rel="stylesheet" href="styles/theme-white.css" />
@@ -71,19 +71,22 @@
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0003.html#a0000000017"><span class="toc_ref">3.1</span> <span class="toc_entry">Implementation-free bias–variance decomposition</span></a>
+  <a href="sect0003.html#a0000000017"><span class="toc_ref">3.1</span> <span class="toc_entry">Implementation-free bias–variance decomposition (proof: Appendix C, thm:bv, thm:bv-general)</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html#a0000000018"><span class="toc_ref">3.2</span> <span class="toc_entry">Hidden–output decomposition</span></a>
+  <a href="sect0003.html#a0000000018"><span class="toc_ref">3.2</span> <span class="toc_entry">Hidden–output decomposition (proof: Appendix D, thm:hidden-decomp / thm:mixed-sg, prop:hilbert-sg, prop:finite-lipschitz-sg)</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html#a0000000019"><span class="toc_ref">3.3</span> <span class="toc_entry">A conditional Sudakov-type converse</span></a>
+  <a href="sect0003.html#a0000000019"><span class="toc_ref">3.3</span> <span class="toc_entry">A conditional Sudakov-type converse (proof: Appendix E, thm:sudakov-type, cor:matching, cor:sudakov-rates)</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html#a0000000020"><span class="toc_ref">3.4</span> <span class="toc_entry">Deterministic entropy decomposition</span></a>
+  <a href="sect0003.html#a0000000020"><span class="toc_ref">3.4</span> <span class="toc_entry">Output-layer realization of hidden geometry (Appendix E, prop:global_scalar_observable, prop:linear-interpolation, cor:rkhs-readout)</span></a>
  </li>
 <li class="">
-  <a href="sect0003.html#a0000000021"><span class="toc_ref">3.5</span> <span class="toc_entry">Deterministic entropy decomposition on the sample</span></a>
+  <a href="sect0003.html#a0000000021"><span class="toc_ref">3.5</span> <span class="toc_entry">Tools not printed in the manuscript: a deterministic entropy decomposition (formerly App. E of the ICLR draft; kept in the library, see comparator/README.md)</span></a>
+ </li>
+<li class="">
+  <a href="sect0003.html#a0000000022"><span class="toc_ref">3.6</span> <span class="toc_entry">Tools not printed in the manuscript: the deterministic entropy decomposition on the sample (formerly App. E of the ICLR draft; kept in the library)</span></a>
  </li>
 
   </ul>
@@ -93,76 +96,79 @@
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0004.html#a0000000022"><span class="toc_ref">4.1</span> <span class="toc_entry">Definitions for the growth conditions</span></a>
+  <a href="sect0004.html#a0000000023"><span class="toc_ref">4.1</span> <span class="toc_entry">Definitions for the growth conditions</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000023"><span class="toc_ref">4.2</span> <span class="toc_entry">Basic facts on covering and packing numbers</span></a>
+  <a href="sect0004.html#a0000000024"><span class="toc_ref">4.2</span> <span class="toc_entry">Basic facts on covering and packing numbers (Appendix A, incl. lem:probes-packing)</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000024"><span class="toc_ref">4.3</span> <span class="toc_entry">Compact Arzelà–Ascoli for self-maps</span></a>
+  <a href="sect0004.html#a0000000025"><span class="toc_ref">4.3</span> <span class="toc_entry">Tools not printed in the manuscript: compact Arzelà–Ascoli for self-maps (formerly App. P of the ICLR draft; kept in the library, see comparator/README.md)</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000025"><span class="toc_ref">4.4</span> <span class="toc_entry">Saturation: equicontinuous semigroups and contraction to an invariant set (P1, P1’)</span></a>
+  <a href="sect0004.html#a0000000026"><span class="toc_ref">4.4</span> <span class="toc_entry">Saturation: equicontinuous semigroups and contraction to an invariant set (Appendix F.1, P1, P1’)</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000026"><span class="toc_ref">4.5</span> <span class="toc_entry">Polynomial growth under nilpotent control (P2)</span></a>
+  <a href="sect0004.html#a0000000027"><span class="toc_ref">4.5</span> <span class="toc_entry">Polynomial growth under nilpotent control (Appendix F.2, P2)</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000027"><span class="toc_ref">4.6</span> <span class="toc_entry">Exponential growth: free semigroups and ping–pong coding (E1, E1’, E2)</span></a>
+  <a href="sect0004.html#a0000000028"><span class="toc_ref">4.6</span> <span class="toc_entry">Exponential growth: free semigroups and ping–pong coding (Appendix F.3, E1, E1’, E2)</span></a>
  </li>
 <li class="">
-  <a href="sect0004.html#a0000000028"><span class="toc_ref">4.7</span> <span class="toc_entry">Memory-preserving expansion: super- and double-exponential growth (E3)</span></a>
+  <a href="sect0004.html#a0000000029"><span class="toc_ref">4.7</span> <span class="toc_entry">Memory-preserving expansion: super- and double-exponential growth (Appendix F.4, E3)</span></a>
+ </li>
+<li class="">
+  <a href="sect0004.html#a0000000030"><span class="toc_ref">4.8</span> <span class="toc_entry">The layerwise covering envelope and the reachable radius (Appendix G, prop:envelope, cor:envelope-profiles, lem:reachable-radius)</span></a>
  </li>
 
   </ul>
  </li>
 <li class=" active current">
-  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">From growth mechanisms to variance profiles</span></a>
+  <a href="sect0005.html"><span class="toc_ref">5</span> <span class="toc_entry">From growth mechanisms to variance profiles (Appendix H)</span></a>
   <span class="expand-toc">▼</span>
   <ul class="sub-toc-1 active">
      <li class="">
-  <a href="sect0005.html#a0000000029"><span class="toc_ref">5.1</span> <span class="toc_entry">An elementary logarithmic splitting lemma</span></a>
+  <a href="sect0005.html#a0000000031"><span class="toc_ref">5.1</span> <span class="toc_entry">An elementary logarithmic splitting lemma (Appendix H, lem:log-split)</span></a>
  </li>
 <li class="">
-  <a href="sect0005.html#a0000000030"><span class="toc_ref">5.2</span> <span class="toc_entry">Variance profiles from growth and diameter</span></a>
+  <a href="sect0005.html#a0000000032"><span class="toc_ref">5.2</span> <span class="toc_entry">Variance profiles from growth and diameter (Appendix H, prop:profiles)</span></a>
  </li>
 <li class="">
-  <a href="sect0005.html#a0000000031"><span class="toc_ref">5.3</span> <span class="toc_entry">The variance term and the table of profiles</span></a>
+  <a href="sect0005.html#a0000000033"><span class="toc_ref">5.3</span> <span class="toc_entry">The variance term and the table of profiles (Appendix H)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Depth bias–variance trade-offs</span></a>
+  <a href="sect0006.html"><span class="toc_ref">6</span> <span class="toc_entry">Depth bias–variance trade-offs (Appendix I)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0006.html#a0000000032"><span class="toc_ref">6.1</span> <span class="toc_entry">Bias laws, variance profiles, balancing depths (definitions)</span></a>
+  <a href="sect0006.html#a0000000034"><span class="toc_ref">6.1</span> <span class="toc_entry">Bias laws, variance profiles, balancing depths (definitions)</span></a>
  </li>
 <li class="">
-  <a href="sect0006.html#a0000000033"><span class="toc_ref">6.2</span> <span class="toc_entry">Balancing depths and balanced rates (EL, EP, PL, PP)</span></a>
+  <a href="sect0006.html#a0000000035"><span class="toc_ref">6.2</span> <span class="toc_entry">Balancing depths and balanced rates (Appendix I, the four regimes EL, EP, PL, PP; lem:balancing, eq:tradeoff-table)</span></a>
  </li>
 
   </ul>
  </li>
 <li class="">
-  <a href="sect0007.html"><span class="toc_ref">7</span> <span class="toc_entry">Examples</span></a>
+  <a href="sect0007.html"><span class="toc_ref">7</span> <span class="toc_entry">Worked examples (Appendices J–M)</span></a>
   <span class="expand-toc">▶</span>
   <ul class="sub-toc-1">
      <li class="">
-  <a href="sect0007.html#a0000000034"><span class="toc_ref">7.1</span> <span class="toc_entry">Shared glue for the worked examples (regimes)</span></a>
+  <a href="sect0007.html#a0000000036"><span class="toc_ref">7.1</span> <span class="toc_entry">Shared glue for the worked examples (regimes)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000035"><span class="toc_ref">7.2</span> <span class="toc_entry">Implementation with controlled uniform error</span></a>
+  <a href="sect0007.html#a0000000037"><span class="toc_ref">7.2</span> <span class="toc_entry">Implementation with controlled uniform error (Appendix J, prop:implementation; proof in J.3)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000036"><span class="toc_ref">7.3</span> <span class="toc_entry">Output-layer realization of hidden geometry</span></a>
+  <a href="sect0007.html#a0000000038"><span class="toc_ref">7.3</span> <span class="toc_entry">Deep ReLU networks (Appendix K, lem:relu-layer-covering, prop:relu-regimes)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000037"><span class="toc_ref">7.4</span> <span class="toc_entry">Chain-of-thought style symbolic computation</span></a>
+  <a href="sect0007.html#a0000000039"><span class="toc_ref">7.4</span> <span class="toc_entry">Chain-of-thought style symbolic computation (Appendix L)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000038"><span class="toc_ref">7.5</span> <span class="toc_entry">Unrolled fixed-point iterations and ODE solvers</span></a>
+  <a href="sect0007.html#a0000000040"><span class="toc_ref">7.5</span> <span class="toc_entry">Unrolled fixed-point iterations and ODE solvers (Appendix M)</span></a>
  </li>
 
   </ul>
@@ -176,14 +182,14 @@
 
 
 <div class="main-text">
-<h1 id="a0000000006">5 From growth mechanisms to variance profiles</h1>
-<h1 id="a0000000029">5.1 An elementary logarithmic splitting lemma</h1>
+<h1 id="a0000000006">5 From growth mechanisms to variance profiles (Appendix H)</h1>
+<h1 id="a0000000031">5.1 An elementary logarithmic splitting lemma (Appendix H, lem:log-split)</h1>
 <div class="theorem_thmwrapper theorem-style-plain" id="lem:log-split-ineq">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">274</span>
+    <span class="theorem_thmlabel">319</span>
     <div class="thm_header_extras">
 
     
@@ -193,7 +199,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:log-split-ineq">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000299"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000354"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -224,7 +230,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000299">
+<div class="proof_wrapper" id="a0000000354">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -236,13 +242,13 @@
 
   </div>
 </div>
-<h1 id="a0000000030">5.2 Variance profiles from growth and diameter</h1>
+<h1 id="a0000000032">5.2 Variance profiles from growth and diameter (Appendix H, prop:profiles)</h1>
 <div class="theorem_thmwrapper theorem-style-plain" id="lem:metric-entropy-nonneg">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">275</span>
+    <span class="theorem_thmlabel">320</span>
     <div class="thm_header_extras">
 
     
@@ -252,7 +258,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:metric-entropy-nonneg">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000300"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000355"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -303,7 +309,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000300">
+<div class="proof_wrapper" id="a0000000355">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -320,7 +326,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">276</span>
+    <span class="theorem_thmlabel">321</span>
     <div class="thm_header_extras">
 
     
@@ -330,7 +336,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:metric-entropy-anti">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000301"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000356"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -381,7 +387,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000301">
+<div class="proof_wrapper" id="a0000000356">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -398,7 +404,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">277</span>
+    <span class="theorem_thmlabel">322</span>
     <div class="thm_header_extras">
 
     
@@ -408,7 +414,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:sqrt-metric-entropy-measurable">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000302"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000357"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -459,7 +465,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000302">
+<div class="proof_wrapper" id="a0000000357">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -476,7 +482,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">278</span>
+    <span class="theorem_thmlabel">323</span>
     <div class="thm_header_extras">
 
     
@@ -486,7 +492,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:entropy-integral-nonneg">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000303"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000358"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -539,7 +545,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000303">
+<div class="proof_wrapper" id="a0000000358">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -556,7 +562,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">279</span>
+    <span class="theorem_thmlabel">324</span>
     <div class="thm_header_extras">
 
     
@@ -566,7 +572,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000304"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000359"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -584,7 +590,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-measurable">Theorem 277</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-measurable">Theorem 322</a></li>
           
         </ul>
     
@@ -619,7 +625,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000304">
+<div class="proof_wrapper" id="a0000000359">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -636,7 +642,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">280</span>
+    <span class="theorem_thmlabel">325</span>
     <div class="thm_header_extras">
 
     
@@ -646,7 +652,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-pos">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000305"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000360"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -664,7 +670,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:metric-entropy-anti">Theorem 276</a></li>
+          <li><a href="sect0005.html#lem:metric-entropy-anti">Theorem 321</a></li>
           
         </ul>
     
@@ -699,7 +705,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000305">
+<div class="proof_wrapper" id="a0000000360">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -716,7 +722,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">281</span>
+    <span class="theorem_thmlabel">326</span>
     <div class="thm_header_extras">
 
     
@@ -726,7 +732,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:entropy-integral-mono-D">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000306"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000361"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -779,7 +785,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000306">
+<div class="proof_wrapper" id="a0000000361">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -796,7 +802,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">282</span>
+    <span class="theorem_thmlabel">327</span>
     <div class="thm_header_extras">
 
     
@@ -806,7 +812,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:entropy-integral-le-integral">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000307"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000362"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -826,7 +832,7 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 279</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 324</a></li>
           
         </ul>
     
@@ -861,7 +867,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000307">
+<div class="proof_wrapper" id="a0000000362">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -878,7 +884,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">283</span>
+    <span class="theorem_thmlabel">328</span>
     <div class="thm_header_extras">
 
     
@@ -888,7 +894,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:entropy-integral-le-of-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000308"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000363"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -908,11 +914,11 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-integral">Theorem 282</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-integral">Theorem 327</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-mono-D">Theorem 281</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-mono-D">Theorem 326</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 279</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 324</a></li>
           
         </ul>
     
@@ -947,7 +953,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000308">
+<div class="proof_wrapper" id="a0000000363">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -964,7 +970,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">284</span>
+    <span class="theorem_thmlabel">329</span>
     <div class="thm_header_extras">
 
     
@@ -974,7 +980,7 @@
 
     <a class="icon proof" href="sect0005.html#prop:profiles-i">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000309"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000364"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -994,7 +1000,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 283</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 328</a></li>
           
         </ul>
     
@@ -1029,7 +1035,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000309">
+<div class="proof_wrapper" id="a0000000364">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1046,7 +1052,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">285</span>
+    <span class="theorem_thmlabel">330</span>
     <div class="thm_header_extras">
 
     
@@ -1056,7 +1062,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:sqrt-metric-entropy-le-of-poly">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000310"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000365"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1074,7 +1080,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:log-split-ineq">Theorem 274</a></li>
+          <li><a href="sect0005.html#lem:log-split-ineq">Theorem 319</a></li>
           
         </ul>
     
@@ -1109,7 +1115,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000310">
+<div class="proof_wrapper" id="a0000000365">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1126,7 +1132,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">286</span>
+    <span class="theorem_thmlabel">331</span>
     <div class="thm_header_extras">
 
     
@@ -1136,7 +1142,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:entropy-integral-le-of-poly">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000311"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000366"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1154,9 +1160,9 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 283</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 328</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-le-of-poly">Theorem 285</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-le-of-poly">Theorem 330</a></li>
           
         </ul>
     
@@ -1191,7 +1197,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000311">
+<div class="proof_wrapper" id="a0000000366">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1208,7 +1214,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">287</span>
+    <span class="theorem_thmlabel">332</span>
     <div class="thm_header_extras">
 
     
@@ -1218,7 +1224,7 @@
 
     <a class="icon proof" href="sect0005.html#prop:profiles-ii">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000312"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000367"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1236,7 +1242,7 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-poly">Theorem 286</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-poly">Theorem 331</a></li>
           
         </ul>
     
@@ -1268,13 +1274,13 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   (Polynomial growth, bounded diameter.) If \(0 \le D_k \le \overline D\), \(\overline D {\gt} 0\), and \(N(A_k, \varepsilon ) \le C_0 (1 + k/\varepsilon )^{D}\) for all \(k \ge 1\) and \(\varepsilon {\gt} 0\) (with \(C_0 \ge 1\), \(D \ge 0\)), then for \(k \ge 1\) </p>
-<div class="displaymath" id="a0000000313">
+<div class="displaymath" id="a0000000368">
   \[  \mathsf V(D_k, A_k) \le \overline D\sqrt{D}\Bigl(\sqrt{\log (1 + k/\overline D)} + \tfrac {\sqrt\pi }{2}\Bigr) + \overline D\sqrt{\log C_0} = O\bigl(\sqrt{D \log k}\bigr).  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000312">
+<div class="proof_wrapper" id="a0000000367">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1291,7 +1297,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">288</span>
+    <span class="theorem_thmlabel">333</span>
     <div class="thm_header_extras">
 
     
@@ -1301,7 +1307,7 @@
 
     <a class="icon proof" href="sect0005.html#prop:profiles-iv">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000314"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000369"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1319,7 +1325,7 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-poly">Theorem 286</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-poly">Theorem 331</a></li>
           
         </ul>
     
@@ -1351,13 +1357,13 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   (Polynomial growth, linearly growing diameter.) If \(0 \le D_k \le D_1 k\) with \(D_1 {\gt} 0\), and \(N(A_k, \varepsilon ) \le C_0 (1 + k/\varepsilon )^{D}\) for all \(k \ge 1\) and \(\varepsilon {\gt} 0\) (with \(C_0 \ge 1\), \(D \ge 0\)), then for \(k \ge 1\) </p>
-<div class="displaymath" id="a0000000315">
+<div class="displaymath" id="a0000000370">
   \[  \mathsf V(D_k, A_k) \le D_1 k\Bigl(\sqrt{D}\bigl(\sqrt{\log (1 + 1/D_1)} + \tfrac {\sqrt\pi }{2}\bigr) + \sqrt{\log C_0}\Bigr) = O(k\sqrt D).  \]
 </div>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000314">
+<div class="proof_wrapper" id="a0000000369">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1374,7 +1380,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">289</span>
+    <span class="theorem_thmlabel">334</span>
     <div class="thm_header_extras">
 
     
@@ -1384,7 +1390,7 @@
 
     <a class="icon proof" href="sect0005.html#prop:profiles-iii">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000316"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000371"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1404,7 +1410,7 @@
           
           <li><a href="sect0002.html#def:entropy-integral">Definition 59</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 283</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 328</a></li>
           
         </ul>
     
@@ -1439,7 +1445,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000316">
+<div class="proof_wrapper" id="a0000000371">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1456,7 +1462,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">290</span>
+    <span class="theorem_thmlabel">335</span>
     <div class="thm_header_extras">
 
     
@@ -1466,7 +1472,7 @@
 
     <a class="icon proof" href="sect0005.html#prop:profiles-finite">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000317"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000372"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1486,7 +1492,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 283</a></li>
+          <li><a href="sect0005.html#lem:entropy-integral-le-of-le">Theorem 328</a></li>
           
         </ul>
     
@@ -1521,7 +1527,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000317">
+<div class="proof_wrapper" id="a0000000372">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1533,13 +1539,13 @@
 
   </div>
 </div>
-<h1 id="a0000000031">5.3 The variance term and the table of profiles</h1>
+<h1 id="a0000000033">5.3 The variance term and the table of profiles (Appendix H)</h1>
 <div class="theorem_thmwrapper theorem-style-plain" id="lem:to-emp-space-lipschitz">
   <div class="theorem_thmheading">
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">291</span>
+    <span class="theorem_thmlabel">336</span>
     <div class="thm_header_extras">
 
     
@@ -1549,7 +1555,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:to-emp-space-lipschitz">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000318"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000373"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1610,7 +1616,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000318">
+<div class="proof_wrapper" id="a0000000373">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1627,7 +1633,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">292</span>
+    <span class="theorem_thmlabel">337</span>
     <div class="thm_header_extras">
 
     
@@ -1637,7 +1643,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:covering-empSpace-le-unifMaps">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000319"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000374"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1663,7 +1669,7 @@
           
           <li><a href="sect0002.html#def:to-emp-space">Definition 86</a></li>
           
-          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 291</a></li>
+          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 336</a></li>
           
         </ul>
     
@@ -1698,7 +1704,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000319">
+<div class="proof_wrapper" id="a0000000374">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1715,7 +1721,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">293</span>
+    <span class="theorem_thmlabel">338</span>
     <div class="thm_header_extras">
 
     
@@ -1725,7 +1731,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:covering-empSpace-le-unifMaps-internal">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000320"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000375"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1751,7 +1757,7 @@
           
           <li><a href="sect0002.html#def:to-emp-space">Definition 86</a></li>
           
-          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 291</a></li>
+          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 336</a></li>
           
         </ul>
     
@@ -1786,7 +1792,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000320">
+<div class="proof_wrapper" id="a0000000375">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1803,7 +1809,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">294</span>
+    <span class="theorem_thmlabel">339</span>
     <div class="thm_header_extras">
 
     
@@ -1813,7 +1819,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:packing-empSpace-le-unifMaps">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000321"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000376"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1839,7 +1845,7 @@
           
           <li><a href="sect0002.html#def:to-emp-space">Definition 86</a></li>
           
-          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 291</a></li>
+          <li><a href="sect0005.html#lem:to-emp-space-lipschitz">Theorem 336</a></li>
           
         </ul>
     
@@ -1874,7 +1880,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000321">
+<div class="proof_wrapper" id="a0000000376">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1891,7 +1897,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">295</span>
+    <span class="theorem_thmlabel">340</span>
     <div class="thm_header_extras">
 
     
@@ -1901,7 +1907,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000322"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000377"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -1925,7 +1931,7 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0005.html#lem:covering-empSpace-le-unifMaps">Theorem 292</a></li>
+          <li><a href="sect0005.html#lem:covering-empSpace-le-unifMaps">Theorem 337</a></li>
           
         </ul>
     
@@ -1960,7 +1966,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000322">
+<div class="proof_wrapper" id="a0000000377">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -1977,7 +1983,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">296</span>
+    <span class="theorem_thmlabel">341</span>
     <div class="thm_header_extras">
 
     
@@ -1987,7 +1993,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:covering-empSpace-toReal-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000323"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000378"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2011,7 +2017,7 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 295</a></li>
+          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 340</a></li>
           
         </ul>
     
@@ -2046,7 +2052,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000323">
+<div class="proof_wrapper" id="a0000000378">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2063,7 +2069,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">297</span>
+    <span class="theorem_thmlabel">342</span>
     <div class="thm_header_extras">
 
     
@@ -2073,7 +2079,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-nonneg">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000324"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000379"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2128,7 +2134,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000324">
+<div class="proof_wrapper" id="a0000000379">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2145,7 +2151,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">298</span>
+    <span class="theorem_thmlabel">343</span>
     <div class="thm_header_extras">
 
     
@@ -2155,7 +2161,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-le-of-uniformDist-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000325"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000380"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2212,7 +2218,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000325">
+<div class="proof_wrapper" id="a0000000380">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2229,7 +2235,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">299</span>
+    <span class="theorem_thmlabel">344</span>
     <div class="thm_header_extras">
 
     
@@ -2239,7 +2245,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-le-toReal-of-uniformDist-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000326"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000381"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2259,7 +2265,7 @@
           
           <li><a href="sect0002.html#def:d-inf">Definition 16</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 298</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 343</a></li>
           
         </ul>
     
@@ -2294,7 +2300,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000326">
+<div class="proof_wrapper" id="a0000000381">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2311,7 +2317,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">300</span>
+    <span class="theorem_thmlabel">345</span>
     <div class="thm_header_extras">
 
     
@@ -2321,7 +2327,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-le-of-bounded">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000327"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000382"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2339,9 +2345,9 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 298</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 343</a></li>
           
-          <li><a href="sect0004.html#cond:p2-nilp-compact">Theorem 235</a></li>
+          <li><a href="sect0004.html#cond:p2-nilp-compact">Theorem 249</a></li>
           
         </ul>
     
@@ -2376,7 +2382,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000327">
+<div class="proof_wrapper" id="a0000000382">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2393,7 +2399,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">301</span>
+    <span class="theorem_thmlabel">346</span>
     <div class="thm_header_extras">
 
     
@@ -2403,7 +2409,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-le-of-compact">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000328"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000383"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2421,7 +2427,7 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
         </ul>
     
@@ -2456,7 +2462,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000328">
+<div class="proof_wrapper" id="a0000000383">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2473,7 +2479,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">302</span>
+    <span class="theorem_thmlabel">347</span>
     <div class="thm_header_extras">
 
     
@@ -2483,7 +2489,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:empDiam-wordBall-le-of-p2">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000329"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000384"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2501,7 +2507,7 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:unif-maps">Definition 21</a></li>
           
@@ -2511,9 +2517,9 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0004.html#lem:p2-diameter">Theorem 234</a></li>
+          <li><a href="sect0004.html#lem:p2-diameter">Theorem 248</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 298</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-uniformDist-le">Theorem 343</a></li>
           
           <li><a href="sect0002.html#def:d-inf">Definition 16</a></li>
           
@@ -2550,7 +2556,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000329">
+<div class="proof_wrapper" id="a0000000384">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2567,7 +2573,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">303</span>
+    <span class="theorem_thmlabel">348</span>
     <div class="thm_header_extras">
 
     
@@ -2577,7 +2583,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:hidden-decomp-var">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000330"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000385"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2648,7 +2654,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000330">
+<div class="proof_wrapper" id="a0000000385">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2665,7 +2671,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">304</span>
+    <span class="theorem_thmlabel">349</span>
     <div class="thm_header_extras">
 
     
@@ -2675,7 +2681,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:var-profiles">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000331"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000386"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2711,7 +2717,7 @@
           
           <li><a href="sect0002.html#def:emp-rademacher">Definition 55</a></li>
           
-          <li><a href="sect0005.html#lem:hidden-decomp-var">Theorem 303</a></li>
+          <li><a href="sect0005.html#lem:hidden-decomp-var">Theorem 348</a></li>
           
           <li><a href="sect0002.html#def:var">Definition 87</a></li>
           
@@ -2748,7 +2754,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000331">
+<div class="proof_wrapper" id="a0000000386">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2765,7 +2771,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">305</span>
+    <span class="theorem_thmlabel">350</span>
     <div class="thm_header_extras">
 
     
@@ -2775,7 +2781,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-p1-totallyBounded">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000332"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000387"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2807,17 +2813,17 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
-          <li><a href="sect0004.html#cond:p1">Theorem 219</a></li>
+          <li><a href="sect0004.html#cond:p1">Theorem 233</a></li>
           
-          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 295</a></li>
+          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 340</a></li>
           
           <li><a href="sect0002.html#lem:subset-semigroup-closure">Theorem 9</a></li>
           
-          <li><a href="sect0005.html#prop:profiles-i">Theorem 284</a></li>
+          <li><a href="sect0005.html#prop:profiles-i">Theorem 329</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
         </ul>
     
@@ -2852,7 +2858,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000332">
+<div class="proof_wrapper" id="a0000000387">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2869,7 +2875,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">306</span>
+    <span class="theorem_thmlabel">351</span>
     <div class="thm_header_extras">
 
     
@@ -2879,7 +2885,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-p1">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000333"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000388"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -2911,9 +2917,9 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0004.html#thm:caa-of-equicontinuous">Theorem 207</a></li>
+          <li><a href="sect0004.html#thm:caa-of-equicontinuous">Theorem 221</a></li>
           
-          <li><a href="sect0005.html#cor:profile-p1-totallyBounded">Theorem 305</a></li>
+          <li><a href="sect0005.html#cor:profile-p1-totallyBounded">Theorem 350</a></li>
           
         </ul>
     
@@ -2948,7 +2954,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000333">
+<div class="proof_wrapper" id="a0000000388">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -2965,7 +2971,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">307</span>
+    <span class="theorem_thmlabel">352</span>
     <div class="thm_header_extras">
 
     
@@ -2975,7 +2981,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-p1-nonexpanding">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000334"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000389"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3007,9 +3013,9 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0005.html#cor:profile-p1">Theorem 306</a></li>
+          <li><a href="sect0005.html#cor:profile-p1">Theorem 351</a></li>
           
-          <li><a href="sect0004.html#lem:semigroup-closure-lipschitz-one">Theorem 218</a></li>
+          <li><a href="sect0004.html#lem:semigroup-closure-lipschitz-one">Theorem 232</a></li>
           
         </ul>
     
@@ -3044,7 +3050,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000334">
+<div class="proof_wrapper" id="a0000000389">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3061,7 +3067,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">308</span>
+    <span class="theorem_thmlabel">353</span>
     <div class="thm_header_extras">
 
     
@@ -3071,7 +3077,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:p2-empSpace-covering">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000335"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000390"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3087,7 +3093,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:unif-maps">Definition 21</a></li>
           
@@ -3101,9 +3107,9 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0004.html#cond:p2-nilp">Theorem 232</a></li>
+          <li><a href="sect0004.html#cond:p2-nilp">Theorem 246</a></li>
           
-          <li><a href="sect0005.html#lem:covering-empSpace-toReal-le">Theorem 296</a></li>
+          <li><a href="sect0005.html#lem:covering-empSpace-toReal-le">Theorem 341</a></li>
           
         </ul>
     
@@ -3135,14 +3141,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   (P2 in the empirical metric.) Under the hypotheses of ‘cond:p2-nilp‘, for every \(k\) and \(\varepsilon {\gt} 0\), </p>
-<div class="displaymath" id="a0000000336">
+<div class="displaymath" id="a0000000391">
   \[ N(B(k,F), d_S, \varepsilon ) \le C_0 \Bigl(1 + \frac k\varepsilon \Bigr)^D,\qquad C_0 := 2^D\,  C_H \max (1, R_S L_\alpha )^D, \]
 </div>
 <p> as real numbers. (The factor \(2^D\) comes from \(N(\cdot , d_S, \varepsilon ) \le N^{\mathrm{ext}}(\cdot , d_\infty , \varepsilon /2)\) and \(1 + 2k/\varepsilon \le 2(1 + k/\varepsilon )\).) </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000335">
+<div class="proof_wrapper" id="a0000000390">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3159,7 +3165,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">309</span>
+    <span class="theorem_thmlabel">354</span>
     <div class="thm_header_extras">
 
     
@@ -3169,7 +3175,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:p2-constant-one-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000337"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000392"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3200,7 +3206,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000337">
+<div class="proof_wrapper" id="a0000000392">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3217,7 +3223,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">310</span>
+    <span class="theorem_thmlabel">355</span>
     <div class="thm_header_extras">
 
     
@@ -3227,7 +3233,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-p2-compact">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000338"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000393"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3245,7 +3251,7 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:unif-maps">Definition 21</a></li>
           
@@ -3261,15 +3267,15 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0005.html#prop:profiles-ii">Theorem 287</a></li>
+          <li><a href="sect0005.html#prop:profiles-ii">Theorem 332</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
-          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 308</a></li>
+          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 353</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
-          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 309</a></li>
+          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 354</a></li>
           
         </ul>
     
@@ -3301,14 +3307,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   <b class="bfseries">(P2 on a bounded state space; table row “P2, compact \(\mathcal X\)”.)</b> Under the hypotheses of ‘cond:p2-nilp‘, if moreover \(d(x,y) \le D_{\mathcal X}\) for all \(x, y\) (\(D_{\mathcal X} {\gt} 0\)), then \(D_k(S) \le D_{\mathcal X}\) and for every \(k \ge 1\) </p>
-<div class="displaymath" id="a0000000339">
+<div class="displaymath" id="a0000000394">
   \[ \mathsf V_k(S) \le D_{\mathcal X}\sqrt D\Bigl(\sqrt{\log (1 + k/D_{\mathcal X})} + \tfrac {\sqrt\pi }{2}\Bigr) + D_{\mathcal X}\sqrt{\log C_0} = O\bigl(\sqrt{D\log k}\bigr), \]
 </div>
 <p> with \(C_0 = 2^D C_H\max (1, R_SL_\alpha )^D\): profile (ii), \(\mathrm{var}(k,n) = O(\sqrt{D\log k/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000338">
+<div class="proof_wrapper" id="a0000000393">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3325,7 +3331,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">311</span>
+    <span class="theorem_thmlabel">356</span>
     <div class="thm_header_extras">
 
     
@@ -3335,7 +3341,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-p2-noncompact">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000340"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000395"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3353,7 +3359,7 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:unif-maps">Definition 21</a></li>
           
@@ -3369,15 +3375,15 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 308</a></li>
+          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 353</a></li>
           
-          <li><a href="sect0005.html#prop:profiles-iv">Theorem 288</a></li>
+          <li><a href="sect0005.html#prop:profiles-iv">Theorem 333</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-wordBall-le-of-p2">Theorem 302</a></li>
+          <li><a href="sect0005.html#lem:empDiam-wordBall-le-of-p2">Theorem 347</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
-          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 309</a></li>
+          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 354</a></li>
           
         </ul>
     
@@ -3409,14 +3415,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   <b class="bfseries">(P2 on a general state space; table row “P2, non-compact \(\mathcal X\)”.)</b> Under the hypotheses of ‘cond:p2-nilp‘ with \(R_S {\gt} 0\), \(D_k(S) \le 2L_\alpha R_S k\) and for every \(k \ge 1\) </p>
-<div class="displaymath" id="a0000000341">
+<div class="displaymath" id="a0000000396">
   \[ \mathsf V_k(S) \le 2L_\alpha R_S k\Bigl(\sqrt D\bigl(\sqrt{\log (1 + 1/(2L_\alpha R_S))} + \tfrac {\sqrt\pi }{2}\bigr) + \sqrt{\log C_0}\Bigr) = O(k\sqrt D), \]
 </div>
 <p> with \(C_0 = 2^D C_H\max (1, R_SL_\alpha )^D\): profile (iv), \(\mathrm{var}(k,n) = O(k\sqrt{D/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000340">
+<div class="proof_wrapper" id="a0000000395">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3433,7 +3439,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">312</span>
+    <span class="theorem_thmlabel">357</span>
     <div class="thm_header_extras">
 
     
@@ -3443,7 +3449,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:profile-finite">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000342"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000397"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3469,13 +3475,13 @@
           
           <li><a href="sect0002.html#def:word-ball">Definition 1</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
           <li><a href="sect0002.html#lem:wordball-card">Theorem 15</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
-          <li><a href="sect0005.html#prop:profiles-finite">Theorem 290</a></li>
+          <li><a href="sect0005.html#prop:profiles-finite">Theorem 335</a></li>
           
         </ul>
     
@@ -3507,14 +3513,14 @@
   </div>
   <div class="theorem_thmcontent">
   <p>   <b class="bfseries">(Finite hidden-layer classes; table row “E1’, E2 with \(|F| = r\)”.)</b> If \(F\) is finite with \(|F| = r \ge 2\) and the state metric is bounded, \(d(x,y) \le D_{\mathcal X}\) (\(D_{\mathcal X} \ge 0\)), then \(|B(k,F)| \le r^{k+1}\), hence \(N(B(k,F), d_S, \varepsilon ) \le r^{k+1}\) for every \(\varepsilon {\gt} 0\), and </p>
-<div class="displaymath" id="a0000000343">
+<div class="displaymath" id="a0000000398">
   \[ \mathsf V_k(S) \le D_{\mathcal X}\sqrt{(k+1)\log r} = O\bigl(\sqrt{k\log r}\bigr) \]
 </div>
 <p> for every \(k\): profile (iii), \(\mathrm{var}(k,n) = O(\sqrt{k/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000342">
+<div class="proof_wrapper" id="a0000000397">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3531,7 +3537,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">313</span>
+    <span class="theorem_thmlabel">358</span>
     <div class="thm_header_extras">
 
     
@@ -3541,7 +3547,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000344"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000399"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3559,7 +3565,7 @@
           
           <li><a href="sect0002.html#def:metric-entropy">Definition 42</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 279</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le">Theorem 324</a></li>
           
         </ul>
     
@@ -3594,7 +3600,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000344">
+<div class="proof_wrapper" id="a0000000399">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3611,7 +3617,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">314</span>
+    <span class="theorem_thmlabel">359</span>
     <div class="thm_header_extras">
 
     
@@ -3621,7 +3627,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:p1-integrand-integrable">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000345"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000400"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3653,17 +3659,17 @@
           
           <li><a href="sect0002.html#def:unif-maps-instance">Definition 22</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
-          <li><a href="sect0004.html#cond:p1">Theorem 219</a></li>
+          <li><a href="sect0004.html#cond:p1">Theorem 233</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 313</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 358</a></li>
           
-          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 295</a></li>
+          <li><a href="sect0005.html#lem:covering-empSpace-le-external-unifMaps">Theorem 340</a></li>
           
           <li><a href="sect0002.html#lem:subset-semigroup-closure">Theorem 9</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
         </ul>
     
@@ -3698,7 +3704,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000345">
+<div class="proof_wrapper" id="a0000000400">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3715,7 +3721,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">315</span>
+    <span class="theorem_thmlabel">360</span>
     <div class="thm_header_extras">
 
     
@@ -3725,7 +3731,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:p2-integrand-integrable">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000346"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000401"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3745,7 +3751,7 @@
           
           <li><a href="sect0002.html#def:diam-S">Definition 31</a></li>
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:unif-maps">Definition 21</a></li>
           
@@ -3759,15 +3765,15 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 308</a></li>
+          <li><a href="sect0005.html#lem:p2-empSpace-covering">Theorem 353</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 313</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 358</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-le-of-poly">Theorem 285</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-le-of-poly">Theorem 330</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
-          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 309</a></li>
+          <li><a href="sect0005.html#lem:p2-constant-one-le">Theorem 354</a></li>
           
         </ul>
     
@@ -3802,7 +3808,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000346">
+<div class="proof_wrapper" id="a0000000401">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3819,7 +3825,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">316</span>
+    <span class="theorem_thmlabel">361</span>
     <div class="thm_header_extras">
 
     
@@ -3829,7 +3835,7 @@
 
     <a class="icon proof" href="sect0005.html#lem:finite-integrand-integrable">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000347"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000402"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3855,13 +3861,13 @@
           
           <li><a href="sect0002.html#def:word-ball">Definition 1</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
           <li><a href="sect0002.html#lem:wordball-card">Theorem 15</a></li>
           
-          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 313</a></li>
+          <li><a href="sect0005.html#lem:sqrt-metric-entropy-integrable-of-le-of-le">Theorem 358</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 297</a></li>
+          <li><a href="sect0005.html#lem:empDiam-nonneg">Theorem 342</a></li>
           
         </ul>
     
@@ -3896,7 +3902,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000347">
+<div class="proof_wrapper" id="a0000000402">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -3913,7 +3919,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">317</span>
+    <span class="theorem_thmlabel">362</span>
     <div class="thm_header_extras">
 
     
@@ -3923,7 +3929,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:var-profiles-p1">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000348"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000403"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -3957,13 +3963,13 @@
           
           <li><a href="sect0002.html#def:emp-rademacher">Definition 55</a></li>
           
-          <li><a href="sect0005.html#lem:p1-integrand-integrable">Theorem 314</a></li>
+          <li><a href="sect0005.html#lem:p1-integrand-integrable">Theorem 359</a></li>
           
-          <li><a href="sect0004.html#thm:caa-of-equicontinuous">Theorem 207</a></li>
+          <li><a href="sect0004.html#thm:caa-of-equicontinuous">Theorem 221</a></li>
           
-          <li><a href="sect0005.html#cor:profile-p1">Theorem 306</a></li>
+          <li><a href="sect0005.html#cor:profile-p1">Theorem 351</a></li>
           
-          <li><a href="sect0005.html#cor:var-profiles">Theorem 304</a></li>
+          <li><a href="sect0005.html#cor:var-profiles">Theorem 349</a></li>
           
         </ul>
     
@@ -3998,7 +4004,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000348">
+<div class="proof_wrapper" id="a0000000403">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -4015,7 +4021,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">318</span>
+    <span class="theorem_thmlabel">363</span>
     <div class="thm_header_extras">
 
     
@@ -4025,7 +4031,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:var-profiles-p2-compact">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000349"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000404"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -4041,7 +4047,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:hypothesis-class">Definition 44</a></li>
           
@@ -4063,13 +4069,13 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 300</a></li>
+          <li><a href="sect0005.html#lem:empDiam-le-of-bounded">Theorem 345</a></li>
           
-          <li><a href="sect0005.html#lem:p2-integrand-integrable">Theorem 315</a></li>
+          <li><a href="sect0005.html#lem:p2-integrand-integrable">Theorem 360</a></li>
           
-          <li><a href="sect0005.html#cor:profile-p2-compact">Theorem 310</a></li>
+          <li><a href="sect0005.html#cor:profile-p2-compact">Theorem 355</a></li>
           
-          <li><a href="sect0005.html#cor:var-profiles">Theorem 304</a></li>
+          <li><a href="sect0005.html#cor:var-profiles">Theorem 349</a></li>
           
         </ul>
     
@@ -4104,7 +4110,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000349">
+<div class="proof_wrapper" id="a0000000404">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -4121,7 +4127,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">319</span>
+    <span class="theorem_thmlabel">364</span>
     <div class="thm_header_extras">
 
     
@@ -4131,7 +4137,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:var-profiles-p2-noncompact">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000350"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000405"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -4147,7 +4153,7 @@
         
         <ul class="uses">
           
-          <li><a href="sect0004.html#def:p2-orbit-map">Definition 177</a></li>
+          <li><a href="sect0004.html#def:p2-orbit-map">Definition 191</a></li>
           
           <li><a href="sect0002.html#def:hypothesis-class">Definition 44</a></li>
           
@@ -4169,13 +4175,13 @@
           
           <li><a href="sect0002.html#def:to-unif-maps">Definition 23</a></li>
           
-          <li><a href="sect0005.html#lem:p2-integrand-integrable">Theorem 315</a></li>
+          <li><a href="sect0005.html#lem:p2-integrand-integrable">Theorem 360</a></li>
           
-          <li><a href="sect0005.html#cor:profile-p2-noncompact">Theorem 311</a></li>
+          <li><a href="sect0005.html#cor:profile-p2-noncompact">Theorem 356</a></li>
           
-          <li><a href="sect0005.html#lem:empDiam-wordBall-le-of-p2">Theorem 302</a></li>
+          <li><a href="sect0005.html#lem:empDiam-wordBall-le-of-p2">Theorem 347</a></li>
           
-          <li><a href="sect0005.html#cor:var-profiles">Theorem 304</a></li>
+          <li><a href="sect0005.html#cor:var-profiles">Theorem 349</a></li>
           
         </ul>
     
@@ -4210,7 +4216,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000350">
+<div class="proof_wrapper" id="a0000000405">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -4227,7 +4233,7 @@
     <span class="theorem_thmcaption">
     Theorem
     </span>
-    <span class="theorem_thmlabel">320</span>
+    <span class="theorem_thmlabel">365</span>
     <div class="thm_header_extras">
 
     
@@ -4237,7 +4243,7 @@
 
     <a class="icon proof" href="sect0005.html#cor:var-profiles-finite">#</a>
     
-    <a class="icon proof" href="sect0005.html#a0000000351"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
+    <a class="icon proof" href="sect0005.html#a0000000406"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
 </a>
     
     
@@ -4267,11 +4273,11 @@
           
           <li><a href="sect0002.html#def:emp-rademacher">Definition 55</a></li>
           
-          <li><a href="sect0005.html#lem:finite-integrand-integrable">Theorem 316</a></li>
+          <li><a href="sect0005.html#lem:finite-integrand-integrable">Theorem 361</a></li>
           
-          <li><a href="sect0005.html#cor:profile-finite">Theorem 312</a></li>
+          <li><a href="sect0005.html#cor:profile-finite">Theorem 357</a></li>
           
-          <li><a href="sect0005.html#cor:var-profiles">Theorem 304</a></li>
+          <li><a href="sect0005.html#cor:var-profiles">Theorem 349</a></li>
           
         </ul>
     
@@ -4306,7 +4312,7 @@
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000351">
+<div class="proof_wrapper" id="a0000000406">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
@@ -4333,7 +4339,7 @@
 </a>
   <a href="index.html" title="Generalization error bounds for deep models"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
 </a>
-  <a href="sect0006.html" title="Depth bias–variance trade-offs"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
+  <a href="sect0006.html" title="Depth bias–variance trade-offs (Appendix I)"><svg  class="icon icon-arrow-right "><use xlink:href="symbol-defs.svg#icon-arrow-right"></use></svg>
 </a>
 </nav>
 
