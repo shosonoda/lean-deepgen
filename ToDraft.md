@@ -189,3 +189,16 @@ Lean 側は以下の一般形で述べる（原稿にも反映する場合の文
 | R4 | `prop:relu-regimes` (iii) 下界 | 推奨 | (i) 2 つの expand-and-reset 写像は内部折れ点 3 個ずつなので幅 4 の ReLU ブロック（`w ≥ 4` で十分；原稿の `w ≥ 5` は弱い形）．(ii) 「`β_W, β` は表現の重みノルム以上」の具体値: `‖W‖_op = ‖(1,1,1,1,0,…)‖ = 2`，`‖b‖ ≤ 2`，`‖V‖_op ≤ 41`（`g₀`: `v = (−12, 52/3, −76/3, 20)`，`‖v‖² = 13376/9`；`g₁`: `v = (−20, 76/3, −52/3, 0)`），`‖c‖ ≤ 5/8`．Lean は `β_W ≥ 41`, `β ≥ 2`, `Λ ≥ 20` で述べる．(iii) `g₁` の最後の区間 `[1−η, 1]` の傾きは `−12`（`(1−η,1) → (1,5/8)`），`g₀` の最初の区間の傾きも `−12`；Lipschitz 定数 20 は `[η,1/4−η]`→`[1/4−η,1/4]` 等の傾き `−20` から |
 | R5 | `sec:relu-computed` | 任意 | E2 の検証で「アンカーが両チャンバーの外」は `3/8, 5/8 ∉ [0,1/4] ∪ [3/4,1]` から，`f_i(A) ⊆ A` はリセット条件から従う；`f_i(V_i) = [0,1]` は `x = η + (3/16)y`（resp. `3/4 + η + (3/16)y`）による全射性．`d(q,{a_0,a_1}) = 1/8` より `ε < 1/16` で `N ≥ 2^k`（E2 の `2ε < α`） |
 | R6 | `sec:relu-setting` | 任意 | 「`‖V‖_op‖W‖_op` は常に `lip(f_θ)` の上界」は Lean では未使用（`F_Λ` の定義に Lipschitz 制約を直接入れる）．`F_Λ ≠ ∅`（`θ = 0`）．`β_W, β, Λ ≥ 0` を明記 |
+
+## 2026-11-15 (revised manuscript: lower bounds on a sample)
+
+原稿の改訂版 `06iclr2027/revise/appK-relu.tex` の新しい小節 `sec:relu-sample`（`lem:shatter-rademacher`, `lem:relu-sort-hold`, `prop:relu-shatter`, `lem:relu-reset-sample`）の形式化（`Bounds/Shatter`，`Examples/ReLUSortHold`，`Examples/ReLUShatter`，`Examples/ReLUResetSample`）で判明した点．改訂版の原稿は Lean と同じ定数・仮定で書かれており，修正が必要な差異はない（K1–K4 は任意の強化・注記，K5–K6 は改訂版で反映済みの項目の記録）．
+
+| # | 箇所 | 種別 | 内容 |
+|---|---|---|---|
+| K1 | `lem:shatter-rademacher` | 反映済み | 原稿の「標本上で有界」は Lean の `hC : ∀ g ∈ G, ∀ i, \|g (S i)\| ≤ C`．一般形（各符号列で Rademacher 平均が上に有界，`BddAbove`）でも成立（`empRademacher_ge_of_shatter`）．`a₀ ≤ a₁` は証明では使わない（結論を非負にする自然な仮定として残す）．`n ≥ 1` は必要 |
+| K2 | `lem:relu-sort-hold` | 任意 | 追加仮定なし．(ii) と `d_S` の等式は `k = 0` でも成立；Rademacher の下界は `{f_0, f_1}` を含む任意のクラスで成立．別の表現（`f_1 = 2relu(x−1/4) − 4relu(x−3/8) − 2relu(5/8−x) + 3relu(x−3/4) + 5/4`）なら幅 4 で足りる（未形式化；`prop:relu-regimes`(iii) の `w ≥ 4` に揃えたい場合）．正確なノルム: `‖W‖ = √5`，`‖b‖ = √74/8`，`‖V‖ = 3`（`f_0`），`√37`（`f_1`）．`R/8` は下界であって値ではない |
+| K3 | `prop:relu-shatter` | 任意 | 追加仮定なし．Lean の添字は 0 始まり（`shatterPoint t b` は原稿の `x_{t+1,b+1}`）．(ii) は `k_1, B ≥ 0` で成立，(iii) は `k_1, B ≥ 1`（`n ≥ 1`）．(ii)(iii) は族 `{f_θ : θ ∈ [0,1/4]}` を含む任意のクラスで成立．保持は `z ∈ [3/4,1]` 全体で，`P(z) = 2z − 1/4` は `[1/4,1/2]` 全体で成立．Remarks (1) の `V_k(S) ≥ √n/192 − √2/12` は `prop_relu_shatter_entropy`（`thm:hidden-decomp-depth` の全有界性・可積分性の仮定は `lem:relu-layer-covering` と包絡から導出；`R` は現れない），線形の系は `prop_relu_shatter_entropy_linear`（全ての `k`）．正確なノルム: `‖W‖_F² = 137/8`，`‖b‖² = 3813/1024`，`‖V_θ‖_F² = 93/2 + 2560θ² + 80 ≤ 573/2`．`Λ ≥ 85` は `‖V‖‖W‖ ≤ 17·5` による十分条件（数値では Lipschitz 定数は約 9.1；鋭い値は未形式化） |
+| K4 | `lem:relu-reset-sample` | 任意 | 追加仮定なし（`n = 0`，`k = 0` を含む）．抽象化: 「空でない語が成功集合 `C_u` の外で最後の文字の定数に等しい」「同じ長さの `C_u` が互いに素」「直径 ≤ 1」だけから被覆評価と `V_k(S)` 評価が出る（`reset_words_sample`）．ping–pong 族では E2 の `f_i(A) ⊆ A` より強い `f_i(a_j) = a_i`（全ての `i, j`）が必要（原稿の証明に明記済み；E2 一般についての注記を書く場合はこの条件を述べること）．同じ補題は分岐計算（`lem:cot-branch-sample`）も含むので，原稿では 1 つの一般補題と 2 つの系にまとめられる |
+| K5 | `prop:relu-regimes` (i)(ii)(iii) | 反映済み | 改訂版で，飽和プロファイルに Lean と同じ可積分性の仮定を明記（R2 の「majorant の可積分性を仮定」に対応）．(iii) から「達成」「標本上で `√k`」の記述を削除（Lean の `prop_relu_regimes_iii_lower` は `d_∞` の不等式のみ）．標本上の下界は K2, K3 |
+| K6 | `sec:app-cot`，`sec:app-ode` | 反映済み | 出力層を `‖w‖ ≤ R` とする例で Assumption 2 の定数は `L_H = R·Lip(Φ)`（Lean の `12 * 1 * (R * LΦ)` と一致；投稿版は `Lip(Φ)` と記載） |

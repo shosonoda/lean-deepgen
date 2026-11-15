@@ -65,7 +65,12 @@
     "LeanDeepgen.Challenge.lem_cot_branch_sample",
     "LeanDeepgen.Challenge.lem_relu_layer_covering",
     "LeanDeepgen.Challenge.prop_relu_regimes",
-    "LeanDeepgen.Challenge.prop_relu_regimes_iii_lower"
+    "LeanDeepgen.Challenge.prop_relu_regimes_iii_lower",
+    "LeanDeepgen.Challenge.lem_shatter_rademacher",
+    "LeanDeepgen.Challenge.lem_relu_sort_hold",
+    "LeanDeepgen.Challenge.prop_relu_shatter",
+    "LeanDeepgen.Challenge.prop_relu_shatter_entropy",
+    "LeanDeepgen.Challenge.lem_relu_reset_sample"
   ],
   "permitted_axioms": [
     "propext",

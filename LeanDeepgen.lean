@@ -32,3 +32,7 @@ import LeanDeepgen.Examples.Readout
 import LeanDeepgen.Examples.ChainOfThought
 import LeanDeepgen.Examples.ODE
 import LeanDeepgen.Examples.ReLU
+import LeanDeepgen.Bounds.Shatter
+import LeanDeepgen.Examples.ReLUSortHold
+import LeanDeepgen.Examples.ReLUShatter
+import LeanDeepgen.Examples.ReLUResetSample

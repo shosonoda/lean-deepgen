@@ -44,10 +44,13 @@ and the main theorems depend only on the standard axioms `propext`, `Classical.c
 | Sec. 5 (trade-off table) | Bias laws, variance profiles, balancing depths and balanced rates in the four regimes EL, EP, PL, PP (two-sided $\Theta$ statements) | `Tradeoff/Defs`, `Tradeoff/Regimes` | proved |
 | App., implementation (`prop:implementation`) | Finite implementation classes, layer-wise error propagation, exact ReLU realization of affine transitions | `Examples/Implementation` | proved |
 | App., readout (`prop:global_scalar_observable`, `prop:linear-interpolation`, `cor:rkhs-readout`) | Output-layer realization of the hidden geometry | `Examples/Readout` | proved |
-| App., chain of thought (`lem:cot-*`, `prop:cot-append`) | Append-only and branching scratchpads, window feature maps, the EL regime for append-only computation | `Examples/ChainOfThought` | proved |
-| App., ODE (`lem:fp-contraction`, `lem:ode-saturation`, `lem:ode-euler-error`, `prop:ode-fixedpoint`, `prop:ode-horizon`) | Unrolled fixed-point iterations and Euler schemes; the EL and PL regimes | `Examples/ODE`, `Examples/Regimes` | proved |
+| App., chain of thought (`lem:cot-*`, `prop:cot-append`, `lem:cot-branch-sample`) | Append-only and branching scratchpads, window feature maps, the EL regime for append-only computation, the covering bound on a sample for branching steps | `Examples/ChainOfThought` | proved |
+| App., ODE (`lem:fp-contraction`, `lem:ode-saturation`, `lem:ode-euler-error`, `lem:ode-scheme-entropy`, `prop:ode-fixedpoint`, `prop:ode-horizon`) | Unrolled fixed-point iterations and Euler schemes, the entropy of the equal-step schemes; the EL and PL regimes | `Examples/ODE`, `Examples/Regimes` | proved |
+| Sec. 4.1 / App., layerwise covering bound (`prop:envelope`, `cor:envelope-profiles`, `lem:reachable-radius`) | Covering bound for compositions of Lipschitz layers, the resulting profiles, and the reachable radius on an unbounded state space | `Growth/Envelope` | proved |
+| App., deep ReLU networks (`lem:relu-layer-covering`, `prop:relu-regimes`) | Covering numbers of one ReLU block; the growth regimes by Lipschitz constant, with the lower bound in the uniform distance for expanding blocks | `Examples/ReLU` | proved |
+| App., deep ReLU networks, lower bounds on a sample (`lem:shatter-rademacher`, `lem:relu-sort-hold`, `prop:relu-shatter`, `lem:relu-reset-sample`; added in the revised manuscript) | Rademacher complexity of a shattered sample; two sort--hold blocks whose compositions are separated on a sample (order $\sqrt{k}$); a one-parameter family of load--count--sort blocks that shatters $k_1 B$ points at depth $k_1 + B + 1$ (linear order, $V_k(S) \ge \sqrt{n}/192 - \sqrt{2}/12$); the expand-and-reset maps have a root-logarithmic entropy integral on every sample | `Bounds/Shatter`, `Examples/ReLUSortHold`, `Examples/ReLUShatter`, `Examples/ReLUResetSample` | proved |
 
-The library is about 12,000 lines of Lean with about 550 `@[blueprint]` nodes. General-purpose
+The library is about 18,600 lines of Lean with about 900 `@[blueprint]` nodes. General-purpose
 tools developed for this project live in lean-rademacher, under
 [`FoML.ToMathlib`](https://github.com/auto-res/lean-rademacher/tree/main/FoML/ToMathlib) and
 [`FoML.ToFoML`](https://github.com/auto-res/lean-rademacher/tree/main/FoML/ToFoML): the
@@ -146,8 +149,9 @@ structure and pulls in the extracted nodes with `\inputleanmodule{...}`.
 [Comparator](https://github.com/leanprover/comparator) certifies that the paper's theorems are
 proved from the standard axioms only. The directory `comparator/` contains:
 
-- `Challenge.lean`: 55 theorems, one per paper label, each stating a result of the paper with
-  the proof replaced by `sorry`, importing only the definition modules of the library;
+- `Challenge.lean`: 69 theorems, one per paper label, each stating a result of the paper with
+  the proof replaced by `sorry`, importing only the definition modules of the library and the
+  example modules that define the worked examples;
 - `Solution.lean`: the same statements proved by the corresponding library theorems;
 - `config.json`: the theorem names and the permitted axioms `propext`, `Quot.sound`,
   `Classical.choice`;
@@ -163,7 +167,7 @@ mkdir -p ../comparator-tools && cd ../comparator-tools
 git clone https://github.com/leanprover/comparator.git && (cd comparator && lake build comparator)
 git clone --branch v4.32.0 https://github.com/leanprover/lean4export.git lean4export-v4.32.0 && (cd lean4export-v4.32.0 && lake build)
 cd -
-./script/comparator.sh   # about a minute; the last line should read "Your solution is okay!"
+./script/comparator.sh   # about two minutes; the last line should read "Your solution is okay!"
 ```
 
 The tool locations can be overridden with `COMPARATOR_TOOLS`, `COMPARATOR_BIN`,

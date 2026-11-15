@@ -26,6 +26,9 @@ import LeanDeepgen.Examples.Readout
 import LeanDeepgen.Examples.ChainOfThought
 import LeanDeepgen.Examples.ODE
 import LeanDeepgen.Examples.ReLU
+import LeanDeepgen.Examples.ReLUSortHold
+import LeanDeepgen.Examples.ReLUShatter
+import LeanDeepgen.Examples.ReLUResetSample
 
 universe u
 
@@ -1123,5 +1126,145 @@ theorem prop_relu_regimes_iii_lower {w : ℕ} (hw : 4 ≤ w) {βW β Λ : ℝ≥
       (wordBall (reluClass isProjectionOnto_clipUnit w βW β Λ) k) := sorry
 
 end ReLU
+
+/-! ## App. K: deep ReLU networks, lower bounds on a sample (`Bounds/Shatter`,
+`Examples/ReLUSortHold`, `Examples/ReLUShatter`, `Examples/ReLUResetSample`)
+
+The statements added in the revised manuscript (App. K, "Variance: lower bounds on a sample").
+Each subsection reproduces the `open` / `local notation` context of its source module. -/
+
+section ReLUSample
+
+section ShatterRademacher
+
+open scoped NNReal ENNReal
+
+/-- **lem:shatter-rademacher** (App. K). A class `G` that is bounded on the sample
+(`|g(x_i)| ≤ C`) and realizes every labeling `c ∈ {0,1}^n` of the sample by the two values
+`a₀ ≤ a₁` has empirical Rademacher complexity `R̂_S(G) ≥ (a₁ − a₀)/2`. -/
+theorem lem_shatter_rademacher {X : Type*} {n : ℕ} (hn : 0 < n) (S : Fin n → X) (G : Set (X → ℝ))
+    {a₀ a₁ C : ℝ} (ha : a₀ ≤ a₁)
+    (hshatter : ∀ c : Fin n → Bool, ∃ g ∈ G, ∀ i, g (S i) = if c i then a₁ else a₀)
+    (hC : ∀ g ∈ G, ∀ i, |g (S i)| ≤ C) :
+    (a₁ - a₀) / 2 ≤ empRademacher S G := sorry
+
+end ShatterRademacher
+
+section SortHold
+
+open scoped NNReal ENNReal
+open Set
+
+/-- **lem:relu-sort-hold** (App. K). The two sort–hold blocks `f₀, f₁` of `K = [0,1]`
+(`a₀ = 3/4`, `a₁ = 1`), in this order: the ReLU formulas and the piecewise-linear forms of `f₀`
+and of `f₁` on `[0,1]`; (i) `f₀` is `2`-Lipschitz, `f₁` is `4`-Lipschitz and both belong to `F_Λ`
+for `w ≥ 5`, `β_W ≥ 7`, `β ≥ 2`, `Λ ≥ 4`; (ii) for every word `u ∈ {0,1}^k`,
+`f_u = f_{u_{k-1}} ∘ ⋯ ∘ f_{u_0} ∈ B(k,{f₀,f₁})` and `f_u(x_j) = a_{u_j}` at `x_j = 2^{-(j+1)}`;
+(iii) `d_S(f_u,f_v)² = Ham(u,v)/(16k)` on `S = (x_0,…,x_{k-1})`, and for `k ≥ 1`, `R ≥ 0` and the
+linear output layers `H_R`, `R̂_S(H_R ∘ B(k,{f₀,f₁})) ≥ R/8` and `R̂_S(H_R ∘ B(k,F_Λ)) ≥ R/8`. -/
+theorem lem_relu_sort_hold :
+    ((∀ (x : ℝ) (hx : x ∈ Icc (0 : ℝ) 1),
+        ((sortHoldGen 0 ⟨x, hx⟩ : Icc (0 : ℝ) 1) : ℝ) =
+            2 * max x 0 + (-2) * max (x - 3 / 8) 0 + max (x - 3 / 4) 0 ∧
+          ((sortHoldGen 0 ⟨x, hx⟩ : Icc (0 : ℝ) 1) : ℝ) =
+            if x ≤ 3 / 8 then 2 * x else if x ≤ 3 / 4 then 3 / 4 else x) ∧
+      (∀ (x : ℝ) (hx : x ∈ Icc (0 : ℝ) 1),
+        ((sortHoldGen 1 ⟨x, hx⟩ : Icc (0 : ℝ) 1) : ℝ) =
+            2 * max x 0 + 2 * max (x - 1 / 4) 0 + (-4) * max (x - 3 / 8) 0
+              + (-2) * max (x - 5 / 8) 0 + 3 * max (x - 3 / 4) 0 ∧
+          ((sortHoldGen 1 ⟨x, hx⟩ : Icc (0 : ℝ) 1) : ℝ) =
+            if x ≤ 1 / 4 then 2 * x else if x ≤ 3 / 8 then 4 * x - 1 / 2
+              else if x ≤ 5 / 8 then 1 else if x ≤ 3 / 4 then 9 / 4 - 2 * x else x)) ∧
+    (LipschitzWith 2 (sortHoldGen 0) ∧ LipschitzWith 4 (sortHoldGen 1) ∧
+      ∀ (w : ℕ) (βW β Λ : ℝ≥0), 5 ≤ w → 7 ≤ βW → 2 ≤ β → 4 ≤ Λ →
+        Set.range sortHoldGen ⊆ reluClass isProjectionOnto_clipUnit w βW β Λ) ∧
+    (∀ (k : ℕ) (u : Fin k → Fin 2), sortHoldWord u ∈ wordBall (Set.range sortHoldGen) k ∧
+      ∀ j : Fin k,
+        ((sortHoldWord u (sortHoldPoint j) : Icc (0 : ℝ) 1) : ℝ) = sortHoldSink (u j)) ∧
+    (∀ (k : ℕ) (u v : Fin k → Fin 2),
+      empDist (fun j : Fin k => sortHoldPoint j) (sortHoldWord u) (sortHoldWord v) ^ 2 =
+        1 / 16 * (hammingDist u v : ℝ) / k) ∧
+    (∀ (k : ℕ) (R : ℝ), 0 < k → 0 ≤ R →
+      R / 8 ≤ empRademacher (fun j : Fin k => sortHoldPoint j)
+          (hypothesisClass (linearReadouts (fun x : Icc (0 : ℝ) 1 => (x : ℝ)) R)
+            (Set.range sortHoldGen) k) ∧
+      ∀ (w : ℕ) (βW β Λ : ℝ≥0), 5 ≤ w → 7 ≤ βW → 2 ≤ β → 4 ≤ Λ →
+        R / 8 ≤ empRademacher (fun j : Fin k => sortHoldPoint j)
+          (hypothesisClass (linearReadouts (fun x : Icc (0 : ℝ) 1 => (x : ℝ)) R)
+            (reluClass isProjectionOnto_clipUnit w βW β Λ) k)) := sorry
+
+end SortHold
+
+section ShatterBlocks
+
+open scoped NNReal ENNReal Real
+open Metric MeasureTheory Set
+
+local notation "E₂" => EuclideanSpace ℝ (Fin 2)
+
+/-- **prop:relu-shatter** (App. K). The load–count–sort blocks `f_θ`, `θ ∈ [0,1/4]`, of
+`K = [0,1]²` (`w ≥ 11`, `β_W ≥ 17`, `β ≥ 2`, `Λ ≥ 85`): (i) every `f_θ` is a ReLU block of width
+`11` and belongs to `F_Λ`; (ii) for every `c ∈ {0,1}^{k₁×B}` there are `θ_s ∈ [0,1/4]` such that
+the first coordinate of `f_{θ_{k₁+B+1}} ∘ ⋯ ∘ f_{θ_1}(x_{t,b})` equals `a_{c_{t,b}}`
+(`a₀ = 3/4`, `a₁ = 7/8`) for all `t, b`; (iii) for `k₁, B ≥ 1`, `k ≥ k₁ + B + 1`, `R ≥ 0` and the
+sample `S` of the `n = k₁B` points `x_{t,b}`, `R̂_S(H_R ∘ B(k,F_Λ)) ≥ R/16`. -/
+theorem prop_relu_shatter {w : ℕ} (hw : 11 ≤ w) {βW β Λ : ℝ≥0} (hβW : 17 ≤ βW)
+    (hβ : 2 ≤ β) (hΛ : 85 ≤ Λ) :
+    (∀ θ ∈ Icc (0 : ℝ) (1 / 4),
+      reluBlock isProjectionOnto_clipSquare (shatterParam 0 θ) = shatterBlock θ ∧
+        shatterBlock θ ∈ reluClass isProjectionOnto_clipSquare w βW β Λ) ∧
+    (∀ (k₁ B : ℕ) (c : Fin k₁ → Fin B → Fin 2),
+      ∃ θ : ℕ → ℝ, (∀ s, θ s ∈ Icc (0 : ℝ) (1 / 4)) ∧ ∀ (t : Fin k₁) (b : Fin B),
+        ((shatterNet θ (k₁ + B + 1) (shatterPoint t b) : unitSquare) : E₂) 0 =
+          shatterSink (c t b)) ∧
+    (∀ k₁ B k : ℕ, 0 < k₁ → 0 < B → k₁ + B + 1 ≤ k → ∀ R : ℝ, 0 ≤ R →
+      R / 16 ≤ empRademacher (shatterSample k₁ B)
+        (hypothesisClass (linearReadouts (fun x : unitSquare => (x : E₂)) R)
+          (reluClass isProjectionOnto_clipSquare w βW β Λ) k)) := sorry
+
+/-- **prop:relu-shatter**, consequence for the entropy integral (App. K, Remarks (1)). In the
+situation of `prop:relu-shatter` (iii), `V_k(S) ≥ √n/192 − √2/12` with `n = k₁B`: the linear
+order of the layerwise bound is attained by ReLU blocks on a sample. -/
+theorem prop_relu_shatter_entropy {w : ℕ} (hw : 11 ≤ w) {βW β Λ : ℝ≥0} (hβW : 17 ≤ βW)
+    (hβ : 2 ≤ β) (hΛ : 85 ≤ Λ) {k₁ B k : ℕ} (hk₁ : 0 < k₁) (hB : 0 < B)
+    (hk : k₁ + B + 1 ≤ k) :
+    √((k₁ * B : ℕ) : ℝ) / 192 - √2 / 12 ≤
+      entropyIntegral (Y := EmpSpace (shatterSample k₁ B))
+        (empDiam (shatterSample k₁ B)
+          (wordBall (reluClass isProjectionOnto_clipSquare w βW β Λ) k))
+        (wordBall (reluClass isProjectionOnto_clipSquare w βW β Λ) k) := sorry
+
+end ShatterBlocks
+
+section ResetSample
+
+open scoped NNReal ENNReal Real
+open Metric MeasureTheory
+
+open FoML.ToMathlib
+
+/-- **lem:relu-reset-sample** (App. K). The two expand-and-reset maps of `[0,1]` on a sample:
+(i) a nonempty word equals the anchor of its last letter off its success set `C_u`, and the sets
+`C_u` of the words of a fixed length are pairwise disjoint; (ii) for every sample `S` of `n`
+points, every `k` and every `ε > 0`,
+`N(B(k,{e₀,e₁}), d_S, ε) ≤ 3 + ∑_{j=1}^k min{2^j, n, ⌊ε^{-2}⌋} ≤ 3 + k min{n, ⌊ε^{-2}⌋}` and
+`V_k(S) ≤ √log(k+1) + √log 3 + √(2 log 2) + √(π/2)`. -/
+theorem lem_relu_reset_sample :
+    ((∀ (u : List (Fin 2)) (hu : u ≠ []) (x : Set.Icc (0 : ℝ) 1), x ∉ erSuccess u →
+        wordOf erGen u x = erAnchor (u.getLast hu)) ∧
+      ∀ j : ℕ, {u : List (Fin 2) | u.length = j}.PairwiseDisjoint erSuccess) ∧
+    ∀ (n : ℕ) (S : Fin n → Set.Icc (0 : ℝ) 1) (k : ℕ),
+      (∀ ε : ℝ≥0, 0 < ε →
+        externalCoveringNumber (X := EmpSpace S) ε (wordBall (Set.range erGen) k) ≤
+            1 + 2 + ∑ j ∈ Finset.Icc 1 k, ((min (2 ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ∧
+          1 + (2 : ℕ∞) + ∑ j ∈ Finset.Icc 1 k, ((min (2 ^ j) (min n ⌊ε⁻¹ ^ 2⌋₊) : ℕ) : ℕ∞) ≤
+            1 + 2 + k * ((min n ⌊ε⁻¹ ^ 2⌋₊ : ℕ) : ℕ∞)) ∧
+      entropyIntegral (Y := EmpSpace S) (empDiam S (wordBall (Set.range erGen) k))
+          (wordBall (Set.range erGen) k) ≤
+        √(Real.log (k + 1)) + √(Real.log 3) + √(2 * Real.log 2) + √(π / 2) := sorry
+
+end ResetSample
+
+end ReLUSample
 
 end LeanDeepgen.Challenge

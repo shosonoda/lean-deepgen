@@ -15,18 +15,22 @@ library `LeanDeepgen` from the standard axioms only.
   in the import closure of the challenge is the trusted "vocabulary" of the certificate.
 * `Solution.lean` imports the whole library and proves each challenge statement by the
   corresponding library theorem (`:= LeanDeepgen.<name> <args>`).
-* `config.json` lists the 64 theorem names (55 of the original certificate, 6 added on
+* `config.json` lists the 69 theorem names (55 of the original certificate, 6 added on
   2026-09-25 for the new results `prop:envelope`, `cor:envelope-profiles`, `lem:reachable-radius`,
-  `lem:ode-scheme-entropy`, `lem:cot-branch-sample`, and 3 added on 2026-09-26 for the deep ReLU
-  appendix, `lem:relu-layer-covering`, `prop:relu-regimes`, `prop:relu-regimes-iii-lower`) and
+  `lem:ode-scheme-entropy`, `lem:cot-branch-sample`, 3 added on 2026-09-26 for the deep ReLU
+  appendix, `lem:relu-layer-covering`, `prop:relu-regimes`, `prop:relu-regimes-iii-lower`, and 5
+  added on 2026-11-15 for the statements added in the revised manuscript, App. K, "Variance:
+  lower bounds on a sample": `lem:shatter-rademacher`, `lem:relu-sort-hold`, `prop:relu-shatter`,
+  its consequence for the entropy integral, and `lem:relu-reset-sample`) and
   the permitted axioms `propext`, `Quot.sound`, `Classical.choice`. `./script/comparator.sh` was
-  re-run on 2026-09-26 with all 64 theorems: "Your solution is okay!".
+  re-run on 2026-11-15 with all 69 theorems: "Your solution is okay!".
 
 Comparator checks that each listed theorem has, in `Solution`, exactly the statement given in
 `Challenge` (all constants occurring in the statement are identical in both environments) and
 that its proof uses only the permitted axioms. Each challenge statement is copied verbatim
 (binders, implicitness, hypothesis order, universe levels) from the library theorem; the
-`open` lines of each section reproduce the context of the source module so both files
+`open` lines (and the `local notation`, where the source module has one) of each section
+reproduce the context of the source module so both files
 elaborate to identical kernel terms. The one exception is `thm_dudley_subgaussian`, whose
 auxiliary definitions live in a theorem module (`FoML/ToFoML/DudleySubGaussian`) and are therefore
 unfolded inline in the challenge.
@@ -74,11 +78,27 @@ generalizations W4–W28). In particular the challenge already incorporates:
   `K`, explicit `C_F = 2(2β_W R_K + β_W + β + 1) max{β_W, β}` in `lem:relu-layer-covering` (R1);
   `K ≠ ∅`, `0 < Λ` and all `k` in `prop:relu-regimes` (i), the `(1 + C/ε)` form of the envelope
   profile with `log(1 + 2C_F/D̄)` in (ii)/(iii) (R2); width `w ≥ 4`, `Λ ≥ 20`, `β_W ≥ 41`,
-  `β ≥ 2` in the lower bound of (iii) (R3).
+  `β ≥ 2` in the lower bound of (iii) (R3);
+* lower bounds on a sample (2026-11-15, revised manuscript, App. K, `sec:relu-sample`; see the
+  2026-11-15 section of `ToDraft.md`): no hypothesis is added to the manuscript's statements.
+  "Bounded on the sample" in `lem:shatter-rademacher` is `|g(x_i)| ≤ C` for all `g ∈ G` and
+  `i ≤ n`; `lem:relu-sort-hold` also lists the piecewise-linear forms of `f₀`, `f₁` on `[0,1]`
+  and `f_u ∈ B(k,{f₀,f₁})`, and states (ii) and the distance identity of (iii) for all `k ≥ 0`;
+  `prop:relu-shatter` states (ii) for all `k₁, B ≥ 0` and (iii) for `k₁, B ≥ 1`, with `0`-based
+  indices (`shatterPoint t b` is the manuscript's `x_{t+1,b+1}`); the consequence
+  `V_k(S) ≥ √n/192 − √2/12` of its Remarks (1) is a separate theorem, in which the
+  total-boundedness and integrability hypotheses of `thm:hidden-decomp` are proved, not assumed;
+  in `lem:relu-reset-sample` the set `C_u` is `erSuccess u` (defined by recursion on the word;
+  `mem_erSuccess_iff` is the manuscript's description) and `N` is the external covering number
+  in `d_S`.
 
 The three ReLU theorems were added to `Challenge.lean` / `Solution.lean` / `config.json` on
 2026-09-26; `./script/comparator.sh` was re-run the same day with all 64 theorems: "Your
 solution is okay!" (commit `aa16b1e`).
+
+The five theorems of the revised manuscript (App. K, "Variance: lower bounds on a sample") were
+added to `Challenge.lean` / `Solution.lean` / `config.json` on 2026-11-15; `./script/comparator.sh`
+was re-run the same day with all 69 theorems: "Your solution is okay!" (commit `3d4ae20`).
 
 ## Mapping: paper label → challenge theorem → library theorem
 
@@ -146,6 +166,11 @@ solution is okay!" (commit `aa16b1e`).
 | `lem:relu-layer-covering` | `lem_relu_layer_covering` | `lem_relu_layer_covering` | `Examples/ReLU` |
 | `prop:relu-regimes` (i)–(iii), upper bounds | `prop_relu_regimes` | `prop_relu_regimes` | `Examples/ReLU` |
 | `prop:relu-regimes` (iii), lower bound (E2) | `prop_relu_regimes_iii_lower` | `prop_relu_regimes_iii_lower` | `Examples/ReLU` |
+| `lem:shatter-rademacher` (a class bounded on the sample that realizes every two-valued labeling has `R̂_S(G) ≥ (a₁ − a₀)/2`) | `lem_shatter_rademacher` | `lem_shatter_rademacher` | `Bounds/Shatter` |
+| `lem:relu-sort-hold` (i)–(iii) (sort–hold blocks: membership in `F_Λ`, the word written on the sample, `d_S(f_u,f_v)² = Ham(u,v)/(16k)`, `R̂_S ≥ R/8`) | `lem_relu_sort_hold` | `lem_relu_sort_hold` | `Examples/ReLUSortHold` |
+| `prop:relu-shatter` (i)–(iii) (load–count–sort blocks: membership in `F_Λ`, shattering of `k₁B` points at depth `k₁ + B + 1`, `R̂_S ≥ R/16`) | `prop_relu_shatter` | `prop_relu_shatter` | `Examples/ReLUShatter` |
+| `prop:relu-shatter`, Remarks (1) (entropy integral, `V_k(S) ≥ √n/192 − √2/12`) | `prop_relu_shatter_entropy` | `prop_relu_shatter_entropy` | `Examples/ReLUShatter` |
+| `lem:relu-reset-sample` (i)–(ii) (expand-and-reset maps: closed form off the success sets, disjoint success sets, covering bound and `V_k(S)` bound on every sample) | `lem_relu_reset_sample` | `lem_relu_reset_sample` | `Examples/ReLUResetSample` |
 | `thm:bernoulli-sudakov` (bonus) | `thm_bernoulli_sudakov` | `FoML.ToFoML.bernoulli_sudakov` (lean-rademacher) | `FoML/ToFoML/BernoulliSudakov` |
 | `thm:dudley-subgaussian` (bonus, inlined) | `thm_dudley_subgaussian` | `FoML.ToFoML.dudley_subgaussian_finite_space` (lean-rademacher) | `FoML/ToFoML/DudleySubGaussian` |
 
@@ -174,6 +199,18 @@ four regimes and balancing depths, J teacher--student/neural-operator/implementa
 computation, M unrolled iterative solvers and samplers. All Lean labels
 (`thm:...`/`prop:...`/`lem:...`/`cond:...`) referenced in the table above are unchanged by this
 reorganization; only their location within the appendix moved.
+
+Note (2026-11-15, revised manuscript): the five rows `lem:shatter-rademacher`,
+`lem:relu-sort-hold`, `prop:relu-shatter` (two rows) and `lem:relu-reset-sample` are the
+statements added in the revised manuscript (App. K, "Variance: lower bounds on a sample",
+`sec:relu-sample`). Each is one library theorem named after the paper label and stating the
+whole paper statement (all parts, as one conjunction); `prop_relu_shatter_entropy` is the
+consequence for the entropy integral stated in Remarks (1) of that subsection. In the challenge
+they form `section ReLUSample`, one subsection per source module, each reproducing the `open`
+lines of its source module (and the `local notation` `E₂` of `Examples/ReLUShatter`). The
+challenge imports the three example modules `Examples/ReLUSortHold`, `Examples/ReLUShatter` and
+`Examples/ReLUResetSample`, which hold the definitions of the blocks, sample points and success
+sets; `Bounds/Shatter` contains no definitions and is not imported by the challenge.
 
 ## Maintenance
 

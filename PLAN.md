@@ -128,6 +128,10 @@
 | `thm:caa`, `thm:maa`, `lem:oaa`, `thm:pmaa`, `cor:aa-semigroup-saturation` | 自己写像版 Arzelà–Ascoli：コンパクト `X` で `H ⊆ C(X,X)` が `d_∞` 全有界 ⇔ 等連続；共通モジュラス判定；擬距離商 | medium（Mathlib `arzela_ascoli` に glue） |
 | `cond:e3`, `cor:superexp`, `cor:doubleexp` | `X = ℓ_∞(E)`，`F = {r, A} ∪ {g_u : u ∈ G}` の記憶保存拡大．`W_k = {w_u}` は定数写像，`d_∞(w_u,w_v) = max_j min{1, λ^{k−j+1}‖u_j − v_j‖}`，`∏_j M(G, 2ε/λ^{k−j+1}) ≤ N(W_k, ε) ≤ ∏_j N(G, ε/λ^{k−j+1})` ⇒ `log N ≳ k²`（有限次元）/ `≳ λ^{pk}`（`δ^{−p}` エントロピー） | medium（積の被覆・パッキング） |
 | `thm:guivarch-bass`, `cor:nilpotent-entropy`, `thm:breuillard-large-balls` | 引用定理 | 形式化対象外（P2 の仮定として置く） |
+| `lem:shatter-rademacher`（改訂版 App. K，2026-11-15） | 標本の全ての 2 値ラベルづけ（値 `a₀ ≤ a₁`）を実現し，標本上で有界なクラスは `R̂_S ≥ (a₁ − a₀)/2` | easy（`σ` と `−σ` の対で平均；済） |
+| `lem:relu-sort-hold`（同） | `[0,1]` 上の幅 5 の ReLU ブロック 2 つ（2 倍・ゲート `1/2` で振り分け・`[3/4,1]` で保持）．合成 `f_u` は標本 `x_j = 2^{-(j+1)}` に語を書き込む: `f_u(x_j) = a_{u_j}`，`d_S(f_u,f_v)² = Ham(u,v)/(16k)`，`R̂_S ≥ R/8`；`w ≥ 5`，`β_W ≥ 7`，`β ≥ 2`，`Λ ≥ 4` で `F_Λ` に属する | medium（区間ごとの場合分けと語の帰納法；済） |
+| `prop:relu-shatter`（同） | `[0,1]²` 上の幅 11 の 1 パラメータ族 `f_θ`（`θ ∈ [0,1/4]`；待機・書き込み・計数・振り分け・保持）．深さ `k₁ + B + 1` で `k₁B` 点の全てのラベルづけを実現，`R̂_S ≥ R/16`，`V_k(S) ≥ √n/192 − √2/12`；`w ≥ 11`，`β_W ≥ 17`，`β ≥ 2`，`Λ ≥ 85` | hard（11 ユニットの和の評価，軌道の帰納法，ビット抽出 `E ∘ S_c = id`；済） |
+| `lem:relu-reset-sample`（同） | expand-and-reset の 2 写像は，任意の標本上で `N(B(k,{e₀,e₁}),d_S,ε) ≤ 3 + Σ_j min{2^j, n, ⌊ε⁻²⌋}`，`V_k(S) ≤ √log(k+1) + √log 3 + √(2 log 2) + √(π/2)` | medium（`lem:cot-branch-sample` の数え上げを「成功集合の外で定数・同長で互いに素」に抽象化；済） |
 
 ### 1.6 抽出時に見つかった原稿側の注意点（形式化で明示すべき仮定）
 
@@ -154,9 +158,10 @@ LeanDeepgen/
     WordBall, Metrics, Covering, Hypothesis, Loss, Rademacher, Assumptions
   Profiles/   Defs, LogSplit, Profiles
   Tradeoff/   Defs, Regimes
-  Growth/     Defs, Lemmas, Exponential, ArzelaAscoli, Saturation, Polynomial, MemoryExpansion
-  Bounds/     BiasVariance, HiddenOutput, Sudakov, EntropyDecomp, EntropyDecompSample, Variance
-  Examples/   Regimes, Implementation, Readout, ChainOfThought, ODE
+  Growth/     Defs, Lemmas, Exponential, ArzelaAscoli, Saturation, Polynomial, MemoryExpansion, Envelope
+  Bounds/     BiasVariance, HiddenOutput, Sudakov, EntropyDecomp, EntropyDecompSample, Variance, Shatter
+  Examples/   Regimes, Implementation, Readout, ChainOfThought, ODE, ReLU,
+              ReLUSortHold, ReLUShatter, ReLUResetSample   -- 改訂版 App. K の標本上の下界（2026-11-15）
 comparator/   Challenge.lean（原稿の定理を sorry 付きで列挙），Solution.lean（ライブラリで証明），config.json
 ```
 
