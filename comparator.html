@@ -38,9 +38,9 @@
     <div class="result">
       <p class="ok">Lean default kernel accepts the solution / Your solution is okay!</p>
       <dl>
-        <dt>Date</dt><dd>2026-09-26</dd>
-        <dt>Commit</dt><dd><code>aa16b1e</code> (branch <code>main</code>)</dd>
-        <dt>Theorems checked</dt><dd>64 (all of <code>comparator/config.json</code>)</dd>
+        <dt>Date</dt><dd>2026-11-15</dd>
+        <dt>Commit</dt><dd><code>3d4ae20</code> (branch <code>main</code>)</dd>
+        <dt>Theorems checked</dt><dd>69 (all of <code>comparator/config.json</code>)</dd>
         <dt>Permitted axioms</dt><dd><code>propext</code>, <code>Quot.sound</code>, <code>Classical.choice</code></dd>
         <dt>Toolchain</dt><dd>Lean <code>v4.32.0</code>, Mathlib <code>v4.32.0</code>, lean4export <code>v4.32.0</code>, fake-landrun (macOS)</dd>
       </dl>
@@ -77,11 +77,12 @@ Your solution is okay!</pre>
     <a href="https://github.com/shosonoda/lean-deepgen#deviations-from-the-printed-manuscript">README</a>.</p>
 
     <h2>Configuration</h2>
-    <p><code>comparator/config.json</code> lists 64 theorems of <code>LeanDeepgen.Challenge</code>
+    <p><code>comparator/config.json</code> lists 69 theorems of <code>LeanDeepgen.Challenge</code>
     (challenge module <code>Challenge</code>, solution module <code>Solution</code>; both are Lake libraries
     with <code>srcDir = "comparator"</code>) and the three permitted axioms. Each challenge statement is copied
     verbatim (binders, implicitness, hypothesis order, universe levels) from the library theorem; the
-    <code>open</code> lines of each section reproduce the context of the source module so that both files
+    <code>open</code> lines (and the <code>local notation</code>, where the source module has one) of each
+    section reproduce the context of the source module so that both files
     elaborate to identical kernel terms. The one exception is <code>thm_dudley_subgaussian</code>, whose
     auxiliary definitions live in a theorem module and are therefore unfolded inline in the challenge.</p>
     <p>Not included: the cited theorems <code>thm:guivarch-bass</code>, <code>cor:nilpotent-entropy</code>,
@@ -108,6 +109,16 @@ Your solution is okay!</pre>
     proof now in J.3), K deep ReLU networks, L chain-of-thought symbolic computation, M unrolled
     iterative solvers and samplers. All Lean labels referenced in the table below are unchanged by
     this reorganization; only their location within the appendix moved.</p>
+    <p><em>Note (2026-11-15, revised manuscript):</em> the five theorems
+    <code>lem_shatter_rademacher</code>, <code>lem_relu_sort_hold</code>, <code>prop_relu_shatter</code>,
+    <code>prop_relu_shatter_entropy</code> and <code>lem_relu_reset_sample</code> are the statements added
+    in the revised manuscript (App. K, &ldquo;Variance: lower bounds on a sample&rdquo;). Each is one library
+    theorem named after the paper label and stating the whole paper statement (all parts, as one
+    conjunction); <code>prop_relu_shatter_entropy</code> is the consequence for the entropy integral stated
+    in Remarks (1) of that subsection. The challenge imports the three example modules
+    <code>Examples/ReLUSortHold</code>, <code>Examples/ReLUShatter</code> and
+    <code>Examples/ReLUResetSample</code>, which hold the definitions of the blocks, sample points and
+    success sets. With these five theorems the certificate covers 69 theorems (64 before).</p>
 
     <h2>Mapping: paper label &rarr; challenge theorem &rarr; library declaration</h2>
     <div class="scroll">
@@ -176,6 +187,11 @@ Your solution is okay!</pre>
       <tr><td><code>lem:relu-layer-covering</code></td><td><code>lem_relu_layer_covering</code></td><td><code>lem_relu_layer_covering</code></td><td><code>Examples/ReLU</code></td></tr>
       <tr><td><code>prop:relu-regimes</code> (i)&ndash;(iii), upper bounds</td><td><code>prop_relu_regimes</code></td><td><code>prop_relu_regimes</code></td><td><code>Examples/ReLU</code></td></tr>
       <tr><td><code>prop:relu-regimes</code> (iii), lower bound (E2)</td><td><code>prop_relu_regimes_iii_lower</code></td><td><code>prop_relu_regimes_iii_lower</code></td><td><code>Examples/ReLU</code></td></tr>
+      <tr><td><code>lem:shatter-rademacher</code><br><small>(a class bounded on the sample that realizes every two-valued labeling has <code>R&#770;<sub>S</sub>(G) &ge; (a<sub>1</sub> &minus; a<sub>0</sub>)/2</code>)</small></td><td><code>lem_shatter_rademacher</code></td><td><code>lem_shatter_rademacher</code></td><td><code>Bounds/Shatter</code></td></tr>
+      <tr><td><code>lem:relu-sort-hold</code> (i)&ndash;(iii)<br><small>(sort&ndash;hold blocks: membership in <code>F<sub>&Lambda;</sub></code>, the word written on the sample, <code>d<sub>S</sub>(f<sub>u</sub>,f<sub>v</sub>)&sup2; = Ham(u,v)/(16k)</code>, <code>R&#770;<sub>S</sub> &ge; R/8</code>)</small></td><td><code>lem_relu_sort_hold</code></td><td><code>lem_relu_sort_hold</code></td><td><code>Examples/ReLUSortHold</code></td></tr>
+      <tr><td><code>prop:relu-shatter</code> (i)&ndash;(iii)<br><small>(load&ndash;count&ndash;sort blocks: membership in <code>F<sub>&Lambda;</sub></code>, shattering of <code>k<sub>1</sub>B</code> points at depth <code>k<sub>1</sub> + B + 1</code>, <code>R&#770;<sub>S</sub> &ge; R/16</code>)</small></td><td><code>prop_relu_shatter</code></td><td><code>prop_relu_shatter</code></td><td><code>Examples/ReLUShatter</code></td></tr>
+      <tr><td><code>prop:relu-shatter</code>, Remarks (1)<br><small>(entropy integral, <code>V<sub>k</sub>(S) &ge; &radic;n/192 &minus; &radic;2/12</code>)</small></td><td><code>prop_relu_shatter_entropy</code></td><td><code>prop_relu_shatter_entropy</code></td><td><code>Examples/ReLUShatter</code></td></tr>
+      <tr><td><code>lem:relu-reset-sample</code> (i)&ndash;(ii)<br><small>(expand-and-reset maps: closed form off the success sets, disjoint success sets, covering bound and <code>V<sub>k</sub>(S)</code> bound on every sample)</small></td><td><code>lem_relu_reset_sample</code></td><td><code>lem_relu_reset_sample</code></td><td><code>Examples/ReLUResetSample</code></td></tr>
       <tr><td><code>thm:bernoulli-sudakov</code> (bonus)</td><td><code>thm_bernoulli_sudakov</code></td><td><code>FoML.ToFoML.bernoulli_sudakov</code> (lean-rademacher)</td><td><code>FoML/ToFoML/BernoulliSudakov</code></td></tr>
       <tr><td><code>thm:dudley-subgaussian</code> (bonus, inlined)</td><td><code>thm_dudley_subgaussian</code></td><td><code>FoML.ToFoML.dudley_subgaussian_finite_space</code> (lean-rademacher)</td><td><code>FoML/ToFoML/DudleySubGaussian</code></td></tr>
       </tbody>
@@ -193,7 +209,7 @@ git clone https://github.com/leanprover/comparator.git &amp;&amp; (cd comparator
 git clone --branch v4.32.0 https://github.com/leanprover/lean4export.git lean4export-v4.32.0 &amp;&amp; (cd lean4export-v4.32.0 &amp;&amp; lake build)
 cd -
 
-./script/comparator.sh   # about a minute; ends with "Your solution is okay!"</pre>
+./script/comparator.sh   # about two minutes; ends with "Your solution is okay!"</pre>
     <p>The script builds <code>Challenge</code> and <code>Solution</code>, exports them and runs the checker on
     <code>comparator/config.json</code>. On Linux it uses <code>landrun</code> for sandboxing when available and
     Comparator's <code>fake-landrun</code> shim otherwise (always on macOS). The tool locations can be overridden

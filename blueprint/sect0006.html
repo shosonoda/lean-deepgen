@@ -18,8 +18,6 @@
 <link rel="up" href="index.html" title="Generalization error bounds for deep models" />
 <link rel="stylesheet" href="styles/theme-white.css" />
 <link rel="stylesheet" href="styles/amsthm.css" />
-<link rel="stylesheet" href="styles/showmore.css" />
-<link rel="stylesheet" href="styles/blueprint.css" />
 <link rel="stylesheet" href="styles/extra_styles.css" />
 </head>
 
@@ -165,15 +163,26 @@
   <a href="sect0007.html#a0000000038"><span class="toc_ref">7.3</span> <span class="toc_entry">Deep ReLU networks (Appendix K, lem:relu-layer-covering, prop:relu-regimes)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000039"><span class="toc_ref">7.4</span> <span class="toc_entry">Chain-of-thought style symbolic computation (Appendix L)</span></a>
+  <a href="sect0007.html#a0000000039"><span class="toc_ref">7.4</span> <span class="toc_entry">Deep ReLU networks: Rademacher complexity of a shattered sample (Appendix K, lem:shatter-rademacher)</span></a>
  </li>
 <li class="">
-  <a href="sect0007.html#a0000000040"><span class="toc_ref">7.5</span> <span class="toc_entry">Unrolled fixed-point iterations and ODE solvers (Appendix M)</span></a>
+  <a href="sect0007.html#a0000000040"><span class="toc_ref">7.5</span> <span class="toc_entry">Deep ReLU networks: sort–hold blocks separated on a sample (Appendix K, lem:relu-sort-hold)</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html#a0000000041"><span class="toc_ref">7.6</span> <span class="toc_entry">Deep ReLU networks: load–count–sort blocks shatter a sample (Appendix K, prop:relu-shatter)</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html#a0000000042"><span class="toc_ref">7.7</span> <span class="toc_entry">Deep ReLU networks: the expand-and-reset maps on a sample (Appendix K, lem:relu-reset-sample)</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html#a0000000043"><span class="toc_ref">7.8</span> <span class="toc_entry">Chain-of-thought style symbolic computation (Appendix L)</span></a>
+ </li>
+<li class="">
+  <a href="sect0007.html#a0000000044"><span class="toc_ref">7.9</span> <span class="toc_entry">Unrolled fixed-point iterations and ODE solvers (Appendix M)</span></a>
  </li>
 
   </ul>
  </li>
-<li ><a href="dep_graph_document.html">Dependency graph</a></li>
 </ul>
 </nav>
 
@@ -190,40 +199,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">366</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:bias-exp">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasExp" class="lean_decl">LeanDeepgen.Tradeoff.biasExp</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Exponentially decaying approximation error: \(\mathsf{bias}(k) = e^{-\alpha k}\), \(\alpha {\gt} 0\). </p>
+  <p> LeanDeepgen.Tradeoff.biasExp Exponentially decaying approximation error: \(\mathsf{bias}(k) = e^{-\alpha k}\), \(\alpha {\gt} 0\). </p>
 
   </div>
 </div>
@@ -233,40 +211,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">367</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:bias-poly">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasPoly" class="lean_decl">LeanDeepgen.Tradeoff.biasPoly</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Polynomially decaying approximation error: \(\mathsf{bias}(k) = k^{-\beta }\), \(\beta {\gt} 0\). </p>
+  <p> LeanDeepgen.Tradeoff.biasPoly Polynomially decaying approximation error: \(\mathsf{bias}(k) = k^{-\beta }\), \(\beta {\gt} 0\). </p>
 
   </div>
 </div>
@@ -276,40 +223,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">368</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:var-log">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varLog" class="lean_decl">LeanDeepgen.Tradeoff.varLog</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Root-logarithmic estimation profile: \(\mathsf{var}(k,n) = \sqrt{\log k / n}\) (??(i)–(ii)). </p>
+  <p> LeanDeepgen.Tradeoff.varLog Root-logarithmic estimation profile: \(\mathsf{var}(k,n) = \sqrt{\log k / n}\) (??(i)–(ii)). </p>
 
   </div>
 </div>
@@ -319,40 +235,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">369</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:var-poly">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varPoly" class="lean_decl">LeanDeepgen.Tradeoff.varPoly</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  Root-polynomial estimation profile: \(\mathsf{var}(k,n) = \sqrt{k^{\gamma } / n}\), \(\gamma {\gt} 0\) (??(iii)–(iv)). </p>
+  <p> LeanDeepgen.Tradeoff.varPoly Root-polynomial estimation profile: \(\mathsf{var}(k,n) = \sqrt{k^{\gamma } / n}\), \(\gamma {\gt} 0\) (??(iii)–(iv)). </p>
 
   </div>
 </div>
@@ -362,40 +247,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">370</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:gen-bound">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.genBound" class="lean_decl">LeanDeepgen.Tradeoff.genBound</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  The depth-dependent part of the excess-risk bound of <a href="sect0003.html#thm:bv">theorem 98</a>: \(\mathsf{gen}(k,n) = \mathsf{bias}(k) + \mathsf{var}(k,n)\). </p>
+  <p> LeanDeepgen.Tradeoff.genBound The depth-dependent part of the excess-risk bound of <a href="sect0003.html#thm:bv">theorem 98</a>: \(\mathsf{gen}(k,n) = \mathsf{bias}(k) + \mathsf{var}(k,n)\). </p>
 
   </div>
 </div>
@@ -405,40 +259,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">371</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:k-pp">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kPP" class="lean_decl">LeanDeepgen.Tradeoff.kPP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  PP balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\). </p>
+  <p> LeanDeepgen.Tradeoff.kPP PP balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
@@ -448,40 +271,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">372</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:k-ep">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kEP" class="lean_decl">LeanDeepgen.Tradeoff.kEP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EP balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). </p>
+  <p> LeanDeepgen.Tradeoff.kEP EP balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). </p>
 
   </div>
 </div>
@@ -491,40 +283,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">373</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:rate-ep">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.rateEP" class="lean_decl">LeanDeepgen.Tradeoff.rateEP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EP balanced rate \(n^{-1/2}(\log n)^{\gamma /2}\). </p>
+  <p> LeanDeepgen.Tradeoff.rateEP EP balanced rate \(n^{-1/2}(\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
@@ -534,40 +295,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">374</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:k-el">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kEL" class="lean_decl">LeanDeepgen.Tradeoff.kEL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EL balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \log \log \log n)\). </p>
+  <p> LeanDeepgen.Tradeoff.kEL EL balancing depth (leading terms): \({k^{\ast }}= \frac{1}{2\alpha }(\log n - \log \log \log n)\). </p>
 
   </div>
 </div>
@@ -577,40 +307,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">375</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:rate-el">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.rateEL" class="lean_decl">LeanDeepgen.Tradeoff.rateEL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  EL balanced rate \(\sqrt{\log \log n / n}\). </p>
+  <p> LeanDeepgen.Tradeoff.rateEL EL balanced rate \(\sqrt{\log \log n / n}\). </p>
 
   </div>
 </div>
@@ -620,40 +319,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">376</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:k-pl">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kPL" class="lean_decl">LeanDeepgen.Tradeoff.kPL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  PL balancing depth \({k^{\ast }}= \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\), the leading term of \(\exp \bigl(W(2\beta n)/(2\beta )\bigr)\) (Lambert \(W\), \(W(x) \sim \log x\)). </p>
+  <p> LeanDeepgen.Tradeoff.kPL PL balancing depth \({k^{\ast }}= \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\), the leading term of \(\exp \bigl(W(2\beta n)/(2\beta )\bigr)\) (Lambert \(W\), \(W(x) \sim \log x\)). </p>
 
   </div>
 </div>
@@ -663,40 +331,9 @@
     Definition
     </span>
     <span class="definition_thmlabel">377</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#def:rate-pl">#</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.ratePL" class="lean_decl">LeanDeepgen.Tradeoff.ratePL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="definition_thmcontent">
-  <p>  PL balanced rate \(\sqrt{\log n/n}\). </p>
+  <p> LeanDeepgen.Tradeoff.ratePL PL balanced rate \(\sqrt{\log n/n}\). </p>
 
   </div>
 </div>
@@ -707,72 +344,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">378</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-exp-antitone">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000407"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasExp_antitone" class="lean_decl">LeanDeepgen.Tradeoff.biasExp_antitone</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\), \(k \mapsto e^{-\alpha k}\) is nonincreasing. </p>
+  <p>def:bias-exp  LeanDeepgen.Tradeoff.biasExp_antitone For \(\alpha {\gt} 0\), \(k \mapsto e^{-\alpha k}\) is nonincreasing. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000407">
+<div class="proof_wrapper" id="a0000000411">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\exp \) is monotone and \(k \mapsto -\alpha k\) is nonincreasing. </p>
@@ -785,72 +368,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">379</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-poly-antitoneOn">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000408"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasPoly_antitoneOn" class="lean_decl">LeanDeepgen.Tradeoff.biasPoly_antitoneOn</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(k \mapsto k^{-\beta }\) is nonincreasing on \((0,\infty )\). </p>
+  <p>def:bias-poly  LeanDeepgen.Tradeoff.biasPoly_antitoneOn For \(\beta {\gt} 0\), \(k \mapsto k^{-\beta }\) is nonincreasing on \((0,\infty )\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000408">
+<div class="proof_wrapper" id="a0000000412">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Power with a nonpositive exponent is antitone on the positive reals. </p>
@@ -863,72 +392,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">380</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-log-monotoneOn">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000409"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varLog_monotoneOn" class="lean_decl">LeanDeepgen.Tradeoff.varLog_monotoneOn</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(n \ge 0\), \(k \mapsto \sqrt{\log k / n}\) is nondecreasing on \((0,\infty )\). </p>
+  <p>def:var-log  LeanDeepgen.Tradeoff.varLog_monotoneOn For \(n \ge 0\), \(k \mapsto \sqrt{\log k / n}\) is nondecreasing on \((0,\infty )\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000409">
+<div class="proof_wrapper" id="a0000000413">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\log \) is monotone on \((0,\infty )\); divide by \(n \ge 0\) and take square roots. </p>
@@ -941,72 +416,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">381</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-poly-monotoneOn">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000410"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varPoly_monotoneOn" class="lean_decl">LeanDeepgen.Tradeoff.varPoly_monotoneOn</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\gamma \ge 0\) and \(n \ge 0\), \(k \mapsto \sqrt{k^{\gamma }/n}\) is nondecreasing on \((0,\infty )\). </p>
+  <p>def:var-poly  LeanDeepgen.Tradeoff.varPoly_monotoneOn For \(\gamma \ge 0\) and \(n \ge 0\), \(k \mapsto \sqrt{k^{\gamma }/n}\) is nondecreasing on \((0,\infty )\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000410">
+<div class="proof_wrapper" id="a0000000414">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(k \mapsto k^\gamma \) is monotone for \(\gamma \ge 0\); divide by \(n\) and take roots. </p>
@@ -1019,72 +440,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">382</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:balancing-max">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000411"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.max_le_genBound" class="lean_decl">LeanDeepgen.Tradeoff.max_le_genBound</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   If \(\mathsf{bias}\ge 0\) and \(\mathsf{var}(\cdot ,n) \ge 0\) on a set \(S\) of depths, then \(\mathsf{gen}(k,n) \ge \max \{ \mathsf{bias}(k), \mathsf{var}(k,n)\} \) for every \(k \in S\). </p>
+  <p>def:gen-bound  LeanDeepgen.Tradeoff.max_le_genBound If \(\mathsf{bias}\ge 0\) and \(\mathsf{var}(\cdot ,n) \ge 0\) on a set \(S\) of depths, then \(\mathsf{gen}(k,n) \ge \max \{ \mathsf{bias}(k), \mathsf{var}(k,n)\} \) for every \(k \in S\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000411">
+<div class="proof_wrapper" id="a0000000415">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Each summand is bounded by the sum because the other one is nonnegative. </p>
@@ -1097,72 +464,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">383</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:balancing">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000412"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.balancing" class="lean_decl">LeanDeepgen.Tradeoff.balancing</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">Balancing principle.</b> Let \(S \subseteq \mathbb R\) be a set of depths on which \(\mathsf{bias}\ge 0\) is nonincreasing and \(\mathsf{var}(\cdot ,n) \ge 0\) is nondecreasing. If \(k_0 \in S\) balances the two terms, \(\mathsf{bias}(k_0) = \mathsf{var}(k_0,n)\), then \(\mathsf{gen}(k,n) \ge \mathsf{bias}(k_0)\) for every \(k \in S\), while \(\mathsf{gen}(k_0,n) = 2\mathsf{bias}(k_0)\); hence \(k_0\) minimizes the bound over \(S\) up to the factor \(2\). </p>
+  <p>def:gen-bound  LeanDeepgen.Tradeoff.balancing <b class="bfseries">Balancing principle.</b> Let \(S \subseteq \mathbb R\) be a set of depths on which \(\mathsf{bias}\ge 0\) is nonincreasing and \(\mathsf{var}(\cdot ,n) \ge 0\) is nondecreasing. If \(k_0 \in S\) balances the two terms, \(\mathsf{bias}(k_0) = \mathsf{var}(k_0,n)\), then \(\mathsf{gen}(k,n) \ge \mathsf{bias}(k_0)\) for every \(k \in S\), while \(\mathsf{gen}(k_0,n) = 2\mathsf{bias}(k_0)\); hence \(k_0\) minimizes the bound over \(S\) up to the factor \(2\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000412">
+<div class="proof_wrapper" id="a0000000416">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Case split on \(k \le k_0\) or \(k \ge k_0\): in the first case \(\mathsf{bias}(k) \ge \mathsf{bias}(k_0)\) and \(\mathsf{var}(k,n) \ge 0\); in the second \(\mathsf{var}(k,n) \ge \mathsf{var}(k_0,n) = \mathsf{bias}(k_0)\) and \(\mathsf{bias}(k) \ge 0\). The identity at \(k_0\) is the balance equation. </p>
@@ -1175,74 +488,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">384</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-poly-kpp">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000413"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:k-pp">Definition 371</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasPoly_kPP" class="lean_decl">LeanDeepgen.Tradeoff.biasPoly_kPP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{bias}({k^{\ast }}) = {k^{\ast }}^{-\beta } = n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>def:bias-poly,def:k-pp  LeanDeepgen.Tradeoff.biasPoly_kPP For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{bias}({k^{\ast }}) = {k^{\ast }}^{-\beta } = n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000413">
+<div class="proof_wrapper" id="a0000000417">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\((n^{1/(2\beta +\gamma )})^{-\beta } = n^{-\beta /(2\beta +\gamma )}\) by the power rule. </p>
@@ -1255,74 +512,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">385</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-poly-kpp">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000414"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-pp">Definition 371</a></li>
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varPoly_kPP" class="lean_decl">LeanDeepgen.Tradeoff.varPoly_kPP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{var}({k^{\ast }},n) = \sqrt{{k^{\ast }}^{\gamma }/n} = n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>def:k-pp,def:var-poly  LeanDeepgen.Tradeoff.varPoly_kPP For \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\), \(\mathsf{var}({k^{\ast }},n) = \sqrt{{k^{\ast }}^{\gamma }/n} = n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000414">
+<div class="proof_wrapper" id="a0000000418">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\({k^{\ast }}^\gamma / n = n^{\gamma /(2\beta +\gamma ) - 1} = n^{-2\beta /(2\beta +\gamma )}\), and the square root halves the exponent. </p>
@@ -1335,91 +536,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">386</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#thm:tradeoff-pp">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000415"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:k-pp">Definition 371</a></li>
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#lem:var-poly-monotoneOn">Theorem 381</a></li>
-          
-          <li><a href="sect0006.html#lem:bias-poly-kpp">Theorem 384</a></li>
-          
-          <li><a href="sect0006.html#lem:bias-poly-antitoneOn">Theorem 379</a></li>
-          
-          <li><a href="sect0006.html#lem:balancing">Theorem 383</a></li>
-          
-          <li><a href="sect0006.html#lem:var-poly-kpp">Theorem 385</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_PP" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_PP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">PP regime</b> (??). Let \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\). At the balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\), \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{{k^{\ast }}^{\gamma }/n} = 2\, n^{-\beta /(2\beta +\gamma )}\), and for every depth \(k {\gt} 0\), \(\mathsf{gen}(k,n) = k^{-\beta } + \sqrt{k^{\gamma }/n} \ge n^{-\beta /(2\beta +\gamma )}\). Thus \({k^{\ast }}\) is optimal up to the factor \(2\) and \(\mathsf{gen}({k^{\ast }},n) \asymp n^{-\beta /(2\beta +\gamma )}\). </p>
+  <p>def:bias-poly,def:k-pp,def:var-poly,def:gen-bound  LeanDeepgen.Tradeoff.tradeoff_PP <b class="bfseries">PP regime</b> (??). Let \(\beta ,\gamma {\gt} 0\) and \(n {\gt} 0\). At the balancing depth \({k^{\ast }}= n^{1/(2\beta +\gamma )}\), \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{{k^{\ast }}^{\gamma }/n} = 2\, n^{-\beta /(2\beta +\gamma )}\), and for every depth \(k {\gt} 0\), \(\mathsf{gen}(k,n) = k^{-\beta } + \sqrt{k^{\gamma }/n} \ge n^{-\beta /(2\beta +\gamma )}\). Thus \({k^{\ast }}\) is optimal up to the factor \(2\) and \(\mathsf{gen}({k^{\ast }},n) \asymp n^{-\beta /(2\beta +\gamma )}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000415">
+<div class="proof_wrapper" id="a0000000419">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Both terms equal \(n^{-\beta /(2\beta +\gamma )}\) at \({k^{\ast }}\) (<a href="sect0006.html#lem:bias-poly-kpp">theorem 384</a>, <a href="sect0006.html#lem:var-poly-kpp">theorem 385</a>), so the balancing principle <a href="sect0006.html#lem:balancing">theorem 383</a> on \(S = (0,\infty )\) gives both claims. </p>
+  <p>lem:var-poly-monotoneOn,lem:bias-poly-kpp,lem:bias-poly-antitoneOn,lem:balancing,lem:var-poly-kpp Both terms equal \(n^{-\beta /(2\beta +\gamma )}\) at \({k^{\ast }}\) (<a href="sect0006.html#lem:bias-poly-kpp">theorem 384</a>, <a href="sect0006.html#lem:var-poly-kpp">theorem 385</a>), so the balancing principle <a href="sect0006.html#lem:balancing">theorem 383</a> on \(S = (0,\infty )\) gives both claims. </p>
 
   </div>
 </div>
@@ -1429,52 +560,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">387</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:eventually-log-le-mul">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000416"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.eventually_log_le_mul" class="lean_decl">LeanDeepgen.Tradeoff.eventually_log_le_mul</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For every \(c {\gt} 0\), \(\log x \le c\, x\) for all sufficiently large \(x\). </p>
+  <p> LeanDeepgen.Tradeoff.eventually_log_le_mul For every \(c {\gt} 0\), \(\log x \le c\, x\) for all sufficiently large \(x\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000416">
+<div class="proof_wrapper" id="a0000000420">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\log x = o(x)\) (Mathlib: ‘Real.isLittleO_log_id_atTop‘). </p>
@@ -1487,55 +584,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">388</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:eventually-log-log-le-mul">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000417"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.eventually_log_log_le_mul" class="lean_decl">LeanDeepgen.Tradeoff.eventually_log_log_le_mul</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For every \(c {\gt} 0\), \(\log \log n \le c \log n\) for all sufficiently large \(n\). </p>
+  <p> LeanDeepgen.Tradeoff.eventually_log_log_le_mul For every \(c {\gt} 0\), \(\log \log n \le c \log n\) for all sufficiently large \(n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000417">
+<div class="proof_wrapper" id="a0000000421">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Compose <a href="sect0006.html#lem:eventually-log-le-mul">theorem 387</a> with \(\log n \to \infty \). </p>
+  <p>lem:eventually-log-le-mul Compose <a href="sect0006.html#lem:eventually-log-le-mul">theorem 387</a> with \(\log n \to \infty \). </p>
 
   </div>
 </div>
@@ -1545,52 +608,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">389</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:log-lt-self-of-pos">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000418"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.log_lt_self_of_pos" class="lean_decl">LeanDeepgen.Tradeoff.log_lt_self_of_pos</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  \(\log x {\lt} x\) for \(x {\gt} 0\). </p>
+  <p> LeanDeepgen.Tradeoff.log_lt_self_of_pos \(\log x {\lt} x\) for \(x {\gt} 0\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000418">
+<div class="proof_wrapper" id="a0000000422">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\log x \le x - 1 {\lt} x\). </p>
@@ -1603,52 +632,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">390</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:rpow-neg-half-mul-rpow">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000419"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.rpow_neg_half_mul_rpow_half" class="lean_decl">LeanDeepgen.Tradeoff.rpow_neg_half_mul_rpow_half</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For \(n {\gt} 0\) and \(L \ge 0\), \(n^{-1/2} L^{\gamma /2} = \sqrt{L^{\gamma }/n}\). </p>
+  <p> LeanDeepgen.Tradeoff.rpow_neg_half_mul_rpow_half For \(n {\gt} 0\) and \(L \ge 0\), \(n^{-1/2} L^{\gamma /2} = \sqrt{L^{\gamma }/n}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000419">
+<div class="proof_wrapper" id="a0000000423">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\sqrt{L^\gamma /n} = \sqrt{L^\gamma }/\sqrt n = L^{\gamma /2} n^{-1/2}\). </p>
@@ -1661,52 +656,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">391</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:sqrt-mul-div">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000420"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.sqrt_mul_div" class="lean_decl">LeanDeepgen.Tradeoff.sqrt_mul_div</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For \(c \ge 0\), \(\sqrt{c\, x/n} = \sqrt c\, \sqrt{x/n}\). </p>
+  <p> LeanDeepgen.Tradeoff.sqrt_mul_div For \(c \ge 0\), \(\sqrt{c\, x/n} = \sqrt c\, \sqrt{x/n}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000420">
+<div class="proof_wrapper" id="a0000000424">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Multiplicativity of the square root. </p>
@@ -1719,72 +680,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">392</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:rate-ep-nonneg">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000421"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:rate-ep">Definition 373</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.rateEP_nonneg" class="lean_decl">LeanDeepgen.Tradeoff.rateEP_nonneg</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   \(n^{-1/2}(\log n)^{\gamma /2} \ge 0\) for \(n \ge 1\). </p>
+  <p>def:rate-ep  LeanDeepgen.Tradeoff.rateEP_nonneg \(n^{-1/2}(\log n)^{\gamma /2} \ge 0\) for \(n \ge 1\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000421">
+<div class="proof_wrapper" id="a0000000425">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Product of two nonnegative powers. </p>
@@ -1797,76 +704,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">393</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-exp-kep">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000422"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:rate-ep">Definition 373</a></li>
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasExp_kEP" class="lean_decl">LeanDeepgen.Tradeoff.biasExp_kEP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} 1\), \(e^{-\alpha {k^{\ast }}} = n^{-1/2}(\log n)^{\gamma /2}\) exactly. </p>
+  <p>def:bias-exp,def:rate-ep,def:k-ep  LeanDeepgen.Tradeoff.biasExp_kEP For \(\alpha {\gt} 0\) and \(n {\gt} 1\), \(e^{-\alpha {k^{\ast }}} = n^{-1/2}(\log n)^{\gamma /2}\) exactly. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000422">
+<div class="proof_wrapper" id="a0000000426">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(-\alpha {k^{\ast }}= -\tfrac 12 \log n + \tfrac \gamma 2 \log \log n\); exponentiate. </p>
@@ -1879,72 +728,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">394</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:kep-le">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000423"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kEP_le" class="lean_decl">LeanDeepgen.Tradeoff.kEP_le</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha , \gamma {\gt} 0\) and \(\log n \ge 1\), \({k^{\ast }}\le \log n/(2\alpha )\). </p>
+  <p>def:k-ep  LeanDeepgen.Tradeoff.kEP_le For \(\alpha , \gamma {\gt} 0\) and \(\log n \ge 1\), \({k^{\ast }}\le \log n/(2\alpha )\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000423">
+<div class="proof_wrapper" id="a0000000427">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\gamma \log \log n \ge 0\) when \(\log n \ge 1\). </p>
@@ -1957,85 +752,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">395</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-poly-kep-le">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000424"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-          <li><a href="sect0006.html#def:rate-ep">Definition 373</a></li>
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-          <li><a href="sect0006.html#lem:sqrt-mul-div">Theorem 391</a></li>
-          
-          <li><a href="sect0006.html#lem:rpow-neg-half-mul-rpow">Theorem 390</a></li>
-          
-          <li><a href="sect0006.html#lem:kep-le">Theorem 394</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varPoly_kEP_le" class="lean_decl">LeanDeepgen.Tradeoff.varPoly_kEP_le</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha ,\gamma {\gt} 0\), \(n {\gt} 1\), \(\log n \ge 1\) and \(\gamma \log \log n \le \log n\): \(\sqrt{{k^{\ast }}^{\gamma }/n} \le \sqrt{(2\alpha )^{-\gamma }}\;  n^{-1/2}(\log n)^{\gamma /2}\). </p>
+  <p>def:var-poly,def:rate-ep,def:k-ep  LeanDeepgen.Tradeoff.varPoly_kEP_le For \(\alpha ,\gamma {\gt} 0\), \(n {\gt} 1\), \(\log n \ge 1\) and \(\gamma \log \log n \le \log n\): \(\sqrt{{k^{\ast }}^{\gamma }/n} \le \sqrt{(2\alpha )^{-\gamma }}\;  n^{-1/2}(\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000424">
+<div class="proof_wrapper" id="a0000000428">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \(0 \le {k^{\ast }}\le \log n/(2\alpha )\), so \({k^{\ast }}^\gamma \le (2\alpha )^{-\gamma } (\log n)^\gamma \); divide by \(n\) and take roots. </p>
+  <p>lem:sqrt-mul-div,lem:rpow-neg-half-mul-rpow,lem:kep-le \(0 \le {k^{\ast }}\le \log n/(2\alpha )\), so \({k^{\ast }}^\gamma \le (2\alpha )^{-\gamma } (\log n)^\gamma \); divide by \(n\) and take roots. </p>
 
   </div>
 </div>
@@ -2045,89 +776,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">396</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:eventually-ep">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000425"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:rate-ep">Definition 373</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-          <li><a href="sect0006.html#lem:eventually-log-log-le-mul">Theorem 388</a></li>
-          
-          <li><a href="sect0006.html#lem:bias-exp-kep">Theorem 393</a></li>
-          
-          <li><a href="sect0006.html#lem:var-poly-kep-le">Theorem 395</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.eventually_EP_bounds" class="lean_decl">LeanDeepgen.Tradeoff.eventually_EP_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha ,\gamma {\gt} 0\), eventually in \(n\): \(n^{-1/2}(\log n)^{\gamma /2} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{(2\alpha )^{-\gamma }}\bigr)\,  n^{-1/2}(\log n)^{\gamma /2}\). </p>
+  <p>def:var-poly,def:bias-exp,def:rate-ep,def:gen-bound,def:k-ep  LeanDeepgen.Tradeoff.eventually_EP_bounds For \(\alpha ,\gamma {\gt} 0\), eventually in \(n\): \(n^{-1/2}(\log n)^{\gamma /2} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{(2\alpha )^{-\gamma }}\bigr)\,  n^{-1/2}(\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000425">
+<div class="proof_wrapper" id="a0000000429">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The bias term equals the rate exactly (<a href="sect0006.html#lem:bias-exp-kep">theorem 393</a>) and the variance term is at most \(\sqrt{(2\alpha )^{-\gamma }}\) times the rate (<a href="sect0006.html#lem:var-poly-kep-le">theorem 395</a>); the side conditions hold for large \(n\) by <a href="sect0006.html#lem:eventually-log-log-le-mul">theorem 388</a>. </p>
+  <p>lem:eventually-log-log-le-mul,lem:bias-exp-kep,lem:var-poly-kep-le The bias term equals the rate exactly (<a href="sect0006.html#lem:bias-exp-kep">theorem 393</a>) and the variance term is at most \(\sqrt{(2\alpha )^{-\gamma }}\) times the rate (<a href="sect0006.html#lem:var-poly-kep-le">theorem 395</a>); the side conditions hold for large \(n\) by <a href="sect0006.html#lem:eventually-log-log-le-mul">theorem 388</a>. </p>
 
   </div>
 </div>
@@ -2137,52 +800,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">397</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:isTheta-of-eventually-bounds">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000426"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.isTheta_of_eventually_bounds" class="lean_decl">LeanDeepgen.Tradeoff.isTheta_of_eventually_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  If \(0 \le g\) eventually, \(c {\gt} 0\), and \(g \le f \le c\, g\) eventually, then \(f = \Theta (g)\). </p>
+  <p> LeanDeepgen.Tradeoff.isTheta_of_eventually_bounds If \(0 \le g\) eventually, \(c {\gt} 0\), and \(g \le f \le c\, g\) eventually, then \(f = \Theta (g)\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000426">
+<div class="proof_wrapper" id="a0000000430">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>Both \(O\)-directions, with constants \(c\) and \(1\). </p>
@@ -2195,89 +824,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">398</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#thm:tradeoff-ep">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000427"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-          <li><a href="sect0006.html#lem:eventually-ep">Theorem 396</a></li>
-          
-          <li><a href="sect0006.html#def:rate-ep">Definition 373</a></li>
-          
-          <li><a href="sect0006.html#lem:isTheta-of-eventually-bounds">Theorem 397</a></li>
-          
-          <li><a href="sect0006.html#lem:rate-ep-nonneg">Theorem 392</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_EP" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_EP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">EP regime</b> (??). Let \(\alpha ,\gamma {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{{k^{\ast }}^{\gamma }/n} \asymp n^{-1/2}(\log n)^{\gamma /2}\) as \(n \to \infty \) (more precisely, between \(1\) and \(1 + (2\alpha )^{-\gamma /2}\) times the rate). </p>
+  <p>def:var-poly,def:bias-exp,def:gen-bound,def:k-ep  LeanDeepgen.Tradeoff.tradeoff_EP <b class="bfseries">EP regime</b> (??). Let \(\alpha ,\gamma {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \gamma \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{{k^{\ast }}^{\gamma }/n} \asymp n^{-1/2}(\log n)^{\gamma /2}\) as \(n \to \infty \) (more precisely, between \(1\) and \(1 + (2\alpha )^{-\gamma /2}\) times the rate). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000427">
+<div class="proof_wrapper" id="a0000000431">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to the two-sided bound <a href="sect0006.html#lem:eventually-ep">theorem 396</a>. </p>
+  <p>lem:eventually-ep,def:rate-ep,lem:isTheta-of-eventually-bounds,lem:rate-ep-nonneg Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to the two-sided bound <a href="sect0006.html#lem:eventually-ep">theorem 396</a>. </p>
 
   </div>
 </div>
@@ -2287,83 +848,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">399</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#cor:tradeoff-ep-bigO">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000428"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-poly">Definition 369</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#def:k-ep">Definition 372</a></li>
-          
-          <li><a href="sect0006.html#thm:tradeoff-ep">Theorem 398</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_EP_isBigO" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_EP_isBigO</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   EP regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
+  <p>def:var-poly,def:bias-exp,def:gen-bound,def:k-ep  LeanDeepgen.Tradeoff.tradeoff_EP_isBigO EP regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000428">
+<div class="proof_wrapper" id="a0000000432">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-ep">theorem 398</a>. </p>
+  <p>thm:tradeoff-ep The \(O\)-half of <a href="sect0006.html#thm:tradeoff-ep">theorem 398</a>. </p>
 
   </div>
 </div>
@@ -2373,81 +872,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">400</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-exp-kel">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000429"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:rate-el">Definition 375</a></li>
-          
-          <li><a href="sect0006.html#lem:rpow-neg-half-mul-rpow">Theorem 390</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasExp_kEL" class="lean_decl">LeanDeepgen.Tradeoff.biasExp_kEL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(n {\gt} e\), \(e^{-\alpha {k^{\ast }}} = \sqrt{\log \log n/n}\) exactly. </p>
+  <p>def:k-el,def:bias-exp,def:rate-el  LeanDeepgen.Tradeoff.biasExp_kEL For \(\alpha {\gt} 0\) and \(n {\gt} e\), \(e^{-\alpha {k^{\ast }}} = \sqrt{\log \log n/n}\) exactly. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000429">
+<div class="proof_wrapper" id="a0000000433">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \(-\alpha {k^{\ast }}= -\tfrac 12\log n + \tfrac 12\log \log \log n\); exponentiate and rewrite \(n^{-1/2}(\log \log n)^{1/2} = \sqrt{\log \log n/n}\). </p>
+  <p>lem:rpow-neg-half-mul-rpow \(-\alpha {k^{\ast }}= -\tfrac 12\log n + \tfrac 12\log \log \log n\); exponentiate and rewrite \(n^{-1/2}(\log \log n)^{1/2} = \sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
@@ -2457,77 +896,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">401</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:kel-bounds">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000430"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#lem:log-lt-self-of-pos">Theorem 389</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kEL_bounds" class="lean_decl">LeanDeepgen.Tradeoff.kEL_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(0 {\lt} {k^{\ast }}\le \log n/(2\alpha )\) and \(\log {k^{\ast }}\le \log \log n + |\log (2\alpha )|\). </p>
+  <p>def:k-el  LeanDeepgen.Tradeoff.kEL_bounds For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(0 {\lt} {k^{\ast }}\le \log n/(2\alpha )\) and \(\log {k^{\ast }}\le \log \log n + |\log (2\alpha )|\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000430">
+<div class="proof_wrapper" id="a0000000434">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \(\log \log \log n \ge 0\) gives the upper bound; \(\log \log \log n {\lt} \log \log n {\lt} \log n\) gives positivity; then \(\log {k^{\ast }}\le \log (\log n/(2\alpha )) = \log \log n - \log (2\alpha )\). </p>
+  <p>lem:log-lt-self-of-pos \(\log \log \log n \ge 0\) gives the upper bound; \(\log \log \log n {\lt} \log \log n {\lt} \log n\) gives positivity; then \(\log {k^{\ast }}\le \log (\log n/(2\alpha )) = \log \log n - \log (2\alpha )\). </p>
 
   </div>
 </div>
@@ -2537,83 +920,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">402</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-log-kel-le">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000431"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:rate-el">Definition 375</a></li>
-          
-          <li><a href="sect0006.html#lem:sqrt-mul-div">Theorem 391</a></li>
-          
-          <li><a href="sect0006.html#lem:kel-bounds">Theorem 401</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varLog_kEL_le" class="lean_decl">LeanDeepgen.Tradeoff.varLog_kEL_le</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{1 + |\log (2\alpha )|}\, \sqrt{\log \log n/n}\). </p>
+  <p>def:k-el,def:var-log,def:rate-el  LeanDeepgen.Tradeoff.varLog_kEL_le For \(\alpha {\gt} 0\) and \(\log n \ge e\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{1 + |\log (2\alpha )|}\, \sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000431">
+<div class="proof_wrapper" id="a0000000435">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \(\log {k^{\ast }}\le \log \log n + |\log 2\alpha | \le (1 + |\log 2\alpha |)\log \log n\) because \(\log \log n \ge 1\) (<a href="sect0006.html#lem:kel-bounds">theorem 401</a>). </p>
+  <p>lem:sqrt-mul-div,lem:kel-bounds \(\log {k^{\ast }}\le \log \log n + |\log 2\alpha | \le (1 + |\log 2\alpha |)\log \log n\) because \(\log \log n \ge 1\) (<a href="sect0006.html#lem:kel-bounds">theorem 401</a>). </p>
 
   </div>
 </div>
@@ -2623,87 +944,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">403</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:eventually-el">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000432"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:rate-el">Definition 375</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#lem:var-log-kel-le">Theorem 402</a></li>
-          
-          <li><a href="sect0006.html#lem:bias-exp-kel">Theorem 400</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.eventually_EL_bounds" class="lean_decl">LeanDeepgen.Tradeoff.eventually_EL_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\alpha {\gt} 0\), eventually in \(n\): \(\sqrt{\log \log n/n} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{1 + |\log (2\alpha )|}\bigr)\sqrt{\log \log n/n}\). </p>
+  <p>def:k-el,def:bias-exp,def:var-log,def:rate-el,def:gen-bound  LeanDeepgen.Tradeoff.eventually_EL_bounds For \(\alpha {\gt} 0\), eventually in \(n\): \(\sqrt{\log \log n/n} \le \mathsf{gen}({k^{\ast }},n) \le \bigl(1 + \sqrt{1 + |\log (2\alpha )|}\bigr)\sqrt{\log \log n/n}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000432">
+<div class="proof_wrapper" id="a0000000436">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Bias equals the rate (<a href="sect0006.html#lem:bias-exp-kel">theorem 400</a>); variance is at most \(\sqrt{1 + |\log 2\alpha |}\) times the rate (<a href="sect0006.html#lem:var-log-kel-le">theorem 402</a>). </p>
+  <p>lem:var-log-kel-le,lem:bias-exp-kel Bias equals the rate (<a href="sect0006.html#lem:bias-exp-kel">theorem 400</a>); variance is at most \(\sqrt{1 + |\log 2\alpha |}\) times the rate (<a href="sect0006.html#lem:var-log-kel-le">theorem 402</a>). </p>
 
   </div>
 </div>
@@ -2713,87 +968,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">404</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#thm:tradeoff-el">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000433"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#lem:eventually-el">Theorem 403</a></li>
-          
-          <li><a href="sect0006.html#def:rate-el">Definition 375</a></li>
-          
-          <li><a href="sect0006.html#lem:isTheta-of-eventually-bounds">Theorem 397</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_EL" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_EL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">EL regime</b> (??). Let \(\alpha {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \log \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log \log n/n}\) as \(n \to \infty \). </p>
+  <p>def:k-el,def:bias-exp,def:var-log,def:gen-bound  LeanDeepgen.Tradeoff.tradeoff_EL <b class="bfseries">EL regime</b> (??). Let \(\alpha {\gt} 0\) and \({k^{\ast }}(n) = \frac{1}{2\alpha }(\log n - \log \log \log n)\). Then \(\mathsf{gen}({k^{\ast }},n) = e^{-\alpha {k^{\ast }}} + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log \log n/n}\) as \(n \to \infty \). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000433">
+<div class="proof_wrapper" id="a0000000437">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to <a href="sect0006.html#lem:eventually-el">theorem 403</a>. </p>
+  <p>lem:eventually-el,def:rate-el,lem:isTheta-of-eventually-bounds Apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to <a href="sect0006.html#lem:eventually-el">theorem 403</a>. </p>
 
   </div>
 </div>
@@ -2803,83 +992,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">405</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#cor:tradeoff-el-bigO">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000434"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-el">Definition 374</a></li>
-          
-          <li><a href="sect0006.html#def:bias-exp">Definition 366</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#thm:tradeoff-el">Theorem 404</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_EL_isBigO" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_EL_isBigO</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   EL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log \log n/n})\). </p>
+  <p>def:k-el,def:bias-exp,def:var-log,def:gen-bound  LeanDeepgen.Tradeoff.tradeoff_EL_isBigO EL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log \log n/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000434">
+<div class="proof_wrapper" id="a0000000438">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-el">theorem 404</a>. </p>
+  <p>thm:tradeoff-el The \(O\)-half of <a href="sect0006.html#thm:tradeoff-el">theorem 404</a>. </p>
 
   </div>
 </div>
@@ -2889,74 +1016,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">406</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:bias-poly-kpl">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000435"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.biasPoly_kPL" class="lean_decl">LeanDeepgen.Tradeoff.biasPoly_kPL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \({k^{\ast }}^{-\beta } = \sqrt{L/(2\beta n)}\). </p>
+  <p>def:bias-poly,def:k-pl  LeanDeepgen.Tradeoff.biasPoly_kPL For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \({k^{\ast }}^{-\beta } = \sqrt{L/(2\beta n)}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000435">
+<div class="proof_wrapper" id="a0000000439">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\({k^{\ast }}^{-\beta } = (2\beta n/L)^{-1/2} = (L/(2\beta n))^{1/2}\). </p>
@@ -2969,72 +1040,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">407</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:log-kpl">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000436"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.log_kPL" class="lean_decl">LeanDeepgen.Tradeoff.log_kPL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \(\log {k^{\ast }}= (L - \log L)/(2\beta )\). </p>
+  <p>def:k-pl  LeanDeepgen.Tradeoff.log_kPL For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\): \(\log {k^{\ast }}= (L - \log L)/(2\beta )\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000436">
+<div class="proof_wrapper" id="a0000000440">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\log \) of a power and of a quotient. </p>
@@ -3047,77 +1064,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">408</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:tradeoff-pl-balance">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000437"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#lem:log-kpl">Theorem 407</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kPL_balance" class="lean_decl">LeanDeepgen.Tradeoff.kPL_balance</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   The PL balancing equation \(k^{2\beta }\log k \asymp n\) holds exactly up to the factor \(1 - \log L/L\): for \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\), \({k^{\ast }}^{2\beta }\log {k^{\ast }}= n\, (1 - \log L/L)\). </p>
+  <p>def:k-pl  LeanDeepgen.Tradeoff.kPL_balance The PL balancing equation \(k^{2\beta }\log k \asymp n\) holds exactly up to the factor \(1 - \log L/L\): for \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) {\gt} 0\), \({k^{\ast }}^{2\beta }\log {k^{\ast }}= n\, (1 - \log L/L)\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000437">
+<div class="proof_wrapper" id="a0000000441">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \({k^{\ast }}^{2\beta } = 2\beta n/L\) and \(\log {k^{\ast }}= (L - \log L)/(2\beta )\) (<a href="sect0006.html#lem:log-kpl">theorem 407</a>); multiply out. </p>
+  <p>lem:log-kpl \({k^{\ast }}^{2\beta } = 2\beta n/L\) and \(\log {k^{\ast }}= (L - \log L)/(2\beta )\) (<a href="sect0006.html#lem:log-kpl">theorem 407</a>); multiply out. </p>
 
   </div>
 </div>
@@ -3127,77 +1088,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">409</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:tradeoff-pl-balance-tendsto">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000438"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#lem:tradeoff-pl-balance">Theorem 408</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.kPL_balance_tendsto" class="lean_decl">LeanDeepgen.Tradeoff.kPL_balance_tendsto</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   \({k^{\ast }}^{2\beta }\log {k^{\ast }}/ n \to 1\) as \(n \to \infty \), i.e. \({k^{\ast }}^{2\beta }\log {k^{\ast }}\sim n\). </p>
+  <p>def:k-pl  LeanDeepgen.Tradeoff.kPL_balance_tendsto \({k^{\ast }}^{2\beta }\log {k^{\ast }}/ n \to 1\) as \(n \to \infty \), i.e. \({k^{\ast }}^{2\beta }\log {k^{\ast }}\sim n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000438">
+<div class="proof_wrapper" id="a0000000442">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> By <a href="sect0006.html#lem:tradeoff-pl-balance">theorem 408</a> the ratio is \(1 - \log L/L\) with \(L = \log (2\beta n) \to \infty \), and \(\log L / L \to 0\). </p>
+  <p>lem:tradeoff-pl-balance By <a href="sect0006.html#lem:tradeoff-pl-balance">theorem 408</a> the ratio is \(1 - \log L/L\) with \(L = \log (2\beta n) \to \infty \), and \(\log L / L \to 0\). </p>
 
   </div>
 </div>
@@ -3207,79 +1112,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">410</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:var-log-kpl-le">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000439"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#lem:log-kpl">Theorem 407</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.varLog_kPL_le" class="lean_decl">LeanDeepgen.Tradeoff.varLog_kPL_le</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) \ge 1\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{L/(2\beta n)}\). </p>
+  <p>def:var-log,def:k-pl  LeanDeepgen.Tradeoff.varLog_kPL_le For \(\beta {\gt} 0\), \(n {\gt} 0\) and \(L = \log (2\beta n) \ge 1\): \(\sqrt{\log {k^{\ast }}/n} \le \sqrt{L/(2\beta n)}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000439">
+<div class="proof_wrapper" id="a0000000443">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> \(\log {k^{\ast }}= (L - \log L)/(2\beta ) \le L/(2\beta )\) since \(\log L \ge 0\). </p>
+  <p>lem:log-kpl \(\log {k^{\ast }}= (L - \log L)/(2\beta ) \le L/(2\beta )\) since \(\log L \ge 0\). </p>
 
   </div>
 </div>
@@ -3289,52 +1136,18 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">411</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:log-two-beta-n-bounds">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000440"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.log_two_beta_mul_bounds" class="lean_decl">LeanDeepgen.Tradeoff.log_two_beta_mul_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For \(\beta {\gt} 0\) and \(\log n \ge \max \{ 1, 2|\log 2\beta |\} \): \(\tfrac 12\log n \le \log (2\beta n) \le (1 + |\log 2\beta |)\log n\). </p>
+  <p> LeanDeepgen.Tradeoff.log_two_beta_mul_bounds For \(\beta {\gt} 0\) and \(\log n \ge \max \{ 1, 2|\log 2\beta |\} \): \(\tfrac 12\log n \le \log (2\beta n) \le (1 + |\log 2\beta |)\log n\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000440">
+<div class="proof_wrapper" id="a0000000444">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
   <p>\(\log (2\beta n) = \log 2\beta + \log n\) and \(-|c| \le c \le |c| \le |c|\log n\). </p>
@@ -3347,91 +1160,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">412</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:eventually-pl">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000441"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#def:rate-pl">Definition 377</a></li>
-          
-          <li><a href="sect0006.html#lem:sqrt-mul-div">Theorem 391</a></li>
-          
-          <li><a href="sect0006.html#lem:log-two-beta-n-bounds">Theorem 411</a></li>
-          
-          <li><a href="sect0006.html#lem:bias-poly-kpl">Theorem 406</a></li>
-          
-          <li><a href="sect0006.html#lem:var-log-kpl-le">Theorem 410</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.eventually_PL_bounds" class="lean_decl">LeanDeepgen.Tradeoff.eventually_PL_bounds</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   For \(\beta {\gt} 0\), eventually in \(n\): \(\sqrt{1/(4\beta )}\sqrt{\log n/n} \le \mathsf{gen}({k^{\ast }},n) \le 2\sqrt{(1 + |\log 2\beta |)/(2\beta )}\, \sqrt{\log n/n}\). </p>
+  <p>def:bias-poly,def:var-log,def:k-pl,def:gen-bound,def:rate-pl  LeanDeepgen.Tradeoff.eventually_PL_bounds For \(\beta {\gt} 0\), eventually in \(n\): \(\sqrt{1/(4\beta )}\sqrt{\log n/n} \le \mathsf{gen}({k^{\ast }},n) \le 2\sqrt{(1 + |\log 2\beta |)/(2\beta )}\, \sqrt{\log n/n}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000441">
+<div class="proof_wrapper" id="a0000000445">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Both terms are at most \(\sqrt{L/(2\beta n)}\) with \(L = \log (2\beta n)\) (<a href="sect0006.html#lem:bias-poly-kpl">theorem 406</a>, <a href="sect0006.html#lem:var-log-kpl-le">theorem 410</a>), the bias term equals it, and \(\tfrac 12\log n \le L \le (1 + |\log 2\beta |)\log n\) (<a href="sect0006.html#lem:log-two-beta-n-bounds">theorem 411</a>). </p>
+  <p>lem:sqrt-mul-div,lem:log-two-beta-n-bounds,lem:bias-poly-kpl,lem:var-log-kpl-le Both terms are at most \(\sqrt{L/(2\beta n)}\) with \(L = \log (2\beta n)\) (<a href="sect0006.html#lem:bias-poly-kpl">theorem 406</a>, <a href="sect0006.html#lem:var-log-kpl-le">theorem 410</a>), the bias term equals it, and \(\tfrac 12\log n \le L \le (1 + |\log 2\beta |)\log n\) (<a href="sect0006.html#lem:log-two-beta-n-bounds">theorem 411</a>). </p>
 
   </div>
 </div>
@@ -3441,87 +1184,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">413</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#thm:tradeoff-pl">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000442"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#lem:eventually-pl">Theorem 412</a></li>
-          
-          <li><a href="sect0006.html#lem:isTheta-of-eventually-bounds">Theorem 397</a></li>
-          
-          <li><a href="sect0006.html#def:rate-pl">Definition 377</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_PL" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_PL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   <b class="bfseries">PL regime</b> (??). Let \(\beta {\gt} 0\) and \({k^{\ast }}(n) = \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\). Then \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log n/n}\) as \(n \to \infty \). </p>
+  <p>def:bias-poly,def:var-log,def:k-pl,def:gen-bound  LeanDeepgen.Tradeoff.tradeoff_PL <b class="bfseries">PL regime</b> (??). Let \(\beta {\gt} 0\) and \({k^{\ast }}(n) = \bigl(2\beta n/\log (2\beta n)\bigr)^{1/(2\beta )}\). Then \(\mathsf{gen}({k^{\ast }},n) = {k^{\ast }}^{-\beta } + \sqrt{\log {k^{\ast }}/n} \asymp \sqrt{\log n/n}\) as \(n \to \infty \). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000442">
+<div class="proof_wrapper" id="a0000000446">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> Rescale the lower bound of <a href="sect0006.html#lem:eventually-pl">theorem 412</a> by \(\sqrt{1/(4\beta )}^{-1}\) and apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to the function \(\sqrt{1/(4\beta )}\, \sqrt{\log n/n}\), which is \(\Theta (\sqrt{\log n/n})\). </p>
+  <p>lem:eventually-pl,lem:isTheta-of-eventually-bounds,def:rate-pl Rescale the lower bound of <a href="sect0006.html#lem:eventually-pl">theorem 412</a> by \(\sqrt{1/(4\beta )}^{-1}\) and apply <a href="sect0006.html#lem:isTheta-of-eventually-bounds">theorem 397</a> to the function \(\sqrt{1/(4\beta )}\, \sqrt{\log n/n}\), which is \(\Theta (\sqrt{\log n/n})\). </p>
 
   </div>
 </div>
@@ -3531,83 +1208,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">414</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#cor:tradeoff-pl-bigO">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000443"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    <button class="modal"><svg  class="icon icon-mindmap "><use xlink:href="symbol-defs.svg#icon-mindmap"></use></svg>
-</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Uses</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="sect0006.html#def:bias-poly">Definition 367</a></li>
-          
-          <li><a href="sect0006.html#def:var-log">Definition 368</a></li>
-          
-          <li><a href="sect0006.html#def:k-pl">Definition 376</a></li>
-          
-          <li><a href="sect0006.html#def:gen-bound">Definition 370</a></li>
-          
-          <li><a href="sect0006.html#thm:tradeoff-pl">Theorem 413</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_PL_isBigO" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_PL_isBigO</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>   PL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log n/n})\). </p>
+  <p>def:bias-poly,def:var-log,def:k-pl,def:gen-bound  LeanDeepgen.Tradeoff.tradeoff_PL_isBigO PL regime, upper bound: \(\mathsf{gen}({k^{\ast }},n) = O(\sqrt{\log n/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000443">
+<div class="proof_wrapper" id="a0000000447">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> The \(O\)-half of <a href="sect0006.html#thm:tradeoff-pl">theorem 413</a>. </p>
+  <p>thm:tradeoff-pl The \(O\)-half of <a href="sect0006.html#thm:tradeoff-pl">theorem 413</a>. </p>
 
   </div>
 </div>
@@ -3617,55 +1232,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">415</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#lem:rate-pl-eq">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000444"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.ratePL_eq" class="lean_decl">LeanDeepgen.Tradeoff.ratePL_eq</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  For \(n {\gt} 1\), \(\sqrt{\log n/n} = n^{-1/2}(\log n)^{1/2}\). </p>
+  <p> LeanDeepgen.Tradeoff.ratePL_eq For \(n {\gt} 1\), \(\sqrt{\log n/n} = n^{-1/2}(\log n)^{1/2}\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000444">
+<div class="proof_wrapper" id="a0000000448">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> <a href="sect0006.html#lem:rpow-neg-half-mul-rpow">theorem 390</a> with \(\gamma = 1\). </p>
+  <p>lem:rpow-neg-half-mul-rpow <a href="sect0006.html#lem:rpow-neg-half-mul-rpow">theorem 390</a> with \(\gamma = 1\). </p>
 
   </div>
 </div>
@@ -3675,55 +1256,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">416</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#rem:tradeoff-ordering-le">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000445"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.rateEP_isBigO_ratePL" class="lean_decl">LeanDeepgen.Tradeoff.rateEP_isBigO_ratePL</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  <b class="bfseries">Ordering note</b>, first half. If \(\gamma \le 1\) then the EP rate is no worse than the PL rate: \(n^{-1/2}(\log n)^{\gamma /2} = O(\sqrt{\log n/n})\). </p>
+  <p> LeanDeepgen.Tradeoff.rateEP_isBigO_ratePL <b class="bfseries">Ordering note</b>, first half. If \(\gamma \le 1\) then the EP rate is no worse than the PL rate: \(n^{-1/2}(\log n)^{\gamma /2} = O(\sqrt{\log n/n})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000445">
+<div class="proof_wrapper" id="a0000000449">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> For \(\log n \ge 1\), \((\log n)^{\gamma /2} \le (\log n)^{1/2}\). </p>
+  <p>lem:rate-pl-eq,def:rate-ep,lem:rate-ep-nonneg For \(\log n \ge 1\), \((\log n)^{\gamma /2} \le (\log n)^{1/2}\). </p>
 
   </div>
 </div>
@@ -3733,55 +1280,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">417</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#rem:tradeoff-ordering-ge">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000446"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.ratePL_isBigO_rateEP" class="lean_decl">LeanDeepgen.Tradeoff.ratePL_isBigO_rateEP</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  <b class="bfseries">Ordering note</b>, second half. If \(\gamma \ge 1\) then the PL rate is no worse than the EP rate: \(\sqrt{\log n/n} = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
+  <p> LeanDeepgen.Tradeoff.ratePL_isBigO_rateEP <b class="bfseries">Ordering note</b>, second half. If \(\gamma \ge 1\) then the PL rate is no worse than the EP rate: \(\sqrt{\log n/n} = O(n^{-1/2}(\log n)^{\gamma /2})\). </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000446">
+<div class="proof_wrapper" id="a0000000450">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> For \(\log n \ge 1\), \((\log n)^{1/2} \le (\log n)^{\gamma /2}\). </p>
+  <p>lem:rate-pl-eq,def:rate-ep,lem:rate-ep-nonneg For \(\log n \ge 1\), \((\log n)^{1/2} \le (\log n)^{\gamma /2}\). </p>
 
   </div>
 </div>
@@ -3791,55 +1304,21 @@
     Theorem
     </span>
     <span class="theorem_thmlabel">418</span>
-    <div class="thm_header_extras">
-
-    
-    ✓
-        </div>
-    <div class="thm_header_hidden_extras">
-
-    <a class="icon proof" href="sect0006.html#rem:tradeoff-ordering">#</a>
-    
-    <a class="icon proof" href="sect0006.html#a0000000447"><svg  class="icon icon-cogs "><use xlink:href="symbol-defs.svg#icon-cogs"></use></svg>
-</a>
-    
-    
-    
-    <button class="modal lean">L∃∀N</button>
-        <div class="modal-container">
-      <div class="modal-content">
-        <header>
-          <h1>Lean declarations</h1>
-          <button class="closebtn"><svg  class="icon icon-cross "><use xlink:href="symbol-defs.svg#icon-cross"></use></svg>
-</button>
-        </header>
-        
-        <ul class="uses">
-          
-          <li><a href="https://shosonoda.github.io/lean-deepgen/docs/find/#doc/LeanDeepgen.Tradeoff.tradeoff_ordering" class="lean_decl">LeanDeepgen.Tradeoff.tradeoff_ordering</a></li>
-          
-        </ul>
-    
-      </div>
-    </div>
-
-    
-        </div>
   </div>
   <div class="theorem_thmcontent">
-  <p>  <b class="bfseries">Ordering note</b> (??). The EP and PL balanced rates are not uniformly ordered: EP \(\lesssim \) PL when \(\gamma \le 1\), and PL \(\lesssim \) EP when \(\gamma \ge 1\); for \(\gamma = 1\) they coincide up to constants. </p>
+  <p> LeanDeepgen.Tradeoff.tradeoff_ordering <b class="bfseries">Ordering note</b> (??). The EP and PL balanced rates are not uniformly ordered: EP \(\lesssim \) PL when \(\gamma \le 1\), and PL \(\lesssim \) EP when \(\gamma \ge 1\); for \(\gamma = 1\) they coincide up to constants. </p>
 
   </div>
 </div>
-<div class="proof_wrapper" id="a0000000447">
+<div class="proof_wrapper" id="a0000000451">
   <div class="proof_heading">
     <span class="proof_caption">
     Proof
     </span>
-    <span class="expand-proof">▶</span>
+    <span class="expand-proof">▼</span>
   </div>
   <div class="proof_content">
-  <p> <a href="sect0006.html#rem:tradeoff-ordering-le">theorem 416</a> and <a href="sect0006.html#rem:tradeoff-ordering-ge">theorem 417</a>. </p>
+  <p>rem:tradeoff-ordering-ge,rem:tradeoff-ordering-le <a href="sect0006.html#rem:tradeoff-ordering-le">theorem 416</a> and <a href="sect0006.html#rem:tradeoff-ordering-ge">theorem 417</a>. </p>
 
   </div>
 </div>
@@ -3850,10 +1329,6 @@
 </div> <!-- wrapper -->
 
 <nav class="prev_up_next">
-  <svg  id="showmore-minus" class="icon icon-eye-minus showmore"><use xlink:href="symbol-defs.svg#icon-eye-minus"></use></svg>
-
-  <svg  id="showmore-plus" class="icon icon-eye-plus showmore"><use xlink:href="symbol-defs.svg#icon-eye-plus"></use></svg>
-
   <a href="sect0005.html" title="From growth mechanisms to variance profiles (Appendix H)"><svg  class="icon icon-arrow-left "><use xlink:href="symbol-defs.svg#icon-arrow-left"></use></svg>
 </a>
   <a href="index.html" title="Generalization error bounds for deep models"><svg  class="icon icon-arrow-up "><use xlink:href="symbol-defs.svg#icon-arrow-up"></use></svg>
@@ -3865,7 +1340,5 @@
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/plastex.js"></script>
 <script type="text/javascript" src="js/svgxuse.js"></script>
-<script type="text/javascript" src="js/js.cookie.min.js"></script>
-<script type="text/javascript" src="js/showmore.js"></script>
 </body>
 </html>
